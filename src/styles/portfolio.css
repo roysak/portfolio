@@ -1,0 +1,19 @@
+/* Portfolio custom styles — non-Tailwind rules only */
+
+::selection {
+  background-color: #e5e5e5; /* neutral-200 equivalent */
+}
+
+/* Arrow icon transition helpers not expressible purely in Tailwind */
+.card-arrow {
+  opacity: 0;
+  transform: translateY(0.5rem) translateX(-0.5rem);
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
+}
+
+.group:hover .card-arrow {
+  opacity: 1;
+  transform: translateY(0) translateX(0);
+}
