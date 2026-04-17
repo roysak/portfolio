@@ -34,7 +34,7 @@ export default function Timeline({ section }: Props) {
                     }`}
                   >
                     {isSuccess ? (
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+                      <span className="material-symbols-rounded" style={{ fontSize: '16px' }} aria-hidden="true">check</span>
                     ) : (
                       i + 1
                     )}
@@ -78,7 +78,7 @@ export default function Timeline({ section }: Props) {
                       <ul className="text-xs text-gray-600 space-y-1.5 ml-1 mt-2">
                         {step.items.map((item, j) => (
                           <li key={j} className="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-500" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+                            <span className="material-symbols-rounded text-primary-500" style={{ fontSize: '12px' }} aria-hidden="true">check</span>
                             {item}
                           </li>
                         ))}

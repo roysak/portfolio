@@ -6,7 +6,7 @@ const caseStudy02: CaseStudyPageData = {
   hero: {
     type: 'hero',
     badge: 'Dashboard Builder Interface',
-    badgeIcon: 'layout-dashboard',
+    badgeIcon: 'space_dashboard',
     title: 'Building within constraints.',
     description:
       'Designing an intuitive, modular dashboard builder on top of a rigid, pre-established backend, prioritizing speed to market while maximizing canvas real estate.',
@@ -41,21 +41,21 @@ const caseStudy02: CaseStudyPageData = {
         'Bridging a rigid backend architecture with a user-friendly frontend under strict time constraints, requiring pragmatic UX solutions.',
       cards: [
         {
-          icon: 'scaling',
+          icon: 'aspect_ratio',
           category: 'Technical Limitation',
           title: 'No Responsive Reflow',
           description:
             'The existing backend lacked capabilities to support a fluid, responsive dashboard. The design needed to set clear user expectations around fixed layouts.',
         },
         {
-          icon: 'mouse-pointer-click',
+          icon: 'ads_click',
           category: 'Timeline Constraint',
           title: 'Minimal Front-end Effort',
           description:
             'Strict MVP timelines meant advanced interactions like drag-and-drop widget sidebars were off the table. We needed a simpler, click-based assembly method.',
         },
         {
-          icon: 'git-branch',
+          icon: 'call_split',
           category: 'Workflow Complexity',
           title: 'Dual Widget Creation',
           description:
@@ -77,7 +77,7 @@ const caseStudy02: CaseStudyPageData = {
       },
       branches: [
         {
-          icon: 'layout-dashboard',
+          icon: 'space_dashboard',
           title: 'Dashboard Management',
           items: [
             {
@@ -118,7 +118,7 @@ const caseStudy02: CaseStudyPageData = {
           ],
         },
         {
-          icon: 'bar-chart-2',
+          icon: 'bar_chart',
           title: 'Widgets Library',
           items: [
             { title: 'Widget Listing' },
@@ -144,7 +144,7 @@ const caseStudy02: CaseStudyPageData = {
     {
       type: 'timeline',
       anchor: 'flow',
-      icon: 'git-commit-horizontal',
+      icon: 'commit',
       title: 'Core Flow: Dashboard Creation',
       subtitle:
         'The end-to-end journey from initiation to publishing, highlighting critical configuration branches.',
@@ -160,7 +160,7 @@ const caseStudy02: CaseStudyPageData = {
           description: 'Set Name, Description, and Instance.',
           variant: 'default',
           note: {
-            icon: 'split',
+            icon: 'call_split',
             text: 'Drilldown Branch: If "Drilldown Dashboard" is enabled, the user must specify the dashboard size, which dictates how it renders inside modal windows.',
           },
         },
@@ -325,7 +325,7 @@ const caseStudy02: CaseStudyPageData = {
       type: 'outcomes',
       columns: [
         {
-          icon: 'target',
+          icon: 'my_location',
           title: 'Outcomes & Impact',
           items: [
             {
@@ -341,7 +341,7 @@ const caseStudy02: CaseStudyPageData = {
           ],
         },
         {
-          icon: 'arrow-right',
+          icon: 'arrow_forward',
           title: 'Future Roadmap',
           items: [
             {

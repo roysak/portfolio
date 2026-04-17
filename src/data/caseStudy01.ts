@@ -6,7 +6,7 @@ const caseStudy01: CaseStudyPageData = {
   hero: {
     type: 'hero',
     badge: 'Automation Story Property Panel Redesign',
-    badgeIcon: 'layout',
+    badgeIcon: 'dashboard',
     title: 'Streamlining the Property Panel',
     description:
       'Transforming a space-heavy, stacked form into a compact, interactive property grid to speed up automation setup, reduce errors, and maximize screen real estate.',
@@ -38,21 +38,21 @@ const caseStudy01: CaseStudyPageData = {
         'Before redesigning, I analyzed the legacy stacked layout against Usability Heuristics to identify core structural failures.',
       cards: [
         {
-          icon: 'zap',
+          icon: 'bolt',
           category: 'Flexibility & Efficiency',
           title: 'Excessive Scrolling',
           description:
             'The stacked label/input layout consumed too much vertical space. Power users had to constantly scroll to configure standard components, slowing down workflow creation.',
         },
         {
-          icon: 'eye',
+          icon: 'visibility',
           category: 'Aesthetic & Minimalist Design',
           title: 'Wasted Real Estate',
           description:
             'Despite taking up screen width, input fields left significant dead whitespace on the right. Heavy borders added unnecessary visual noise to the UI.',
         },
         {
-          icon: 'alert-triangle',
+          icon: 'warning',
           category: 'Visibility of System Status',
           title: 'Poor Contextual Tracking',
           description:
@@ -161,7 +161,7 @@ const caseStudy01: CaseStudyPageData = {
 
     {
       type: 'callout',
-      icon: 'settings-2',
+      icon: 'settings',
       title: 'Systematic Design in Figma',
       description:
         'Built using comprehensive Figma variants to create a highly modular component library. This ensured pixel-perfect consistency across complex interaction states and created a streamlined handoff process that directly mirrored front-end component logic.',
@@ -171,7 +171,7 @@ const caseStudy01: CaseStudyPageData = {
       type: 'outcomes',
       columns: [
         {
-          icon: 'check-circle-2',
+          icon: 'check_circle',
           title: 'Lessons Learned',
           items: [
             {
@@ -187,7 +187,7 @@ const caseStudy01: CaseStudyPageData = {
           ],
         },
         {
-          icon: 'arrow-right',
+          icon: 'arrow_forward',
           title: 'Next Steps',
           items: [
             {

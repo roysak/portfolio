@@ -57,7 +57,7 @@ export default function Carousel({ section }: Props) {
           className="absolute left-2 sm:-left-4 top-[40%] -translate-y-1/2 bg-white text-gray-800 p-3 rounded-full shadow-lg border border-gray-200 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-primary-50 hover:text-primary-600 hover:scale-110 focus:opacity-100"
           aria-label="Previous slide"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6" /></svg>
+          <span className="material-symbols-rounded" style={{ fontSize: '24px' }} aria-hidden="true">chevron_left</span>
         </button>
 
         {/* Next */}
@@ -66,7 +66,7 @@ export default function Carousel({ section }: Props) {
           className="absolute right-2 sm:-right-4 top-[40%] -translate-y-1/2 bg-white text-gray-800 p-3 rounded-full shadow-lg border border-gray-200 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-primary-50 hover:text-primary-600 hover:scale-110 focus:opacity-100"
           aria-label="Next slide"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6" /></svg>
+          <span className="material-symbols-rounded" style={{ fontSize: '24px' }} aria-hidden="true">chevron_right</span>
         </button>
       </div>
     </section>

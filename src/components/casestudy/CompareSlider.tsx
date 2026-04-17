@@ -67,9 +67,7 @@ export default function CompareSlider({ section }: Props) {
           style={{ left: `${value}%`, transform: 'translateX(-50%)' }}
         >
           <div className="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center border border-gray-200">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-600" aria-hidden="true">
-              <path d="m9 18 6-6-6-6" /><path d="m15 6-6 6 6 6" style={{ transform: 'scaleX(-1)', transformOrigin: 'center' }} />
-            </svg>
+            <span className="material-symbols-rounded text-gray-600" style={{ fontSize: '20px' }} aria-hidden="true">compare_arrows</span>
           </div>
         </div>
 

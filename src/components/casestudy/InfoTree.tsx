@@ -57,7 +57,7 @@ export default function InfoTree({ section }: Props) {
                           <ul className="text-gray-600 mt-1.5 ml-1 space-y-1.5">
                             {item.subitems.map((sub, j) => (
                               <li key={j} className="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400 shrink-0" aria-hidden="true"><polyline points="15 10 20 15 15 20" /><path d="M4 4v7a4 4 0 0 0 4 4h12" /></svg>
+                                <span className="material-symbols-rounded text-gray-400 shrink-0" style={{ fontSize: '16px' }} aria-hidden="true">subdirectory_arrow_right</span>
                                 {sub.text}
                                 {sub.subtext && (
                                   <span className="text-gray-500 text-xs">{sub.subtext}</span>

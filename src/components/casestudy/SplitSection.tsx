@@ -6,19 +6,13 @@ interface Props {
 
 const BULLET_ICONS: Record<string, React.ReactNode> = {
   check: (
-    <svg className="w-5 h-5 text-green-500 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
-    </svg>
+    <span className="material-symbols-rounded text-green-500 shrink-0" style={{ fontSize: '20px' }} aria-hidden="true">check_circle</span>
   ),
   warning: (
-    <svg className="w-5 h-5 text-amber-500 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
-    </svg>
+    <span className="material-symbols-rounded text-amber-500 shrink-0" style={{ fontSize: '20px' }} aria-hidden="true">warning</span>
   ),
   error: (
-    <svg className="w-5 h-5 text-red-400 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
-    </svg>
+    <span className="material-symbols-rounded text-red-400 shrink-0" style={{ fontSize: '20px' }} aria-hidden="true">error</span>
   ),
 };
 
