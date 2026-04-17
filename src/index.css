@@ -1,6 +1,37 @@
 @import "tailwindcss";
 @import "./styles/portfolio.css";
 
+/* ─── Design Tokens ─────────────────────────────────────────────────────────
+   Primary brand color: #6D4778 (deep plum/violet)
+   Used for: buttons, links, badges, accents, interactive highlights.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  --color-primary-50:  #f8f0fa;
+  --color-primary-100: #f0dff5;
+  --color-primary-200: #e0beec;
+  --color-primary-300: #c890da;
+  --color-primary-400: #aa62c4;
+  --color-primary-500: #8c43aa;
+  --color-primary-600: #6d4778;
+  --color-primary-700: #573060;
+  --color-primary-800: #3d1f45;
+  --color-primary-900: #27112d;
+  --color-primary-950: #160818;
+}
+
+/* Semantic aliases for use in arbitrary Tailwind values or plain CSS */
+:root {
+  --color-primary:        #6d4778;
+  --color-primary-light:  #8c43aa;
+  --color-primary-dark:   #573060;
+  --color-primary-subtle: #f8f0fa;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
 }

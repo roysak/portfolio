@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { CaseStudy } from "../data/caseStudies";
 
 interface CaseStudyCardProps {
@@ -7,9 +8,9 @@ interface CaseStudyCardProps {
 export default function CaseStudyCard({ study }: CaseStudyCardProps) {
   return (
     <article className="group cursor-pointer flex flex-col">
-      <a href={`/${study.link}/`}>
+      <Link to={`/case-studies/${study.link}`}>
         <div
-          className={`relative w-full aspect-4/2 rounded-2xl overflow-hidden mb-6 transition-all duration-500 ease-out border border-neutral-100 ${study.color} flex items-start justify-center shadow-sm group-hover:shadow-xl group-hover:scale-[1.02]`}
+          className={`relative w-full aspect-4/2 rounded-2xl overflow-hidden mb-6 transition-all duration-500 ease-out ${study.color} ${study.shadow} flex items-start justify-center shadow-sm group-hover:shadow-xl group-hover:scale-[1.02]`}
         >
           <img
             src={`/img/${study.image}`}
@@ -63,7 +64,7 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
             ))}
           </div>
         </div>
-      </a>
+      </Link>
     </article>
   );
 }
