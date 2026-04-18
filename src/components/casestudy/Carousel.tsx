@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import type { CarouselSection } from '../../data/caseStudyTypes';
+import { assetUrl } from '../../utils/assetUrl';
 
 interface Props {
   section: CarouselSection;
@@ -38,7 +39,7 @@ export default function Carousel({ section }: Props) {
             >
               <div className="bg-gray-50 rounded-2xl border border-gray-200 shadow-sm p-4 w-full">
                 <img
-                  src={slide.image}
+                  src={assetUrl(slide.image)}
                   alt={slide.label}
                   className="w-full h-auto rounded-xl shadow-sm border border-gray-200 object-cover"
                 />

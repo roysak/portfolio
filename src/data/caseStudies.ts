@@ -20,7 +20,7 @@ const caseStudies: CaseStudy[] = [
     tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],
     color: "bg-blue-200",
     shadow: "shadow-blue-100/50",
-    image: "automationstory.png",
+    image: "/img/automationstory.png",
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ const caseStudies: CaseStudy[] = [
     tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],
     color: "bg-green-200",
     shadow: "shadow-green-100/50",
-    image: "dashboard-builder.png",
+    image: "/img/dashboard-builder.png",
   },
 ];
 

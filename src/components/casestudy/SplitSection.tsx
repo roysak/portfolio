@@ -1,4 +1,5 @@
 import type { SplitSectionData } from '../../data/caseStudyTypes';
+import { assetUrl } from '../../utils/assetUrl';
 
 interface Props {
   section: SplitSectionData;
@@ -49,7 +50,7 @@ export default function SplitSection({ section }: Props) {
             {section.imageCaption}
           </p>
           <img
-            src={section.image}
+            src={assetUrl(section.image)}
             alt={section.imageAlt}
             className="object-cover rounded shadow-sm w-full"
           />

@@ -1,4 +1,5 @@
 import type { ShowcaseSection } from '../../data/caseStudyTypes';
+import { assetUrl } from '../../utils/assetUrl';
 
 interface Props {
   section: ShowcaseSection;
@@ -16,7 +17,7 @@ export default function Showcase({ section }: Props) {
       </div>
       <div className="w-full bg-gray-50 rounded-2xl border border-gray-200 shadow-lg overflow-hidden group">
         <img
-          src={section.image}
+          src={assetUrl(section.image)}
           alt={section.alt}
           className="w-full h-auto rounded-xl"
         />

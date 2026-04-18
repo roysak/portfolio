@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { CaseStudy } from "../data/caseStudies";
+import { assetUrl } from "../utils/assetUrl";
 
 interface CaseStudyCardProps {
   study: CaseStudy;
@@ -13,7 +14,7 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
           className={`relative w-full aspect-4/2 rounded-2xl overflow-hidden mb-6 transition-all duration-500 ease-out ${study.color} ${study.shadow} flex items-start justify-center shadow-sm group-hover:shadow-xl group-hover:scale-[1.02]`}
         >
           <img
-            src={`/img/${study.image}`}
+            src={assetUrl(study.image)}
             alt={study.title}
             className="object-cover object-top w-full h-full"
           />

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { DeepDiveSection } from '../../data/caseStudyTypes';
+import { assetUrl } from '../../utils/assetUrl';
 
 interface Props {
   section: DeepDiveSection;
@@ -52,7 +53,7 @@ export default function DeepDiveTabs({ section }: Props) {
                     {tab.caption}
                   </p>
                   <img
-                    src={tab.image}
+                    src={assetUrl(tab.image)}
                     alt={tab.caption}
                     className="w-full rounded"
                   />

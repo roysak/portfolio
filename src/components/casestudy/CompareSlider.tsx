@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import type { CompareSliderSection } from '../../data/caseStudyTypes';
+import { assetUrl } from '../../utils/assetUrl';
 
 interface Props {
   section: CompareSliderSection;
@@ -34,7 +35,7 @@ export default function CompareSlider({ section }: Props) {
       >
         {/* After image — background */}
         <img
-          src={section.after.src}
+          src={assetUrl(section.after.src)}
           alt={`After: ${section.after.label}`}
           className="absolute inset-0 w-full h-full object-cover object-top"
         />
@@ -50,7 +51,7 @@ export default function CompareSlider({ section }: Props) {
           style={{ clipPath: `inset(0 ${100 - value}% 0 0)` }}
         >
           <img
-            src={section.before.src}
+            src={assetUrl(section.before.src)}
             alt={`Before: ${section.before.label}`}
             className="absolute inset-0 w-full h-full object-cover object-top"
           />
