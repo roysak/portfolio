@@ -1,4 +1,5 @@
 import CaseStudyCard from "../components/CaseStudyCard";
+import GridAnimation from "../components/GridAnimation";
 import caseStudies from "../data/caseStudies";
 
 export default function CaseStudies() {

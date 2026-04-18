@@ -31,9 +31,7 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <div className="fixed inset-0 pointer-events-none">
-                <GridAnimation />
-            </div>
+            <GridAnimation />
         </main>
     );
 }

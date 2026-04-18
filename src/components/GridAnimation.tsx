@@ -3,7 +3,7 @@ import colormap from 'colormap';
 
 // ── Swap this string to try any colormap name, e.g. 'jet', 'hot', ────────
 // ── 'cool', 'spring', 'hsv', 'rainbow', 'portland', 'blackbody' ──────────
-const COLORMAP_NAME = 'inferno';
+const COLORMAP_NAME = 'hot';
 const NSHADES = 20;
 
 const PALETTE: readonly string[] = colormap({
@@ -12,8 +12,6 @@ const PALETTE: readonly string[] = colormap({
   format: 'hex',
   alpha: 1,
 }).toReversed() as readonly string[]; // assert immutability since we rely on stable references for performance
-
-console.log("Pallette", PALETTE,  PALETTE.toReversed()) // we want dark colors for small displacement and bright colors for large displacement
 
 // ── Dot — pure physics state, no canvas reference ────────────────────────
 
@@ -26,7 +24,7 @@ class Dot {
   readonly iy: number;
   size = 8;         // default (far) value
   thickness = 0.5; // default (far) value
-  color = PALETTE[0];
+  color = "PALETTE[0]";
 
   private static readonly MIN_DIST    = 200;
   private static readonly MIN_DIST_SQ = 200 * 200;
@@ -218,9 +216,11 @@ export default function GridAnimation() {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{ display: 'block', width: '100%', height: '100%' }}
-    />
+    <div className="fixed z-100 inset-0 pointer-events-none mix-blend-darken opacity-60">
+      <canvas
+        ref={canvasRef}
+        style={{ display: 'block', width: '100%', height: '100%' }}
+      />
+    </div>
   );
 }
