@@ -52,6 +52,10 @@ export default function CaseStudyInPageNav({ navItems }: Props) {
               key={item.anchor}
               href={`#${item.anchor}`}
               className={linkClass(item.anchor)}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById(item.anchor)?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
               {item.label}
             </a>
