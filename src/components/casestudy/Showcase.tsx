@@ -14,11 +14,11 @@ export default function Showcase({ section }: Props) {
         <h2 className="text-3xl font-bold mb-4">{section.title}</h2>
         <p className="text-gray-600">{section.subtitle}</p>
       </div>
-      <div className="w-full bg-gray-50 rounded-2xl border border-gray-200 shadow-lg overflow-hidden group p-2 sm:p-4">
+      <div className="w-full bg-gray-50 rounded-2xl border border-gray-200 shadow-lg overflow-hidden group">
         <img
           src={section.image}
           alt={section.alt}
-          className="w-full h-auto rounded-xl border border-gray-200 shadow-sm"
+          className="w-full h-auto rounded-xl"
         />
       </div>
     </section>

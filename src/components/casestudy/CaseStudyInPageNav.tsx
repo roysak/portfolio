@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import type { CaseStudyNavItem } from '../../data/caseStudyTypes';
 
 interface Props {
@@ -5,32 +6,52 @@ interface Props {
 }
 
 export default function CaseStudyInPageNav({ navItems }: Props) {
+  const [activeAnchor, setActiveAnchor] = useState<string>(navItems[0]?.anchor ?? '');
+
+  useEffect(() => {
+    const anchors = navItems.map((item) => item.anchor);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Pick the topmost intersecting section
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+        if (visible.length > 0) {
+          setActiveAnchor(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: '-10% 0px -80% 0px', // trigger when section enters top 10–20% of viewport
+        threshold: 0,
+      }
+    );
+
+    anchors.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [navItems]);
+
+  const linkClass = (anchor: string) =>
+    `text-sm font-medium transition-colors ${
+      activeAnchor === anchor
+        ? 'text-neutral-900'
+        : 'text-neutral-400 hover:text-neutral-700'
+    }`;
+
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-      <div className="max-w-6xl mx-auto px-6 py-4 flex justify-center items-center text-sm font-medium text-gray-600">
-        {/* <Link
-          to="/case-studies"
-          className="flex gap-1.5 items-center hover:text-indigo-600 transition-colors"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="20px"
-            viewBox="0 -960 960 960"
-            width="20px"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path d="M240-200h120v-200q0-17 11.5-28.5T400-440h160q17 0 28.5 11.5T600-400v200h120v-360L480-740 240-560v360Zm-80 0v-360q0-19 8.5-36t23.5-28l240-180q21-16 48-16t48 16l240 180q15 11 23.5 28t8.5 36v360q0 33-23.5 56.5T720-120H560q-17 0-28.5-11.5T520-160v-200h-80v200q0 17-11.5 28.5T400-120H240q-33 0-56.5-23.5T160-200Zm320-270Z" />
-          </svg>
-          <span className="font-bold tracking-tight">Case Studies</span>
-        </Link> */}
-
+      <div className="max-w-6xl mx-auto px-6 py-4 flex justify-center items-center">
         <div className="hidden md:flex gap-8">
           {navItems.map((item) => (
             <a
               key={item.anchor}
               href={`#${item.anchor}`}
-              className="hover:text-primary-600 transition-colors"
+              className={linkClass(item.anchor)}
             >
               {item.label}
             </a>

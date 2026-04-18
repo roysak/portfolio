@@ -36,7 +36,7 @@ export default function CompareSlider({ section }: Props) {
         <img
           src={section.after.src}
           alt={`After: ${section.after.label}`}
-          className="absolute inset-0 w-full h-full object-contain object-top"
+          className="absolute inset-0 w-full h-full object-cover object-top"
         />
         <div className="absolute inset-0 flex items-center justify-end p-8 pointer-events-none">
           <span className="bg-primary-600 text-white px-3 py-1 text-xs font-bold uppercase rounded shadow-md opacity-90">
@@ -52,7 +52,7 @@ export default function CompareSlider({ section }: Props) {
           <img
             src={section.before.src}
             alt={`Before: ${section.before.label}`}
-            className="absolute inset-0 w-full h-full object-contain object-top"
+            className="absolute inset-0 w-full h-full object-cover object-top"
           />
           <div className="absolute inset-0 flex items-center justify-start p-8">
             <span className="bg-gray-800 text-white px-3 py-1 text-xs font-bold uppercase rounded shadow-md opacity-90">

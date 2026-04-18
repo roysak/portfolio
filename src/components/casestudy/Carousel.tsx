@@ -57,7 +57,7 @@ export default function Carousel({ section }: Props) {
           className="absolute left-2 sm:-left-4 top-[40%] -translate-y-1/2 bg-white text-gray-800 p-3 rounded-full shadow-lg border border-gray-200 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-primary-50 hover:text-primary-600 hover:scale-110 focus:opacity-100"
           aria-label="Previous slide"
         >
-          <span className="material-symbols-rounded" style={{ fontSize: '24px' }} aria-hidden="true">chevron_left</span>
+          <span className="material-symbols-rounded block!" style={{ fontSize: '24px' }} aria-hidden="true">chevron_left</span>
         </button>
 
         {/* Next */}
@@ -66,7 +66,7 @@ export default function Carousel({ section }: Props) {
           className="absolute right-2 sm:-right-4 top-[40%] -translate-y-1/2 bg-white text-gray-800 p-3 rounded-full shadow-lg border border-gray-200 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-primary-50 hover:text-primary-600 hover:scale-110 focus:opacity-100"
           aria-label="Next slide"
         >
-          <span className="material-symbols-rounded" style={{ fontSize: '24px' }} aria-hidden="true">chevron_right</span>
+          <span className="material-symbols-rounded block!" style={{ fontSize: '24px' }} aria-hidden="true">chevron_right</span>
         </button>
       </div>
     </section>
