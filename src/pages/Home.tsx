@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { assetUrl } from "../utils/assetUrl";
-import SketchAnimation from "../components/SketchAnimation";
 
 export default function Home() {
     return (
@@ -56,7 +55,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <SketchAnimation />
         </main>
     );
 }

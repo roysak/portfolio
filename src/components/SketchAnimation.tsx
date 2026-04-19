@@ -18,7 +18,7 @@ const SYMBOLS = '10#@$%&*()<>!?/\\^~|=+[];:\'",.`'.split('');
 
 // ── Colormap palette (256 steps, rainbow) ─────────────────────────────────
 const PALETTE = colormap({
-  colormap: 'viridis',
+  colormap: 'hot',
   nshades:  256,
   format:   'rgba',
   alpha:    1,
@@ -223,7 +223,7 @@ export default function SketchAnimation() {
   }, []);
 
   return (
-    <div className="fixed z-100 inset-0 pointer-events-none">
+    <div className="fixed z-100 inset-0 pointer-events-none mix-blend-darken">
       <canvas
         ref={canvasRef}
         style={{ display: 'block', width: '100%', height: '100%' }}
