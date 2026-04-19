@@ -6,6 +6,7 @@ import CaseStudy from "./pages/CaseStudy";
 import Works from "./pages/Works";
 import DigitalPaintings from "./pages/DigitalPaintings";
 import Applications from "./pages/Applications";
+import Resume from "./pages/Resume";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/works" element={<Works />} />
           <Route path="/works/digital-paintings" element={<DigitalPaintings />} />
           <Route path="/works/applications" element={<Applications />} />
+          <Route path="/resume" element={<Resume />} />
         </Route>
       </Routes>
     </HashRouter>

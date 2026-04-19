@@ -6,7 +6,7 @@ export default function RootLayout() {
   return (
     <div className="grid h-screen grid-rows-[min-content_auto_min-content] bg-white text-neutral-900 font-sans antialiased">
       <Nav />
-      <div>
+      <div className="flex flex-col">
         <Outlet />
       </div>
       <Footer />

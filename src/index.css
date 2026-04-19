@@ -18,6 +18,8 @@
   --color-primary-800: #3d1f45;
   --color-primary-900: #27112d;
   --color-primary-950: #160818;
+
+  --color-body-text: #583B61;
 }
 
 /* Semantic aliases for use in arbitrary Tailwind values or plain CSS */
