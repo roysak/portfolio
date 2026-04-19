@@ -3,22 +3,22 @@ import colormap from 'colormap';
 
 // ── Config ────────────────────────────────────────────────────────────────
 const LIFETIME      = 1000;  // ms – total lifetime of a trail point
-const SYM_START     = 200;   // ms – symbols begin fading in
-const SYM_PEAK      = 600;  // ms – symbols at full opacity / scatter starts
-const SYM_END       = 800;  // ms – symbols fully gone
+const SYM_START     = 300;   // ms – symbols begin fading in
+const SYM_PEAK      = 600;   // ms – symbols at full opacity / scatter starts
+const SYM_END       = 800;   // ms – symbols fully gone
 const SYM_SPACING   = 10;    // px between symbol sample points along segment
 const MAX_SCATTER   = 40;    // px max scatter distance
-const SYM_BASE_SIZE = 11;    // base font size in px
+const SYM_BASE_SIZE = 16;    // base font size in px
 const SYM_ZOOM_IN   = 3.2;   // max scale for symbols flying toward viewer
 const SYM_ZOOM_OUT  = 0.25;  // min scale for symbols flying away from viewer
 const MIN_MOVE_SQ   = 20;    // skip point if moved less than ~4.5 px
-const JITTER        = 0.5;     // px of sketch wobble per stroke pass
+const JITTER        = 0.5;   // px of sketch wobble per stroke pass
 
-const SYMBOLS = '10#@$%&*()<>!?/\\^~|=+[];:\'",.`'.split('');
+const SYMBOLS = '10#@$%&*(){}<>!?/\\^~|=+[];:\'",.`'.split('');
 
 // ── Colormap palette (256 steps, rainbow) ─────────────────────────────────
 const PALETTE = colormap({
-  colormap: 'hot',
+  colormap: 'magma',
   nshades:  256,
   format:   'rgba',
   alpha:    1,
@@ -124,7 +124,8 @@ export default function SketchAnimation() {
             const trailT      = trail.length > 1 ? i / (trail.length - 1) : 0;
             const strokeAlpha = alpha * (pass === 0 ? 0.85 : 0.40);
             ctx.strokeStyle = palColor(trailT, strokeAlpha);
-            ctx.lineWidth   = pass === 0 ? 1.6 : 0.9;
+            // ctx.lineWidth   = pass === 0 ? 1.6 : 0.9;
+            ctx.lineWidth   = pass === 0 ? 3 : 2;
 
             ctx.beginPath();
             ctx.moveTo(smx, smy);
@@ -223,7 +224,7 @@ export default function SketchAnimation() {
   }, []);
 
   return (
-    <div className="fixed z-100 inset-0 pointer-events-none mix-blend-darken">
+    <div className="fixed z-100 inset-0 pointer-events-none">
       <canvas
         ref={canvasRef}
         style={{ display: 'block', width: '100%', height: '100%' }}

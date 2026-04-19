@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import SketchAnimation from "../components/SketchAnimation";
 
 export default function RootLayout() {
   return (
@@ -11,7 +10,6 @@ export default function RootLayout() {
         <Outlet />
       </div>
       <Footer />
-      <SketchAnimation />
     </div>
   );
 }

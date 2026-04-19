@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { assetUrl } from "../utils/assetUrl";
+import SketchAnimation from "../components/SketchAnimation";
 
 export default function Home() {
     return (
@@ -32,6 +33,7 @@ export default function Home() {
                             <Link
                                 to="/case-studies"
                                 className="inline-flex flex-col items-start gap-2 px-8 py-4 bg-primary-600 text-white font-normal text-lg rounded-xl hover:bg-primary-700 transition-colors">
+                                <span className="material-symbols-rounded text-white shrink-0 !text-4xl" aria-hidden="true">book</span>
                                 <b className="font-semibold text-2xl">Case Studies</b>
                                 <p className="text-lg">Deep dives into the "why" behind the "what."</p>
                                  {/* Explore the strategic thinking, user research, and iterative processes that transformed complex problems into functional solutions. */}
@@ -39,6 +41,7 @@ export default function Home() {
                             <Link
                                 to="/works"
                                 className="inline-flex flex-col items-start gap-2 px-8 py-4 border border-neutral-300 text-neutral-700 text-lg rounded-xl hover:border-neutral-500 transition-colors">
+                                <span className="material-symbols-rounded text-primary-600 shrink-0 !text-4xl" aria-hidden="true">work</span>
                                 <b className="font-semibold text-2xl">Works</b>
                                 <p className="text-lg">A curated gallery of craft and code.</p>
                                 {/* A showcase of live projects and digital experiences built at the intersection of aesthetic design and technical precision. */}
@@ -46,15 +49,16 @@ export default function Home() {
                             <Link
                                 to="/resume"
                                 className="inline-flex flex-col items-start gap-2 px-8 py-4 border border-neutral-300 text-neutral-700 text-lg rounded-xl hover:border-neutral-500 transition-colors">
+                                <span className="material-symbols-rounded text-primary-600 shrink-0 !text-4xl" aria-hidden="true">user_attributes</span>
                                 <b className="font-semibold text-2xl">Resume</b>
                                 <p className="text-lg">The journey, the tools, and the milestones.</p>
                                 {/* A detailed look at my professional evolution, technical stack, and the impact I’ve delivered across various industries. */}
                             </Link>
                         </div>
-                         
                     </div>
                 </div>
             </section>
+            <SketchAnimation />
         </main>
     );
 }
