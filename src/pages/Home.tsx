@@ -1,19 +1,20 @@
 import { Link } from "react-router-dom";
-import GridAnimation from "../components/GridAnimation";
 import { assetUrl } from "../utils/assetUrl";
+import SketchAnimation from "../components/SketchAnimation";
 
 export default function Home() {
     return (
         <main className="content-center grow">
             <section className="flex items-center">
-                <div className="w-full mx-auto px-24 flex flex-col lg:flex-row gap-16 md:gap-32 items-center justify-center">
+                <div className="w-full mx-auto md:px-24 flex flex-col lg:flex-row gap-16 md:gap-32 items-center justify-center">
                     <div className="flex flex-col xl:flex-row gap-0 items-center">
                         <div className="flex flex-col lg:flex-row gap-0 items-center">
-                            <div className="pointer-events-none items-center justify-center opacity-80 hidden md:flex min-w-sm">
+                            <div className="pointer-events-none items-center justify-center opacity-80 hidden lg:flex min-w-sm">
                                 <img src={assetUrl("/img/dude.png")} alt="A portrait of the developer" className="w-full max-w-md lg:max-w-md" />
                             </div>
-                            <div className="flex flex-col w-fll lg:w-auto gap-6 md:gap-6 items-stretch px-12">
-                                <h1 className="text-8xl md:text-8xl lg:text-8xl tracking-tight mb-4 text-primary-600 w-full sm:text-center lg:text-left">
+                            <div className="flex flex-col w-fll lg:w-auto gap-6 md:gap-6 items-stretch px-6 py-6">
+                                {/* <h1 className="text-8xl md:text-8xl lg:text-8xl tracking-tight mb-4 text-primary-600 w-full sm:text-center lg:text-left"> */}
+                                <h1 className="text-8xl md:text-8xl lg:text-8xl tracking-tight mb-4 text-primary-600 w-full text-center lg:text-left">
                                     Pixels. Code.
                                     <div className="font-semibold">
                                         <span className="text-[#df5745]">I</span>
@@ -25,10 +26,10 @@ export default function Home() {
                                         <span className="text-[#B3B3B3]">.</span>
                                     </div>
                                 </h1>
-                                <p className="text-2xl md:text-xl leading-10 text-body-text font-normal sm:text-center lg:text-left">Crafting colorful, user-centric experiences from the first pixel to the final deployment.</p>
+                                <p className="text-2xl md:text-xl leading-10 text-body-text font-normal text-center lg:text-left">Crafting colorful, user-centric experiences from the first pixel to the final deployment.</p>
                             </div>    
                         </div>                                        
-                        <div className="flex flex-col pt-16 sm:w-full md:w-auto sm:flex-col md:flex-row lg:pt-0 xl:flex-col gap-6 border-neutral-200 border-l rounded-2xl px-0 lg:px-12">
+                        <div className="flex flex-col px-6 pt-16 sm:w-full md:w-auto sm:flex-col md:flex-row lg:pt-0 xl:flex-col gap-6 border-neutral-200 lg:border-l lg:px-12">
                             <Link
                                 to="/case-studies"
                                 className="inline-flex flex-col items-start gap-2 px-8 py-4 bg-primary-600 text-white font-normal text-lg rounded-xl hover:bg-primary-700 transition-colors">
@@ -55,7 +56,7 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <GridAnimation />
+            <SketchAnimation />
         </main>
     );
 }
