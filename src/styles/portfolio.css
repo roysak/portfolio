@@ -116,4 +116,30 @@ button.fixed.bottom-4.right-4:hover {
     background-color: #2563eb; /* Darker blue on hover */
 }
 
+/* ─── Home page blur-in entrance animation ───────────────────────────────── */
+@keyframes blurIn {
+    from {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(-14px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0);
+    }
+}
+
+.blur-in {
+    opacity: 0;
+    animation: blurIn 0.4s ease-out forwards;
+}
+
+.blur-in-1 { animation-delay: 0ms; }
+.blur-in-2 { animation-delay: 60ms; }
+.blur-in-3 { animation-delay: 120ms; }
+.blur-in-4 { animation-delay: 180ms; }
+.blur-in-5 { animation-delay: 240ms; }
+.blur-in-6 { animation-delay: 300ms; }
+
 
