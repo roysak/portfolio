@@ -16,10 +16,20 @@ const Modal: React.FC<ModalProps> = ({ imageSrc, imageAlt, onClose }) => {
   }, [onClose]);
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <img src={imageSrc} alt={imageAlt} className="modal-image" />
-        <button className="modal-close" onClick={onClose} aria-label="Close modal">
+    <div
+      className="fixed inset-0 bg-black/80 flex justify-center items-center z-[1000]"
+      onClick={onClose}
+    >
+      <div
+        className="relative max-w-[90%] max-h-[90%]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img src={imageSrc} alt={imageAlt} className="max-w-[90vw] max-h-[90vh] rounded-lg" />
+        <button
+          className="absolute top-2.5 right-2.5 bg-transparent border-0 text-white text-2xl cursor-pointer leading-none"
+          onClick={onClose}
+          aria-label="Close modal"
+        >
           ×
         </button>
       </div>
