@@ -10,7 +10,7 @@ export default function Nav() {
     }`;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md w-full mx-auto px-6 py-4 flex items-center justify-between">
+    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md w-full mx-auto pl-3 py-4 pr-6 flex items-center justify-between">
       <NavLink to="/" className="text-lg font-semibold tracking-tight text-neutral-900 hover:scale-[1.3] transition-all duration-500">
         <img src={assetUrl('/img/logo.svg')} className="w-[40px] h-[40px]" />
       </NavLink>
