@@ -1,12 +1,14 @@
 import { useRef } from 'react';
 import type { CarouselSection } from '../../data/caseStudyTypes';
 import { assetUrl } from '../../utils/assetUrl';
+import { useModal } from './ModalContext';
 
 interface Props {
   section: CarouselSection;
 }
 
 export default function Carousel({ section }: Props) {
+  const { openModal } = useModal();
   const carouselRef = useRef<HTMLDivElement>(null);
 
   function scroll(direction: number) {
@@ -41,7 +43,8 @@ export default function Carousel({ section }: Props) {
                 <img
                   src={assetUrl(slide.image)}
                   alt={slide.label}
-                  className="w-full h-auto rounded-xl shadow-sm border border-gray-200 object-cover"
+                  className="w-full h-auto rounded-xl shadow-sm border border-gray-200 object-cover cursor-zoom-in"
+                  onClick={() => openModal(assetUrl(slide.image), slide.label)}
                 />
               </div>
               <p className="text-sm font-bold text-gray-500 mt-4 uppercase tracking-wider">

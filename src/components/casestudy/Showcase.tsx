@@ -1,11 +1,13 @@
 import type { ShowcaseSection } from '../../data/caseStudyTypes';
 import { assetUrl } from '../../utils/assetUrl';
+import { useModal } from './ModalContext';
 
 interface Props {
   section: ShowcaseSection;
 }
 
 export default function Showcase({ section }: Props) {
+  const { openModal } = useModal();
   return (
     <section
       id={section.anchor}
@@ -19,7 +21,8 @@ export default function Showcase({ section }: Props) {
         <img
           src={assetUrl(section.image)}
           alt={section.alt}
-          className="w-full h-auto rounded-xl"
+          className="w-full h-auto rounded-xl cursor-zoom-in"
+          onClick={() => openModal(assetUrl(section.image), section.alt)}
         />
       </div>
     </section>

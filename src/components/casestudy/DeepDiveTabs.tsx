@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import type { DeepDiveSection } from '../../data/caseStudyTypes';
 import { assetUrl } from '../../utils/assetUrl';
+import { useModal } from './ModalContext';
 
 interface Props {
   section: DeepDiveSection;
 }
 
 export default function DeepDiveTabs({ section }: Props) {
+  const { openModal } = useModal();
   const [activeId, setActiveId] = useState(section.tabs[0]?.id ?? '');
 
   return (
@@ -55,9 +57,10 @@ export default function DeepDiveTabs({ section }: Props) {
                   <img
                     src={assetUrl(tab.image)}
                     alt={tab.caption}
-                    className="w-full rounded"
+                    className="w-full rounded cursor-zoom-in"
+                    onClick={() => openModal(assetUrl(tab.image), tab.caption)}
                   />
-                  <div className="absolute inset-0 border-2 border-dashed border-transparent group-hover:border-gray-600 rounded-2xl transition-colors duration-300" />
+                  {/* <div className="absolute inset-0 border-2 border-dashed border-transparent group-hover:border-gray-600 rounded-2xl transition-colors duration-300" /> */}
                 </div>
               ) : null
             )}

@@ -1,5 +1,6 @@
 import type { SplitSectionData } from '../../data/caseStudyTypes';
 import { assetUrl } from '../../utils/assetUrl';
+import { useModal } from './ModalContext';
 
 interface Props {
   section: SplitSectionData;
@@ -18,6 +19,7 @@ const BULLET_ICONS: Record<string, React.ReactNode> = {
 };
 
 export default function SplitSection({ section }: Props) {
+  const { openModal } = useModal();
   const imageLeft = section.imagePosition === 'left';
 
   return (
@@ -52,9 +54,10 @@ export default function SplitSection({ section }: Props) {
           <img
             src={assetUrl(section.image)}
             alt={section.imageAlt}
-            className="object-cover rounded shadow-sm w-full"
+            className="object-cover rounded shadow-sm w-full cursor-zoom-in"
+            onClick={() => openModal(assetUrl(section.image), section.imageAlt)}
           />
-          <div className="absolute inset-0 border-2 border-dashed border-transparent group-hover:border-gray-300 rounded-2xl transition-colors duration-300" />
+          {/* <div className="absolute inset-0 border-2 border-dashed border-transparent group-hover:border-gray-300 rounded-2xl transition-colors duration-300" /> */}
         </div>
       </div>
     </section>

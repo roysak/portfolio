@@ -5,6 +5,7 @@ import type { CaseStudyPageData } from "../data/caseStudyTypes";
 import CaseStudyHero from "../components/casestudy/CaseStudyHero";
 import CaseStudyInPageNav from "../components/casestudy/CaseStudyInPageNav";
 import SectionRenderer from "../components/casestudy/SectionRenderer";
+import { ModalProvider } from "../components/casestudy/ModalContext";
 
 const CASE_STUDY_DATA: Record<string, CaseStudyPageData> = {
   "01": caseStudy01,
@@ -30,16 +31,18 @@ export default function CaseStudy() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
-      <CaseStudyHero hero={data.hero} />
-      <CaseStudyInPageNav navItems={data.navItems} />
-      {data.sections.map((section, i) => (
-        <SectionRenderer key={i} section={section} />
-      ))}
-      <footer className="py-12 text-center text-gray-400 text-sm border-t border-gray-100">
-        <p>Thanks for scrolling.</p>
-      </footer>
-    </div>
+    <ModalProvider>
+      <div className="min-h-screen bg-white text-gray-900">
+        <CaseStudyHero hero={data.hero} />
+        <CaseStudyInPageNav navItems={data.navItems} />
+        {data.sections.map((section, i) => (
+          <SectionRenderer key={i} section={section} />
+        ))}
+        <footer className="py-12 text-center text-gray-400 text-sm border-t border-gray-100">
+          <p>Thanks for scrolling.</p>
+        </footer>
+      </div>
+    </ModalProvider>
   );
 }
 
