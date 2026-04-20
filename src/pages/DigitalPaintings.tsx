@@ -1,3 +1,5 @@
+import { assetUrl } from "../utils/assetUrl";
+
 export default function DigitalPaintings() {
   const paintings = [
     "Aerial_View.png",
@@ -24,7 +26,7 @@ export default function DigitalPaintings() {
         {paintings.map((painting) => (
           <div key={painting} className="gallery-item">
             <img
-              src={`/img/dp/${painting}`}
+              src={assetUrl(`/img/dp/${painting}`)}
               alt={painting.replace(/\.[^.]+$/, "").replace(/_/g, " ")}
               className="gallery-image"
             />
