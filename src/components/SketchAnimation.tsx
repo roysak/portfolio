@@ -14,7 +14,8 @@ const SYM_ZOOM_OUT  = 0.25;  // min scale for symbols flying away from viewer
 const MIN_MOVE_SQ   = 20;    // skip point if moved less than ~4.5 px
 const JITTER        = 0.5;   // px of sketch wobble per stroke pass
 
-const SYMBOLS = '10#@$%&*(){}<>!?/\\^~|=+[];:\'",.`'.split('');
+// const SYMBOLS = '10#@$%&*(){}<>!?/\\^~|=+[];:\'",.`'.split('');
+const SYMBOLS = '10codevvarletfunction#@$%&*(){}<>!?/\\^~|=+[];:\''.split('');
 
 // ── Colormap palette (256 steps, rainbow) ─────────────────────────────────
 const PALETTE = colormap({

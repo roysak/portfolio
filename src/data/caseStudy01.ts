@@ -24,6 +24,7 @@ const caseStudy01: CaseStudyPageData = {
     { anchor: 'problem', label: 'Problem' },
     { anchor: 'solution', label: 'Solution' },
     { anchor: 'compare', label: 'Compare' },
+    { anchor: 'final', label: 'Final' },
     { anchor: 'deep-dive', label: 'Deep Dive' },
   ],
 
@@ -123,6 +124,106 @@ const caseStudy01: CaseStudyPageData = {
       before: { src: '/img/01/before.png', label: 'Legacy' },
       after: { src: '/img/01/after.png', label: 'New' },
       heightPreset: 'tall',
+    },
+
+    {
+      type: 'carousel',
+      anchor: 'final',
+      title: 'The Final Design',
+      subtitle:
+        'Showcasing the refined design that balances functionality, clarity, and user-centric decision-making.',
+      slides: [
+        {
+          image: '/img/01/d-01.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-02.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-03.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-04.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-05.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-06.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-07.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-08.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-09.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-10.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-11.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-12.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-13.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-14.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-15.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-16.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-17.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/01/d-18.png',
+          label: ' ',
+          sublabel: ' ',
+        }
+      ],
     },
 
     {

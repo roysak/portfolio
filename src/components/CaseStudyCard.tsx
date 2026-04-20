@@ -19,7 +19,7 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
             className="object-cover object-top w-full h-full"
           />
 
-          <div className="card-arrow absolute top-4 right-4 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm transition-all duration-300 ease-out opacity-0 translate-y-2 -translate-x-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0">
+          {/* <div className="card-arrow absolute top-4 right-4 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm transition-all duration-300 ease-out opacity-0 translate-y-2 -translate-x-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -36,7 +36,7 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
               <line x1="7" y1="17" x2="17" y2="7" />
               <polyline points="7 7 17 7 17 17" />
             </svg>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex flex-col grow">
@@ -58,7 +58,7 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
             {study.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 bg-white border border-neutral-200 text-neutral-600 text-xs font-medium rounded-full"
+                className="px-3 py-1 border border-neutral-200 rounded-full bg-primary-50 text-primary-600 text-xs font-medium"
               >
                 {tag}
               </span>

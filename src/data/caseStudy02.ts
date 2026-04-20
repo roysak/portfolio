@@ -203,13 +203,13 @@ const caseStudy02: CaseStudyPageData = {
       slides: [
         {
           image: '/img/02/dashboard-concept01.png',
-          label: 'Concept 01: Persistent Sidebars',
-          sublabel: 'Maximum visibility, minimum canvas space.',
+          label: 'Concept 01',
+          sublabel: ' ',
         },
         {
           image: '/img/02/dashboard-concept02.png',
-          label: 'Concept 02: Top Navigation Shift',
-          sublabel: 'Attempting to reclaim horizontal space via top-bars.',
+          label: 'Concept 02',
+          sublabel: ' ',
         },
       ],
     },
@@ -278,13 +278,64 @@ const caseStudy02: CaseStudyPageData = {
     },
 
     {
-      type: 'showcase',
+      type: 'carousel',
       anchor: 'final',
       title: 'The Final Design',
       subtitle:
         'The culmination of constraint-driven decisions resulting in a clean, focused, and highly functional dashboard builder interface.',
-      image: '/img/02/final-design.png',
-      alt: 'Final Dashboard Design',
+      slides: [
+        {
+          image: '/img/02/design-01.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/02/design-02.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/02/design-03.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/02/design-04.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/02/design-05.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/02/design-06.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/02/design-07.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/02/design-08.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/02/design-09.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/02/design-10.png',
+          label: ' ',
+          sublabel: ' ',
+        }
+
+      ],
     },
 
     {
