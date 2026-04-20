@@ -1,5 +1,9 @@
 /* Portfolio custom styles — non-Tailwind rules only */
 
+*{
+    user-select: none;
+}
+
 /* ─── Custom Cursor (desktop/fine-pointer only) ──────────────────────────── */
 @media (pointer: fine) {
     /* * {
