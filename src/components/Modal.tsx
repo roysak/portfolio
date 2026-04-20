@@ -17,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({ imageSrc, imageAlt, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black/80 flex justify-center items-center z-[1000]"
+      className="fixed inset-0 bg-black/60 flex justify-center items-center z-[1000]"
       onClick={onClose}
     >
       <div

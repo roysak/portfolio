@@ -31,24 +31,24 @@ export default function Home() {
                         <div className="flex flex-col px-6 pt-16 sm:w-full md:w-auto sm:flex-col md:flex-row lg:pt-0 xl:flex-col gap-6 border-neutral-200 lg:border-l lg:px-12">
                             <Link
                                 to="/case-studies"
-                                className="inline-flex flex-col items-start gap-2 px-8 py-4 border border-neutral-300 text-neutral-700 text-lg rounded-xl transition-all hover:bg-primary-50 hover:border-white">
-                                <span className="material-symbols-rounded text-primary-600 shrink-0 !text-4xl" aria-hidden="true">book</span>
-                                <b className="font-semibold text-2xl">Case Studies</b>
-                                <p className="text-lg">Deep dives into the "why" behind the "what."</p>
+                                className="inline-flex flex-col items-start gap-2 px-8 py-4 border border-neutral-300 text-neutral-700 text-md rounded-xl transition-all hover:bg-primary-50 hover:border-white">
+                                <span className="material-symbols-rounded text-primary-600 shrink-0 !text-3xl" aria-hidden="true">book</span>
+                                <b className="font-semibold text-xl">Case Studies</b>
+                                <p>Deep dives into the "why" behind the "what."</p>
                             </Link>
                             <Link
                                 to="/works"
-                                className="inline-flex flex-col items-start gap-2 px-8 py-4 border border-neutral-300 text-neutral-700 text-lg rounded-xl transition-all hover:bg-primary-50 hover:border-white">
-                                <span className="material-symbols-rounded text-primary-600 shrink-0 !text-4xl" aria-hidden="true">work</span>
-                                <b className="font-semibold text-2xl">Works</b>
-                                <p className="text-lg">A curated gallery of craft and code.</p>
+                                className="inline-flex flex-col items-start gap-2 px-8 py-4 border border-neutral-300 text-neutral-700 text-md rounded-xl transition-all hover:bg-primary-50 hover:border-white">
+                                <span className="material-symbols-rounded text-primary-600 shrink-0 !text-3xl" aria-hidden="true">work</span>
+                                <b className="font-semibold text-xl">Works</b>
+                                <p>A curated gallery of craft and code.</p>
                             </Link>
                             <Link
                                 to="/resume"
-                                className="inline-flex flex-col items-start gap-2 px-8 py-4 border border-neutral-300 text-neutral-700 text-lg rounded-xl transition-all hover:bg-primary-50 hover:border-white">
-                                <span className="material-symbols-rounded text-primary-600 shrink-0 !text-4xl" aria-hidden="true">article_person</span>
-                                <b className="font-semibold text-2xl">Resume</b>
-                                <p className="text-lg">The journey, the tools, and the milestones.</p>
+                                className="inline-flex flex-col items-start gap-2 px-8 py-4 border border-neutral-300 text-neutral-700 text-md rounded-xl transition-all hover:bg-primary-50 hover:border-white">
+                                <span className="material-symbols-rounded text-primary-600 shrink-0 !text-3xl" aria-hidden="true">article_person</span>
+                                <b className="font-semibold text-xl">Resume</b>
+                                <p>The journey, the tools, and the milestones.</p>
                             </Link>
                         </div>
                     </div>

@@ -24,7 +24,7 @@ const caseStudy01: CaseStudyPageData = {
     { anchor: 'problem', label: 'Problem' },
     { anchor: 'solution', label: 'Solution' },
     { anchor: 'compare', label: 'Compare' },
-    { anchor: 'final', label: 'Final' },
+    { anchor: 'final', label: 'Final Design' },
     { anchor: 'deep-dive', label: 'Deep Dive' },
   ],
 
