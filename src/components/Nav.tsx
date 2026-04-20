@@ -17,11 +17,6 @@ export default function Nav() {
 
       <ul className="flex items-center gap-8">
         <li>
-          <NavLink to="/" end className={linkClass}>
-            Home
-          </NavLink>
-        </li>
-        <li>
           <NavLink to="/case-studies" className={linkClass}>
             Case Studies
           </NavLink>
@@ -29,6 +24,11 @@ export default function Nav() {
         <li>
           <NavLink to="/works" className={linkClass}>
             Works
+          </NavLink>
+        </li>
+		<li>
+          <NavLink to="/resume" className={linkClass}>
+            Resume
           </NavLink>
         </li>
       </ul>
