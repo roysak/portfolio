@@ -8,11 +8,15 @@ export default function Home() {
             <section className="flex items-center">
                 <div className="w-full mx-auto md:px-24 flex flex-col lg:flex-row gap-16 md:gap-32 items-center justify-center">
                     <div className="flex flex-col xl:flex-row gap-0 items-center">
-                        <div className="flex flex-col lg:flex-row gap-0 items-center">
-                            <div className="blur-in blur-in-1 pointer-events-none items-center justify-center lg:flex min-w-sm">
-                                <img src={assetUrl("/img/dude.png")} alt="A portrait of the developer" className="w-full max-w-50 md:max-w-xs m-auto opacity-80" />
-                            </div>
-                            <div className="flex flex-col w-fll lg:w-auto gap-6 md:gap-6 items-stretch px-6 py-6">
+                        <div className="flex flex-col lg:flex-row lg:gap-10 items-center">
+							<div className="blur-in blur-in-1 pointer-events-none items-center justify-center lg:flex min-w-sm">
+                                {(() => {
+                                    const images = ["hero.png"];
+                                    const randomImage = images[Math.floor(Math.random() * images.length)];
+                                    return <img src={assetUrl(`/img/${randomImage}`)} alt="A portrait of the developer" className="w-full max-w-100 md:max-w-140 m-auto" />;
+                                })()}
+							</div>
+                            <div className="flex flex-col w-full lg:w-auto gap-6 md:gap-6 items-stretch px-6 py-6">
                                 <h1 className="blur-in blur-in-2 text-6xl xl:text-8xl tracking-tight mb-4 text-primary-600 w-full text-center lg:text-left md:pt-8">
                                     Pixels. Code.
                                     <div className="font-semibold">

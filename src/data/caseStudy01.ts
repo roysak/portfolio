@@ -14,7 +14,7 @@ const caseStudy01: CaseStudyPageData = {
       role: 'Product UX Designer',
       platform: 'Web Application',
       tools: 'Figma, Stackblitz, Angular',
-      focus: 'UI Architecture, Systems',
+      focus: 'Layout, Efficiency, Usability',
     },
   },
 

@@ -14,7 +14,7 @@ const caseStudy02: CaseStudyPageData = {
       role: 'Product UX Designer',
       platform: 'Web Application',
       tools: 'Figma, AI Tools',
-      focus: 'UI Architecture, Layouts',
+      focus: 'Usability, Systems',
     },
   },
 
@@ -331,6 +331,16 @@ const caseStudy02: CaseStudyPageData = {
         },
         {
           image: '/img/02/design-10.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/02/design-11.png',
+          label: ' ',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/02/design-12.png',
           label: ' ',
           sublabel: ' ',
         }

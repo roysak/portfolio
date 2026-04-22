@@ -2,10 +2,10 @@ import { useEffect, useRef } from 'react';
 import colormap from 'colormap';
 
 // ── Config ────────────────────────────────────────────────────────────────
-const LIFETIME      = 1000;  // ms – total lifetime of a trail point
+const LIFETIME      = 1400;  // ms – total lifetime of a trail point
 const SYM_START     = 300;   // ms – symbols begin fading in
-const SYM_PEAK      = 600;   // ms – symbols at full opacity / scatter starts
-const SYM_END       = 800;   // ms – symbols fully gone
+const SYM_PEAK      = 300;   // ms – symbols at full opacity / scatter starts
+const SYM_END       = 1200;   // ms – symbols fully gone
 const SYM_SPACING   = 10;    // px between symbol sample points along segment
 const MAX_SCATTER   = 40;    // px max scatter distance
 const SYM_BASE_SIZE = 16;    // base font size in px
