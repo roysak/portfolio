@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { assetUrl } from "../utils/assetUrl";
+import Modal from "../components/Modal";
 
 export default function DigitalPaintings() {
+  const [selectedPainting, setSelectedPainting] = useState<string | null>(null);
+
   const paintings = [
     "Aerial_View.png",
     "Birch_tree.png",
@@ -24,7 +28,11 @@ export default function DigitalPaintings() {
       
       <div className="gallery-masonry">
         {paintings.map((painting) => (
-          <div key={painting} className="gallery-item">
+          <div
+            key={painting}
+            className="gallery-item cursor-pointer"
+            onClick={() => setSelectedPainting(painting)}
+          >
             <img
               src={assetUrl(`/img/dp/${painting}`)}
               alt={painting.replace(/\.[^.]+$/, "").replace(/_/g, " ")}
@@ -33,6 +41,14 @@ export default function DigitalPaintings() {
           </div>
         ))}
       </div>
+
+      {selectedPainting && (
+        <Modal
+          imageSrc={assetUrl(`/img/dp/${selectedPainting}`)}
+          imageAlt={selectedPainting.replace(/\.[^.]+$/, "").replace(/_/g, " ")}
+          onClose={() => setSelectedPainting(null)}
+        />
+      )}
     </main>
   );
 }
