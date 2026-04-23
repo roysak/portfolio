@@ -31,24 +31,24 @@ export default function CaseStudy() {
   }
 
   return (
-    <ModalProvider>
-      <div className="min-h-screen bg-white text-gray-900">
-        <div className="pt-12 max-w-6xl px-24 mx-auto">
-            <Link
-                to="/case-studies"
-                className="text-neutral-500 hover:text-neutral-900 flex gap-2">
-                <i className="material-symbols-rounded">keyboard_backspace</i>Back to Case Studies
-            </Link>
-        </div>
-        <CaseStudyHero hero={data.hero} />
-        <CaseStudyInPageNav navItems={data.navItems} />
-        {data.sections.map((section, i) => (
-          <SectionRenderer key={i} section={section} />
-        ))}
-        <footer className="py-12 text-center text-gray-400 text-sm border-t border-gray-100">
-          <p>Thanks for scrolling.</p>
-        </footer>
-      </div>
+	<ModalProvider>
+		<div className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full pt-12">
+			<Link
+				to="/case-studies"
+				className="text-neutral-500 hover:text-neutral-900 flex gap-2">
+				<i className="material-symbols-rounded">keyboard_backspace</i>Back to Case Studies
+			</Link>
+		</div>
+		<div className="min-h-screen bg-white text-gray-900">
+			<CaseStudyHero hero={data.hero} />
+			<CaseStudyInPageNav navItems={data.navItems} />
+			{data.sections.map((section, i) => (
+			  <SectionRenderer key={i} section={section} />
+			))}
+			<footer className="py-12 text-center text-gray-400 text-sm border-t border-gray-100">
+				<p>Thanks for scrolling.</p>
+			</footer>
+		</div>
     </ModalProvider>
   );
 }
