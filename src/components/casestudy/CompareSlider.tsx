@@ -23,7 +23,7 @@ export default function CompareSlider({ section }: Props) {
   const heightClass = HEIGHT_MAP[section.heightPreset] ?? HEIGHT_MAP.medium;
 
   return (
-    <section id={section.anchor} className="py-24 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto border-t border-gray-100">
+    <section id={section.anchor} className="py-24 px-6 md:px-6 lg:px-6 max-w-6xl mx-auto border-t border-gray-100">
       <div className="mb-12 text-center max-w-2xl mx-auto">
         <h2 className="text-3xl font-bold mb-4">{section.title}</h2>
         <p className="text-gray-600">{section.subtitle}</p>

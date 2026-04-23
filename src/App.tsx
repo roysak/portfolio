@@ -7,6 +7,7 @@ import Works from "./pages/Works";
 import DigitalPaintings from "./pages/DigitalPaintings";
 import Applications from "./pages/Applications";
 import Resume from "./pages/Resume";
+import CreativeCoding from "./pages/CreativeCoding";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/case-studies/:id" element={<CaseStudy />} />
           <Route path="/works" element={<Works />} />
           <Route path="/works/digital-paintings" element={<DigitalPaintings />} />
+          <Route path="/works/creative-coding" element={<CreativeCoding />} />
           <Route path="/works/applications" element={<Applications />} />
           <Route path="/resume" element={<Resume />} />
         </Route>

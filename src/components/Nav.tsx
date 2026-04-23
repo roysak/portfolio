@@ -47,11 +47,11 @@ export default function Nav() {
               Case Studies
             </NavLink>
           </li>
-          {/* <li>
+          <li>
             <NavLink to="/works" className={linkClass}>
               Works
             </NavLink>
-          </li> */}
+          </li>
           <li>
             <NavLink to="/resume" className={linkClass}>
               Resume

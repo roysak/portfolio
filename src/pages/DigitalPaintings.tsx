@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { assetUrl } from "../utils/assetUrl";
 import Modal from "../components/Modal";
+import { Link } from "react-router-dom";
 
 export default function DigitalPaintings() {
   const [selectedPainting, setSelectedPainting] = useState<string | null>(null);
@@ -18,7 +19,14 @@ export default function DigitalPaintings() {
   ];
 
   return (
-    <main className="max-w-6xl w-full mx-auto px-6 py-24 pt-12">
+    <main className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full py-24 pt-12">
+      <div className="pb-12">
+          <Link
+              to="/works"
+              className="text-neutral-500 hover:text-neutral-900 flex gap-2">
+              <i className="material-symbols-rounded">keyboard_backspace</i>Back to Works
+          </Link>
+      </div>
       <h1 className="text-3xl font-semibold tracking-tight mb-10">
         Digital Paintings
       </h1>

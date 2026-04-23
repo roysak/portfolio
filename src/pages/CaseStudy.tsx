@@ -33,6 +33,13 @@ export default function CaseStudy() {
   return (
     <ModalProvider>
       <div className="min-h-screen bg-white text-gray-900">
+        <div className="pt-12 max-w-6xl px-24 mx-auto">
+            <Link
+                to="/case-studies"
+                className="text-neutral-500 hover:text-neutral-900 flex gap-2">
+                <i className="material-symbols-rounded">keyboard_backspace</i>Back to Case Studies
+            </Link>
+        </div>
         <CaseStudyHero hero={data.hero} />
         <CaseStudyInPageNav navItems={data.navItems} />
         {data.sections.map((section, i) => (

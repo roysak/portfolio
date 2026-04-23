@@ -80,7 +80,7 @@ export default function Resume() {
           </section>
 
           {/* Certifications */}
-          <section>
+          <section className="hidden lg:block">
             <h2 className="text-xs font-semibold tracking-widest text-primary-600 uppercase mb-4">Certifications</h2>
             <ul className="flex flex-col gap-3">
               {[
@@ -98,7 +98,7 @@ export default function Resume() {
           </section>
 
           {/* Education */}
-          <section>
+          <section className="hidden lg:block">
             <h2 className="text-xs font-semibold tracking-widest text-primary-600 uppercase mb-4">Education</h2>
             <div>
               <p className="text-sm font-medium text-neutral-800">Bachelor of Commerce (BCom)</p>
@@ -236,6 +236,34 @@ export default function Resume() {
                   ))}
                 </ul>
               </div>
+            </div>
+          </section>
+
+          {/* Certifications */}
+          <section className="lg:hidden">
+            <h2 className="text-xs font-semibold tracking-widest text-primary-600 uppercase mb-4">Certifications</h2>
+            <ul className="flex flex-col gap-3">
+              {[
+                { name: "Google UX Design", issuer: "Google", year: "2023" },
+                { name: "Claude Code in Action", issuer: "Anthropic", year: "2026" },
+                { name: "Enterprise Design Thinking Practitioner", issuer: "IBM", year: "2023" },
+                { name: "Creative Coding", issuer: "Domestika", year: "2023" },
+              ].map(cert => (
+                <li key={cert.name} className="flex flex-col">
+                  <span className="text-sm font-medium text-neutral-800">{cert.name}</span>
+                  <span className="text-xs text-neutral-500">{cert.issuer} · {cert.year}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* Education */}
+          <section className="lg:hidden">
+            <h2 className="text-xs font-semibold tracking-widest text-primary-600 uppercase mb-4">Education</h2>
+            <div>
+              <p className="text-sm font-medium text-neutral-800">Bachelor of Commerce (BCom)</p>
+              <p className="text-xs text-neutral-500">MA College, Kothamangalam</p>
+              <p className="text-xs text-neutral-400">2003 – 2005</p>
             </div>
           </section>
         </div>

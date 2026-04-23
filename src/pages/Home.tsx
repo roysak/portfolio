@@ -11,7 +11,7 @@ export default function Home() {
                         <div className="flex flex-col lg:flex-row lg:gap-10 items-center">
 							<div className="blur-in blur-in-1 pointer-events-none items-center justify-center lg:flex min-w-sm">
                                 {(() => {
-                                    const images = ["hero.png", "myself01.png", "myself03.png"];
+                                    const images = ["hero.png", "myself03.png"];
                                     const randomImage = images[Math.floor(Math.random() * images.length)];
                                     return <img src={assetUrl(`/img/${randomImage}`)} alt="A portrait of the developer" className="w-full max-w-100 md:max-w-140 m-auto" />;
                                 })()}
@@ -40,13 +40,13 @@ export default function Home() {
                                 <b className="font-semibold text-xl">Case Studies</b>
                                 <p>Deep dives into the "why" behind the "what."</p>
                             </Link>
-                            {/* <Link
+                            <Link
                                 to="/works"
                                 className="blur-in blur-in-5 md:grow md:basis-0 inline-flex flex-col items-start gap-2 px-8 py-4 text-neutral-700 text-md rounded-xl transition-all bg-gray-50 hover:bg-primary-50">
                                 <span className="material-symbols-rounded text-primary-600 shrink-0 text-3xl!" aria-hidden="true">work</span>
                                 <b className="font-semibold text-xl">Works</b>
                                 <p>A curated gallery of craft and code.</p>
-                            </Link> */}
+                            </Link>
                             <Link
                                 to="/resume"
                                 className="blur-in blur-in-6 md:grow md:basis-0 inline-flex flex-col items-start gap-2 px-8 py-4 text-neutral-700 text-md rounded-xl transition-all bg-gray-50 hover:bg-primary-50">

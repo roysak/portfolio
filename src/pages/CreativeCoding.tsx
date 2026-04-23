@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function Applications() {
+export default function CreativeCoding() {
   return (
     <main className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full py-24 pt-12">
       <div className="pb-12">
@@ -11,10 +11,10 @@ export default function Applications() {
           </Link>
       </div>
       <h1 className="text-3xl font-semibold tracking-tight mb-10">
-        Applications
+        Creative Coding
       </h1>
       <p className="text-neutral-500 leading-relaxed max-w-2xl">
-        {/* Side projects and applications I've designed and built.  */} Content coming soon.
+        Content coming soon.
       </p>
     </main>
   );

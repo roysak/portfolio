@@ -31,7 +31,7 @@ export default function Carousel({ section }: Props) {
         {/* Track */}
         <div
           ref={carouselRef}
-          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 pb-8"
+          className="flex w-full min-w-0 overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 pb-8"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {section.slides.map((slide, i) => (
