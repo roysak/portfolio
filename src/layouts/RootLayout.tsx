@@ -5,9 +5,10 @@ import ScrollToTop from '../components/ScrollToTop';
 
 export default function RootLayout() {
   return (
-    <div className="grid h-screen grid-rows-[min-content_auto_min-content] bg-white text-neutral-900 font-sans antialiased">
+    <div className="min-h-screen flex flex-col bg-white text-neutral-900 font-sans antialiased">
       <Nav />
-      <div className="flex flex-col">
+      {/* pt-[72px] reserves space for the fixed nav (py-4 padding + h-10 logo = 72px) */}
+      <div className="flex flex-col flex-1 pt-18">
         <Outlet />
       </div>
       <Footer />

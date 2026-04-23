@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { CaseStudyNavItem } from '../../data/caseStudyTypes';
+import { useScrollDirection } from '../../hooks/useScrollDirection';
 
 interface Props {
   navItems: CaseStudyNavItem[];
@@ -7,6 +8,7 @@ interface Props {
 
 export default function CaseStudyInPageNav({ navItems }: Props) {
   const [activeAnchor, setActiveAnchor] = useState<string>(navItems[0]?.anchor ?? '');
+  const scrollDir = useScrollDirection();
 
   useEffect(() => {
     const anchors = navItems.map((item) => item.anchor);
@@ -44,7 +46,10 @@ export default function CaseStudyInPageNav({ navItems }: Props) {
     }`;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <nav
+      className="sticky z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-[top] duration-300"
+      style={{ top: scrollDir === 'up' ? 'var(--nav-height, 72px)' : '0px' }}
+    >
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-center items-center">
         <div className="hidden md:flex gap-8">
           {navItems.map((item) => (
