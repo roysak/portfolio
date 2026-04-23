@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import DigitalPaintings from "./DigitalPaintings";
 
 export default function Works() {
   return (

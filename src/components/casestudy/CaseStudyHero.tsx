@@ -1,6 +1,5 @@
 import DynamicIcon from "../DynamicIcon";
 import type { HeroData } from "../../data/caseStudyTypes";
-import { Link } from "react-router-dom";
 
 interface Props {
     hero: HeroData;
