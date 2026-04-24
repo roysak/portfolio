@@ -5,65 +5,63 @@ const caseStudy02: CaseStudyPageData = {
 
   hero: {
     type: 'hero',
-    badge: 'Dashboard Builder Interface',
-    badgeIcon: 'space_dashboard',
-    title: 'Building within constraints.',
+    badge: 'Dashboard Builder Design',
+    badgeIcon: 'dashboard_customize',
+    title: 'Manual JSON to Visual Canvas',
     description:
-      'Designing an intuitive, modular dashboard builder on top of a rigid, pre-established backend, prioritizing speed to market while maximizing canvas real estate.',
+      'Transforming a complex, code-based dashboard configuration process into an intuitive visual builder in just over two months through ruthless prioritization.',
     meta: {
-      role: 'Product UX Designer',
-      platform: 'Web Application',
-      tools: 'Figma, AI Tools',
-      focus: 'Usability, Systems',
+      role: 'Lead Product Designer',
+      platform: 'Analytics Web Application',
+      tools: 'AI Ideation, Design Systems',
+      focus: 'MVP Scoping, Rapid Delivery, UX Strategy',
     },
   },
 
   navItems: [
-    { anchor: 'hero', label: 'Summary' },
-    { anchor: 'heuristics', label: 'Constraints' },
+    { anchor: 'ecosystem', label: 'Ecosystem' },
     { anchor: 'architecture', label: 'Architecture' },
+    { anchor: 'challenge', label: 'Challenge' },
+    { anchor: 'solution', label: 'Solution' },
     { anchor: 'flow', label: 'Flow' },
-    { anchor: 'concepts', label: 'Concepts' },
-    { anchor: 'problem', label: 'Evolution' },
-    { anchor: 'compare', label: 'Compare' },
-    { anchor: 'final', label: 'Final Design' },
-    { anchor: 'deep-dive', label: 'Deep Dive' },
+    { anchor: 'features', label: 'Features & Customization' },
+    { anchor: 'final', label: 'Final' }
   ],
 
   sections: [
     {
       type: 'cardGrid',
-      anchor: 'heuristics',
+      anchor: 'ecosystem',
       background: 'gray',
-      iconColorClass: 'bg-amber-50 text-amber-500',
-      title: 'The Challenge & Constraints',
+      iconColorClass: 'bg-blue-50 text-blue-500',
+      title: 'The Application Ecosystem',
       subtitle:
-        'Bridging a rigid backend architecture with a user-friendly frontend under strict time constraints, requiring pragmatic UX solutions.',
+        'The dashboard builder is the centerpiece of a larger, modular analytics application consisting of three main pillars.',
       cards: [
         {
-          icon: 'aspect_ratio',
-          category: 'Technical Limitation',
-          title: 'No Responsive Reflow',
+          icon: 'database',
+          category: 'Pillar 1',
+          title: 'Data Sources',
           description:
-            'The existing backend lacked capabilities to support a fluid, responsive dashboard. The design needed to set clear user expectations around fixed layouts.',
+            'The foundational data connections and databases supplying the raw data for visualizations.',
         },
         {
-          icon: 'ads_click',
-          category: 'Timeline Constraint',
-          title: 'Minimal Front-end Effort',
+          icon: 'bar_chart',
+          category: 'Pillar 2',
+          title: 'Widgets',
           description:
-            'Strict MVP timelines meant advanced interactions like drag-and-drop widget sidebars were off the table. We needed a simpler, click-based assembly method.',
+            'Reusable, standalone data visualization components created independently to be deployed across multiple contexts.',
         },
         {
-          icon: 'call_split',
-          category: 'Workflow Complexity',
-          title: 'Dual Widget Creation',
+          icon: 'dashboard',
+          category: 'Pillar 3',
+          title: 'Dashboards',
           description:
-            'Users required the ability to build custom widgets from scratch or pull from a global library, all without losing their place on the active canvas.',
+            'The actual canvases where users assemble widgets using the dashboard builder—our core UX challenge.',
         },
       ],
     },
-
+  
     {
       type: 'infoTree',
       anchor: 'architecture',
@@ -140,6 +138,57 @@ const caseStudy02: CaseStudyPageData = {
         },
       ],
     },
+  
+    {
+      type: 'split',
+      anchor: 'challenge',
+      title: 'Building Blind',
+      description:
+        'Users previously had to construct custom dashboards by manually writing complex JSON files in a text editor without any visual feedback, leading to a frustrating "guess and check" cycle.',
+      bullets: [
+        { variant: 'warning', text: 'No visual feedback during dashboard creation or editing.' },
+        { variant: 'warning', text: 'Users were forced to write and publish code just to verify layouts.' },
+        { variant: 'warning', text: 'Strict 2+ month deadline with a lean team of only 3 developers.' },
+      ],
+      image: '/img/02/json.png',
+      imageAlt: 'Manual JSON Configuration',
+      imageCaption: 'Legacy Workflow: Manual JSON Editing',
+      imagePosition: 'right',
+    },
+
+    {
+      type: 'callout',
+      icon: 'smart_toy',
+      title: 'AI Concepts vs. Reality',
+      description:
+        'To accelerate ideation, we utilized AI tools to generate initial UI/UX concepts. While feature-rich and advanced, these designs were far too complex for our time and resource constraints. Attempting to build them would have guaranteed missing our launch, forcing a pivot to a highly pragmatic approach.',
+    },
+
+    {
+      type: 'split',
+      anchor: 'solution',
+      title: 'The Visual Canvas',
+      description:
+        'By focusing strictly on the critical path and integrating seamlessly with our existing design system, we shipped a highly usable builder on time.',
+      bullets: [
+        {
+          variant: 'check',
+          text: 'Eliminated manual coding with intuitive visual controls.',
+        },
+        {
+          variant: 'check',
+          text: 'Removed the "guess and check" cycle with instant visual feedback.',
+        },
+        {
+          variant: 'check',
+          text: 'Established a solid foundation for future iterative enhancements.',
+        },
+      ],
+      image: '/img/02/after.png',
+      imageAlt: 'New Visual Canvas',
+      imageCaption: 'The New Visual Dashboard Builder',
+      imagePosition: 'left',
+    },
 
     {
       type: 'timeline',
@@ -195,86 +244,37 @@ const caseStudy02: CaseStudyPageData = {
     },
 
     {
-      type: 'carousel',
-      anchor: 'concepts',
-      title: 'Concept Explorations',
+      type: 'deepDive',
+      anchor: 'features',
+      title: 'Interactive Features & Customization',
       subtitle:
-        'Iterating through various layout configurations to balance functional density with available canvas real estate before committing to the final architecture.',
-      slides: [
+        'Implementing advanced navigation, contextual controls, and granular styling to enhance the builder experience.',
+        tabs: [
         {
-          image: '/img/02/dashboard-concept01.png',
-          label: 'Concept 01',
-          sublabel: ' ',
+          id: 'hover-options',
+          title: 'Contextual Hover Options',
+          description:
+            'Streamlines the editing workflow with quick-access on-hover widget controls, including Clone, Delete, Edit, and Theme Selection.',
+          caption: 'Widget Hover State Controls',
+          image: '/img/02/feature-01.png',
         },
         {
-          image: '/img/02/dashboard-concept02.png',
-          label: 'Concept 02',
-          sublabel: ' ',
-        },
-      ],
-    },
-
-    {
-      type: 'split',
-      anchor: 'problem',
-      title: 'Early Concepts: The "IDE" Style',
-      description:
-        'Initial explorations relied heavily on persistent left and right sidebars, attempting to mimic traditional drag-and-drop editor interfaces.',
-      bullets: [
-        {
-          variant: 'warning',
-          text: 'Three-column layouts severely shrunk the active workspace.',
+          id: 'theming',
+          title: 'Theme Customization',
+          description:
+            'Provides granular aesthetic control, allowing users to apply custom themes at both the global dashboard and individual widget levels.',
+          caption: 'Dashboard and Widget Theming',
+          image: '/img/02/feature-02.png',
         },
         {
-          variant: 'warning',
-          text: 'Persistent properties panels caused high cognitive load.',
-        },
-        {
-          variant: 'warning',
-          text: 'Complex drag-and-drop engineering exceeded our MVP constraints.',
+          id: 'drilldown',
+          title: 'Drilldown & Rules',
+          description:
+            'Enables users to open nested dashboards for deeper insights by defining specific table columns as interactive links.',
+          caption: 'Configuring Drilldown Rules',
+          image: '/img/02/feature-03.png',
         },
       ],
-      image: '/img/02/dashboard-concept02.png',
-      imageAlt: 'Early Concept — Cluttered Workspace',
-      imageCaption: 'Concept 02: Cluttered Workspace',
-      imagePosition: 'right',
-    },
-
-    {
-      type: 'split',
-      anchor: 'solution',
-      title: 'Streamlined, Content-First',
-      description:
-        'The final design strips away visual clutter, turning technical limitations into deliberate, intuitive user experiences.',
-      bullets: [
-        {
-          variant: 'check',
-          text: 'Fixed-Grid Canvas: A strict, visible grid guarantees predictable, pixel-perfect widget snapping.',
-        },
-        {
-          variant: 'check',
-          text: 'Contextual Controls: Hover menus (Edit, Duplicate) replace the right sidebar, saving space.',
-        },
-        {
-          variant: 'check',
-          text: 'Click-to-Add Strategy: Replaced drag-and-drop with a seamless modal to slash development time.',
-        },
-      ],
-      image: '/img/02/final-design.png',
-      imageAlt: 'Final Design — Clean Workspace',
-      imageCaption: 'Final Design: Clean Workspace',
-      imagePosition: 'left',
-    },
-
-    {
-      type: 'compareSlider',
-      anchor: 'compare',
-      title: 'The Evolution',
-      subtitle:
-        'Slide to compare the cluttered IDE-style concept with the clean, constraint-driven final workspace.',
-      before: { src: '/img/02/before.png', label: 'Concept' },
-      after: { src: '/img/02/after.png', label: 'Final' },
-      heightPreset: 'medium',
     },
 
     {
@@ -349,71 +349,37 @@ const caseStudy02: CaseStudyPageData = {
     },
 
     {
-      type: 'deepDive',
-      anchor: 'deep-dive',
-      title: 'Strategic Interface Decisions',
-      subtitle:
-        'Deep dive into specific UI mechanics designed to bypass technical constraints while preserving user flow.',
-      tabs: [
-        {
-          id: 'ecosystem',
-          title: 'Contextual Controls',
-          description:
-            'Clean hover-state actions directly on widgets replace heavy property sidebars.',
-          caption: 'Contextual Widget Hover State',
-          image: '/img/02/feature-01.png',
-        },
-        {
-          id: 'modal',
-          title: 'Hybrid Widget Modal',
-          description:
-            'A branched workflow allows users to select global widgets or build custom ones without losing context.',
-          caption: 'Simplified Global Setup Frame',
-          image: '/img/02/feature-02.png',
-        },
-        {
-          id: 'depth',
-          title: 'Drilldown Depth',
-          description:
-            'Bypassing responsive horizontal scaling by linking dashboards vertically.',
-          caption: 'Drilldown Toggle Configuration',
-          image: '/img/02/feature-03.png',
-        },
-      ],
-    },
-
-    {
       type: 'outcomes',
       columns: [
         {
-          icon: 'my_location',
-          title: 'Outcomes & Impact',
+          icon: 'check_circle',
+          title: 'Impact & Delivery',
           items: [
             {
-              title: 'Strategic MVP Deployment',
+              title: 'Eliminated Coding',
               description:
-                'Pivoting from drag-and-drop to a click-to-add modal bypassed months of engineering effort, allowing us to hit strict launch deadlines.',
+                'Users now visually configure dashboards instead of editing raw JSON files.',
             },
             {
-              title: 'Constraints Bred Clarity',
+              title: 'Instant Validation',
               description:
-                'The inability to make the layout responsive forced a strict fixed-grid design. This actually improved user trust, as their exact layouts were preserved without unpredictable reflowing.',
+                'Live visual previews give immediate confirmation of layout choices, drastically reducing build times.',
             },
           ],
         },
         {
-          icon: 'arrow_forward',
-          title: 'Future Roadmap',
+          icon: 'route',
+          title: 'Strategic Roadmap',
           items: [
             {
-              title: 'Interactive Refinements',
+              title: 'Frictionless Editing',
               description:
-                'As the backend matures, we plan to reintroduce smooth drag-and-drop mechanics to further accelerate the dashboard assembly process.',
+                'Implementing deferred drag-and-drop capabilities for effortless widget placement.',
             },
             {
-              title: 'Advanced Drilldown Visualizations',
+              title: 'Cross-Device Fluidity & Safeguards',
               description:
-                'Expanding the "drilldown" feature into a more visual node-tree map so users can track complex data journeys across multiple dashboards.',
+                'Introducing fully responsive layouts alongside Auto-save, Undo, and Redo workflow protections.',
             },
           ],
         },
