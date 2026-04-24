@@ -12,7 +12,7 @@ const caseStudy01: CaseStudyPageData = {
       'Transforming a space-heavy, stacked form into a compact, interactive property grid to speed up automation setup, reduce errors, and maximize screen real estate.',
     meta: {
       role: 'Product UX Designer',
-      platform: 'Web Application',
+      platform: 'Automation Workflow Builder',
       tools: 'Figma, Stackblitz, Angular',
       focus: 'Layout, Efficiency, Usability',
     },

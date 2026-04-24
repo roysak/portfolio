@@ -11,10 +11,10 @@ const caseStudy02: CaseStudyPageData = {
     description:
       'Transforming a complex, code-based dashboard configuration process into an intuitive visual builder in just over two months through ruthless prioritization.',
     meta: {
-      role: 'Lead Product Designer',
+      role: 'Product UX Designer',
       platform: 'Analytics Web Application',
       tools: 'AI Ideation, Design Systems',
-      focus: 'MVP Scoping, Rapid Delivery, UX Strategy',
+      focus: 'Rapid Delivery, UX Strategy',
     },
   },
 
