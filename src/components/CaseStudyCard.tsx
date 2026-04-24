@@ -18,25 +18,6 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
             alt={study.title}
             className="object-cover object-top w-full h-full"
           />
-
-          {/* <div className="card-arrow absolute top-4 right-4 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm transition-all duration-300 ease-out opacity-0 translate-y-2 -translate-x-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-neutral-900"
-              aria-hidden="true"
-            >
-              <line x1="7" y1="17" x2="17" y2="7" />
-              <polyline points="7 7 17 7 17 17" />
-            </svg>
-          </div> */}
         </div>
 
         <div className="flex flex-col grow">
