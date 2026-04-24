@@ -7,8 +7,7 @@ export default function RootLayout() {
   return (
     <div className="min-h-screen flex flex-col bg-white text-neutral-900 font-sans antialiased">
       <Nav />
-      {/* pt-[72px] reserves space for the fixed nav (py-4 padding + h-10 logo = 72px) */}
-      <div className="flex flex-col flex-1 pt-18">
+      <div className="flex flex-col flex-1 py-20">
         <Outlet />
       </div>
       <Footer />
