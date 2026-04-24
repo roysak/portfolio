@@ -1,3 +1,4 @@
+import { assetUrl } from "../utils/assetUrl";
 
 export default function Resume() {
   return (
@@ -5,25 +6,35 @@ export default function Resume() {
 
       {/* ── Header ── */}
       <header className="mb-12 pb-10 border-b border-neutral-200">
-        <h1 className="text-5xl md:text-6xl font-semibold tracking-tight text-neutral-900 mb-2">
-          Roys A Kareem
-        </h1>
-        <p className="text-xl text-primary-600 font-medium mb-5">
-          Product Designer · UX Designer · Frontend Developer
-        </p>
-        <div className="flex flex-wrap gap-4 text-neutral-500">
-          <a href="tel:+919846666988" className="inline-flex items-center gap-1.5 hover:text-primary-600 transition-colors">
-            <span className="material-symbols-rounded text-base!">phone</span>
-            +91 98466 66988
-          </a>
-          <a href="mailto:roysak@gmail.com" className="inline-flex items-center gap-1.5 hover:text-primary-600 transition-colors">
-            <span className="material-symbols-rounded text-base!">mail</span>
-            roysak@gmail.com
-          </a>
-          <a href="https://in.linkedin.com/in/roysak" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-primary-600 transition-colors">
-            <span className="material-symbols-rounded text-base!">open_in_new</span>
-            linkedin.com/in/roysak
-          </a>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <h1 className="text-5xl md:text-6xl font-semibold tracking-tight text-neutral-900 mb-2">
+              Roys A Kareem
+            </h1>
+            <p className="text-xl text-primary-600 font-medium mb-5">
+              Product Designer · UX Designer · Frontend Developer
+            </p>
+            <div className="flex flex-wrap gap-4 text-neutral-500">
+              <a href="tel:+919846666988" className="inline-flex items-center gap-1.5 hover:text-primary-600 transition-colors">
+                <span className="material-symbols-rounded text-base!">phone</span>
+                +91 98466 66988
+              </a>
+              <a href="mailto:roysak@gmail.com" className="inline-flex items-center gap-1.5 hover:text-primary-600 transition-colors">
+                <span className="material-symbols-rounded text-base!">mail</span>
+                roysak@gmail.com
+              </a>
+              <a href="https://in.linkedin.com/in/roysak" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:text-primary-600 transition-colors">
+                <span className="material-symbols-rounded text-base!">open_in_new</span>
+                linkedin.com/in/roysak
+              </a>
+            </div>
+          </div>
+          <div>
+            <a href={assetUrl('/resumes/Roys_Resume.pdf')} download className="px-4 py-2 inline-flex items-center gap-2 rounded-full bg-primary-600  text-white hover:bg-primary-800 transition-colors">
+              <span className="material-symbols-rounded text-base!">download</span>
+              Download Resume
+            </a>
+          </div>
         </div>
       </header>
 
