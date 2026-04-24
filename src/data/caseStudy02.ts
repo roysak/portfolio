@@ -22,6 +22,7 @@ const caseStudy02: CaseStudyPageData = {
     { anchor: 'ecosystem', label: 'Ecosystem' },
     { anchor: 'architecture', label: 'Architecture' },
     { anchor: 'challenge', label: 'Challenge' },
+    { anchor: 'concepts', label: 'Concepts' },
     { anchor: 'solution', label: 'Solution' },
     { anchor: 'flow', label: 'Flow' },
     { anchor: 'features', label: 'Features & Customization' },
@@ -162,6 +163,26 @@ const caseStudy02: CaseStudyPageData = {
       title: 'AI Concepts vs. Reality',
       description:
         'To accelerate ideation, we utilized AI tools to generate initial UI/UX concepts. While feature-rich and advanced, these designs were far too complex for our time and resource constraints. Attempting to build them would have guaranteed missing our launch, forcing a pivot to a highly pragmatic approach.',
+    },
+
+    {
+      type: 'carousel',
+      anchor: 'concepts',
+      title: 'Concept Explorations',
+      subtitle:
+        'Iterating through various layout configurations to balance functional density with available canvas real estate before committing to the final architecture.',
+      slides: [
+        {
+          image: '/img/02/dashboard-concept01.png',
+          label: 'Concept 01',
+          sublabel: ' ',
+        },
+        {
+          image: '/img/02/dashboard-concept02.png',
+          label: 'Concept 02',
+          sublabel: ' ',
+        },
+      ],
     },
 
     {
