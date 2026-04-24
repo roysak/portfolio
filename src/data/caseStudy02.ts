@@ -205,7 +205,7 @@ const caseStudy02: CaseStudyPageData = {
           text: 'Used a constraint-based layout to reduce errors and accelerate development.',
         },
         {
-          variant: 'info',
+          variant: 'check',
           text: 'Intentionally avoided drag-and-drop interactions due to time constraints and risk of layout inconsistencies, prioritizing a stable and shippable system.',
         },
       ],

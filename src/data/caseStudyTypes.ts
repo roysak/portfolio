@@ -47,7 +47,7 @@ export interface CardGridSection {
 // ─── Split Section ───────────────────────────────────────────────────────────
 
 export interface SplitBullet {
-  variant: 'check' | 'warning' | 'error';
+  variant: 'check' | 'warning' | 'error' | 'info';
   text: string;
 }
 

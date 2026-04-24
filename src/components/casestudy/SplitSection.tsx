@@ -16,6 +16,9 @@ const BULLET_ICONS: Record<string, React.ReactNode> = {
   error: (
     <span className="material-symbols-rounded text-red-400 shrink-0" style={{ fontSize: '20px' }} aria-hidden="true">error</span>
   ),
+  info: (
+    <span className="material-symbols-rounded text-blue-400 shrink-0" style={{ fontSize: '20px' }} aria-hidden="true">info</span>
+  ),
 };
 
 export default function SplitSection({ section }: Props) {
