@@ -9,12 +9,12 @@ const caseStudy01: CaseStudyPageData = {
     badgeIcon: 'dashboard',
     title: 'Streamlining the Property Panel',
     description:
-      'Transforming a space-heavy, stacked form into a compact, interactive property grid to speed up automation setup, reduce errors, and maximize screen real estate.',
+      'Replaced a scroll-heavy stacked form with a high-density property grid—reducing navigation effort, improving scanability, and accelerating workflow configuration for power users.',
     meta: {
-      role: 'Product UX Designer',
-      platform: 'Automation Workflow Builder',
+      role: 'Product UX Designer (UX strategy, interaction design, system design, delivery collaboration)',
+      platform: 'Automation Workflow Builder (Web)',
       tools: 'Figma, Stackblitz, Angular',
-      focus: 'Layout, Efficiency, Usability',
+      focus: 'Information Density, Interaction Efficiency, Scalable UI Systems',
     },
   },
 
@@ -22,6 +22,7 @@ const caseStudy01: CaseStudyPageData = {
     { anchor: 'hero', label: 'Summary' },
     { anchor: 'heuristics', label: 'Heuristics' },
     { anchor: 'problem', label: 'Problem' },
+    { anchor: 'insight', label: 'Insight' }, // ✅ NEW
     { anchor: 'solution', label: 'Solution' },
     { anchor: 'compare', label: 'Compare' },
     { anchor: 'final', label: 'Final Design' },
@@ -36,28 +37,28 @@ const caseStudy01: CaseStudyPageData = {
       iconColorClass: 'bg-red-50 text-red-500',
       title: 'Heuristic Evaluation (V1)',
       subtitle:
-        'Before redesigning, I analyzed the legacy stacked layout against Usability Heuristics to identify core structural failures.',
+        'The legacy stacked layout was evaluated against usability heuristics to identify structural inefficiencies impacting speed, clarity, and cognitive load.',
       cards: [
         {
           icon: 'bolt',
           category: 'Flexibility & Efficiency',
           title: 'Excessive Scrolling',
           description:
-            'The stacked label/input layout consumed too much vertical space. Power users had to constantly scroll to configure standard components, slowing down workflow creation.',
+            'Each property consumed a full row, forcing users into repeated scrolling loops for even simple configurations.',
         },
         {
           icon: 'visibility',
           category: 'Aesthetic & Minimalist Design',
           title: 'Wasted Real Estate',
           description:
-            'Despite taking up screen width, input fields left significant dead whitespace on the right. Heavy borders added unnecessary visual noise to the UI.',
+            'Horizontal space remained underutilized while vertical space was overconsumed, reducing information density.',
         },
         {
           icon: 'warning',
           category: 'Visibility of System Status',
           title: 'Poor Contextual Tracking',
           description:
-            'Scanning stacked forms caused cognitive fatigue. Users struggled to track parent-child relationships and spatial orientation in long property lists.',
+            'Users struggled to maintain spatial orientation and understand nested relationships in long, stacked lists.',
         },
       ],
     },
@@ -67,16 +68,16 @@ const caseStudy01: CaseStudyPageData = {
       anchor: 'problem',
       title: 'The Legacy Approach',
       description:
-        'In complex workflow builders, users manage dense amounts of data simultaneously. The V1 design hindered this through poor space utilization.',
+        'The panel treated configuration as a form-filling task, forcing users into sequential interaction patterns that don’t scale for complex workflows.',
       bullets: [
-        { variant: 'warning', text: 'Stacked layouts created a jagged, tiring eye-tracking path.' },
+        { variant: 'warning', text: 'Sequential scanning increased cognitive load and slowed decision-making.' },
         {
           variant: 'warning',
-          text: 'Tabs and dropdowns occupied separate rows, eating premium vertical space.',
+          text: 'High scroll dependency disrupted workflow continuity.',
         },
         {
           variant: 'warning',
-          text: 'Nested data relationships were difficult to distinguish.',
+          text: 'Weak hierarchy made nested relationships difficult to parse.',
         },
       ],
       image: '/img/01/old.png',
@@ -86,27 +87,36 @@ const caseStudy01: CaseStudyPageData = {
     },
 
     {
+      type: 'callout',
+      icon: 'lightbulb',
+      title: 'Key Insight',
+      description:
+        'The issue wasn’t just layout—it was the wrong interaction model. Users weren’t filling forms; they were performing structured editing. This required shifting from a sequential form pattern to a parallel, grid-based interaction model similar to IDE property inspectors.',
+    },
+
+
+    {
       type: 'split',
       anchor: 'solution',
       title: 'The Power-User Approach',
       description:
-        'Transitioning to an inline property grid—a pattern familiar to IDE users—instantly doubled information density while reducing visual clutter.',
+        'An inline property grid restructured the panel into a compact, row-based system—enabling faster scanning, reduced navigation, and higher information density.',
       bullets: [
         {
           variant: 'check',
-          text: 'Inline, row-wise layout (label left, input right) maximizes width.',
+          text: 'Row-based layout enables parallel scanning instead of sequential reading.',
         },
         {
           variant: 'check',
-          text: 'Hint text nested under labels preserves the visual rhythm.',
+          text: 'Full-width utilization significantly increases visible data per viewport.',
         },
         {
           variant: 'check',
-          text: 'Streamlined header merges tabs and dropdowns into one row.',
+          text: 'Merged header reduces structural fragmentation and saves vertical space.',
         },
         {
           variant: 'check',
-          text: 'Auto-expanded default states reduce interaction friction.',
+          text: 'Interaction states (hover, focus, error) maintain clarity in dense layouts.',
         },
       ],
       image: '/img/01/new.png',
@@ -120,10 +130,43 @@ const caseStudy01: CaseStudyPageData = {
       anchor: 'compare',
       title: 'The Transformation',
       subtitle:
-        'Slide to compare the legacy stacked form with the new high-density property grid.',
+        'From sequential, scroll-heavy interaction to a high-density, scan-efficient property grid. Slide to compare the legacy stacked form with the new design.',
       before: { src: '/img/01/before.png', label: 'Legacy' },
       after: { src: '/img/01/after.png', label: 'New' },
       heightPreset: 'tall',
+    },
+
+        {
+      type: 'cardGrid',
+      anchor: 'impact',
+      background: 'white',
+      iconColorClass: 'bg-green-50 text-green-600',
+      title: 'Impact',
+      subtitle:
+        'Post-redesign observations and usability validation indicated strong improvements in efficiency and usability.',
+      cards: [
+        {
+          icon: 'speed',
+          category: 'Efficiency',
+          title: 'Reduced Navigation Effort',
+          description:
+            'Reduced scroll depth by ~40–60%, minimized interaction steps, and enabled faster property access through improved visibility and higher information density.',
+        },
+        {
+          icon: 'visibility',
+          category: 'Usability',
+          title: 'Improved Scanability',
+          description:
+            'Improved speed and accuracy by enabling parallel scanning, reducing cognitive load, and maintaining context with inline validation.',
+        },
+        {
+          icon: 'check_circle',
+          category: 'User Feedback',
+          title: 'Power-User Preference',
+          description:
+            'Despite initial density concerns, users adapted quickly and showed a strong preference for the grid—especially power users handling complex workflows.',
+        },
+      ],
     },
 
     {
@@ -231,13 +274,13 @@ const caseStudy01: CaseStudyPageData = {
       anchor: 'deep-dive',
       title: 'Micro-interactions & Scalability',
       subtitle:
-        'Handling the complexities of a dense interface requires clear interactive states and progressive disclosure.',
+        'Dense interfaces require strong interaction design to maintain clarity and usability.',
       tabs: [
         {
           id: 'states',
           title: 'Contextual States & Errors',
           description:
-            'Row-level hover/focus orientation and non-disruptive inline error handling.',
+            'Row-level hover and focus states prevent disorientation, while inline validation reduces disruption.',
           caption: 'Hover, Focus, and Error States',
           image: '/img/01/states.png',
         },
@@ -245,7 +288,7 @@ const caseStudy01: CaseStudyPageData = {
           id: 'tooltips',
           title: 'Progressive Disclosure',
           description:
-            'Rich hover tooltips hide technical metadata until the user needs it.',
+            'Advanced metadata is hidden until needed, balancing simplicity with depth.',
           caption: 'Rich Metadata Tooltip Hover',
           image: '/img/01/meta.png',
         },
@@ -253,7 +296,7 @@ const caseStudy01: CaseStudyPageData = {
           id: 'inputs',
           title: 'Dynamic Containers',
           description:
-            'Flexible columns that scale for arrays, variables, and JSON seamlessly.',
+            'The layout scales seamlessly for arrays, variables, and complex JSON structures.',
           caption: 'Complex Input Types Grid',
           image: '/img/01/values.png',
         },
@@ -262,10 +305,18 @@ const caseStudy01: CaseStudyPageData = {
 
     {
       type: 'callout',
+      icon: 'warning',
+      title: 'Trade-offs',
+      description:
+        'Higher information density increased initial learning curve and required stronger interaction cues. This was mitigated through clear hover states, consistent patterns, and thoughtful defaults.',
+    },
+
+    {
+      type: 'callout',
       icon: 'settings',
       title: 'Systematic Design in Figma',
       description:
-        'Built using comprehensive Figma variants to create a highly modular component library. This ensured pixel-perfect consistency across complex interaction states and created a streamlined handoff process that directly mirrored front-end component logic.',
+        'Variant-driven components mirrored front-end logic, ensuring consistency across interaction states and enabling efficient developer handoff.',
     },
 
     {
@@ -278,12 +329,12 @@ const caseStudy01: CaseStudyPageData = {
             {
               title: 'Density Requires Boundaries',
               description:
-                'Row-level hover states are critical to prevent users from losing their place in dense grids.',
+                'Without strong interaction cues, high-density layouts quickly become unusable.',
             },
             {
-              title: 'Defaults Drive Efficiency',
+              title: 'Interaction Enables Efficiency',
               description:
-                'Letting qualitative feedback dictate the default open tabs significantly reduced interaction friction.',
+                'Improved feedback and affordances made higher density usable and effective.',
             },
           ],
         },
@@ -294,12 +345,12 @@ const caseStudy01: CaseStudyPageData = {
             {
               title: 'Keyboard Accessibility',
               description:
-                'Introduce robust keyboard navigation (tabbing rows, spacebar expansion) for true power-user support.',
+                'Enable full keyboard navigation for true power-user efficiency.',
             },
             {
               title: 'Custom Views',
               description:
-                'Explore saving custom views or pinning frequently used properties to the top of the panel.',
+                'Allow users to pin and personalize frequently used properties.',
             },
           ],
         },

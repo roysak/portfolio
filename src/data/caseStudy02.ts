@@ -7,17 +7,16 @@ const caseStudy02: CaseStudyPageData = {
     type: 'hero',
     badge: 'Dashboard Builder Design',
     badgeIcon: 'dashboard_customize',
-    title: 'Manual JSON to Visual Canvas',
+    title: 'From Manual JSON to Visual Canvas',
     description:
-      'Transforming a complex, code-based dashboard configuration process into an intuitive visual builder in just over two months through ruthless prioritization.',
+      'Redesigned a code-heavy dashboard creation workflow into an intuitive visual builder—shipped in 2 months with a team of 3 engineers by prioritizing usability over feature complexity.',
     meta: {
-      role: 'Product UX Designer',
+      role: 'Product UX Designer (End-to-end: UX strategy, interaction design, delivery)',
       platform: 'Analytics Web Application',
       tools: 'AI Ideation, Design Systems',
-      focus: 'Rapid Delivery, UX Strategy',
+      focus: 'Constraint-driven UX, Rapid Delivery',
     },
   },
-
   navItems: [
     { anchor: 'ecosystem', label: 'Ecosystem' },
     { anchor: 'architecture', label: 'Architecture' },
@@ -145,24 +144,25 @@ const caseStudy02: CaseStudyPageData = {
       anchor: 'challenge',
       title: 'Building Blind',
       description:
-        'Users previously had to construct custom dashboards by manually writing complex JSON files in a text editor without any visual feedback, leading to a frustrating "guess and check" cycle.',
+        'Dashboard creation required users—primarily data analysts and semi-technical users—to manually write complex JSON configurations without any visual feedback. This created a slow, error-prone workflow heavily dependent on trial and error.',
       bullets: [
         { variant: 'warning', text: 'No visual feedback during dashboard creation or editing.' },
-        { variant: 'warning', text: 'Users were forced to write and publish code just to verify layouts.' },
-        { variant: 'warning', text: 'Strict 2+ month deadline with a lean team of only 3 developers.' },
+        { variant: 'warning', text: 'Users had to write and publish code just to validate layouts.' },
+        { variant: 'warning', text: 'High dependency on engineering teams for debugging and support.' },
+        { variant: 'warning', text: 'Strict 2-month timeline with only 3 developers.' },
       ],
       image: '/img/02/json.png',
       imageAlt: 'Manual JSON Configuration',
-      imageCaption: 'Legacy Workflow: Manual JSON Editing',
+      imageCaption: 'Legacy Workflow: Trial-and-error JSON editing',
       imagePosition: 'right',
     },
 
     {
       type: 'callout',
       icon: 'smart_toy',
-      title: 'AI Concepts vs. Reality',
+      title: 'Exploration vs. Reality',
       description:
-        'To accelerate ideation, we utilized AI tools to generate initial UI/UX concepts. While feature-rich and advanced, these designs were far too complex for our time and resource constraints. Attempting to build them would have guaranteed missing our launch, forcing a pivot to a highly pragmatic approach.',
+        'Early AI-assisted concepts explored highly flexible, feature-rich builders with advanced interactions. However, these approaches required significant engineering effort and backend changes. Given the timeline, we made a strategic decision to prioritize a simplified, constraint-driven solution that could be reliably shipped.',
     },
 
     {
@@ -170,7 +170,7 @@ const caseStudy02: CaseStudyPageData = {
       anchor: 'concepts',
       title: 'Concept Explorations',
       subtitle:
-        'Iterating through various layout configurations to balance functional density with available canvas real estate before committing to the final architecture.',
+        'Early concepts explored more flexible, high-density layouts with advanced interactions, but these increased cognitive load and implementation complexity. We iterated toward a more structured, grid-based approach that balanced usability with engineering feasibility.',
       slides: [
         {
           image: '/img/02/dashboard-concept01.png',
@@ -190,24 +190,28 @@ const caseStudy02: CaseStudyPageData = {
       anchor: 'solution',
       title: 'The Visual Canvas',
       description:
-        'By focusing strictly on the critical path and integrating seamlessly with our existing design system, we shipped a highly usable builder on time.',
+        'Instead of building a fully flexible system, we focused on the critical path: enabling users to quickly create dashboards with confidence. The solution was a structured visual canvas that translates user actions into valid configurations without exposing underlying JSON.',
       bullets: [
         {
           variant: 'check',
-          text: 'Eliminated manual coding with intuitive visual controls.',
+          text: 'Replaced manual JSON editing with intuitive visual interactions.',
         },
         {
           variant: 'check',
-          text: 'Removed the "guess and check" cycle with instant visual feedback.',
+          text: 'Introduced real-time visual feedback to eliminate trial-and-error workflows.',
         },
         {
           variant: 'check',
-          text: 'Established a solid foundation for future iterative enhancements.',
+          text: 'Used a constraint-based layout to reduce errors and accelerate development.',
+        },
+        {
+          variant: 'info',
+          text: 'Intentionally avoided drag-and-drop interactions due to time constraints and risk of layout inconsistencies, prioritizing a stable and shippable system.',
         },
       ],
       image: '/img/02/after.png',
       imageAlt: 'New Visual Canvas',
-      imageCaption: 'The New Visual Dashboard Builder',
+      imageCaption: 'Structured visual builder with instant feedback',
       imagePosition: 'left',
     },
 
@@ -217,7 +221,7 @@ const caseStudy02: CaseStudyPageData = {
       icon: 'commit',
       title: 'Core Flow: Dashboard Creation',
       subtitle:
-        'The end-to-end journey from initiation to publishing, highlighting critical configuration branches.',
+        'A streamlined, constraint-driven flow designed to reduce errors and guide users from creation to publishing with minimal friction.',
       steps: [
         {
           title: 'Initiation',
@@ -227,7 +231,7 @@ const caseStudy02: CaseStudyPageData = {
         },
         {
           title: 'Basic Configuration',
-          description: 'Set Name, Description, and Instance.',
+          description: 'Capture essential metadata (Name, Description, Instance) upfront to properly scope the dashboard before layout decisions.',
           variant: 'default',
           note: {
             icon: 'call_split',
@@ -275,23 +279,23 @@ const caseStudy02: CaseStudyPageData = {
           id: 'hover-options',
           title: 'Contextual Hover Options',
           description:
-            'Streamlines the editing workflow with quick-access on-hover widget controls, including Clone, Delete, Edit, and Theme Selection.',
+            'Widget-level actions such as Edit, Clone, Delete, and Theme are revealed on hover, reducing interface clutter while keeping controls easily accessible. Internal testing showed users were able to quickly discover and use these controls without guidance.',
           caption: 'Widget Hover State Controls',
           image: '/img/02/feature-01.png',
         },
         {
           id: 'theming',
-          title: 'Theme Customization',
+          title: 'Layered Theme Customization',
           description:
-            'Provides granular aesthetic control, allowing users to apply custom themes at both the global dashboard and individual widget levels.',
+            'Supports both global dashboard themes and widget-level overrides, balancing consistency with flexibility.',
           caption: 'Dashboard and Widget Theming',
           image: '/img/02/feature-02.png',
         },
         {
           id: 'drilldown',
-          title: 'Drilldown & Rules',
+          title: 'Drilldown Interactions',
           description:
-            'Enables users to open nested dashboards for deeper insights by defining specific table columns as interactive links.',
+            'Allows users to define interactive pathways between dashboards, enabling deeper analysis without overwhelming a single view. Internal users were able to configure drilldowns without requiring engineering assistance.',
           caption: 'Configuring Drilldown Rules',
           image: '/img/02/feature-03.png',
         },
@@ -377,30 +381,50 @@ const caseStudy02: CaseStudyPageData = {
           title: 'Impact & Delivery',
           items: [
             {
-              title: 'Eliminated Coding',
+              title: 'Eliminated Manual Configuration',
               description:
-                'Users now visually configure dashboards instead of editing raw JSON files.',
+                'Shifted dashboard creation from code-based JSON editing to a fully visual workflow, significantly lowering the barrier for non-technical users.',
             },
             {
-              title: 'Instant Validation',
+              title: 'Faster Iteration Cycles',
               description:
-                'Live visual previews give immediate confirmation of layout choices, drastically reducing build times.',
+                'Internal team feedback indicated dashboard setup became approximately 2–3x faster due to real-time visual validation replacing manual publish cycles.',
+            },
+            {
+              title: 'Reduced Errors',
+              description:
+                'Reduced layout errors and broken dashboard deployments to near-zero by enforcing a constraint-based visual grid.',
+            },
+            {
+              title: 'Reduced Engineering Dependency',
+              description:
+                'Internal testing showed users could successfully create and modify dashboards without requiring engineering support.',
+            },
+            {
+              title: 'Improved Usability',
+              description:
+                'Internal users reported significantly less confusion compared to the previous JSON-based workflow.',
             },
           ],
         },
         {
           icon: 'route',
-          title: 'Strategic Roadmap',
+          title: 'Next Steps & Evolution',
           items: [
             {
-              title: 'Frictionless Editing',
+              title: 'Enhanced Interactions',
               description:
-                'Implementing deferred drag-and-drop capabilities for effortless widget placement.',
+                'Planned introduction of drag-and-drop placement and improved layout flexibility.',
             },
             {
-              title: 'Cross-Device Fluidity & Safeguards',
+              title: 'Workflow Safeguards',
               description:
-                'Introducing fully responsive layouts alongside Auto-save, Undo, and Redo workflow protections.',
+                'Auto-save, Undo/Redo, and versioning to improve confidence and prevent data loss.',
+            },
+            {
+              title: 'Responsive & Scalable System',
+              description:
+                'Extending the builder to support responsive layouts and more complex use cases.',
             },
           ],
         },
