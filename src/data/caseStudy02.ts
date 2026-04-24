@@ -7,7 +7,7 @@ const caseStudy02: CaseStudyPageData = {
     type: 'hero',
     badge: 'Dashboard Builder Design',
     badgeIcon: 'dashboard_customize',
-    title: 'From Manual JSON to Visual Canvas',
+    title: 'JSON to Visual Canvas',
     description:
       'Redesigned a code-heavy dashboard creation workflow into an intuitive visual builder—shipped in 2 months with a team of 3 engineers by prioritizing usability over feature complexity.',
     meta: {
