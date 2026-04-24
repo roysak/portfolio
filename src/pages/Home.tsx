@@ -12,7 +12,8 @@ export default function Home() {
 							<div className="blur-in blur-in-1 pointer-events-none items-center justify-center lg:flex min-w-sm">
                                 {(() => {
                                     const images = ["hero.png", "myself03.png"];
-                                    const randomImage = images[Math.floor(Math.random() * images.length)];
+                                    const random = Math.random();
+                                    const randomImage = images[random < 0.9 ? 0 : Math.floor(random * images.length)];
                                     return <img src={assetUrl(`/img/${randomImage}`)} alt="A portrait of the developer" className="w-full max-w-100 md:max-w-140 m-auto" />;
                                 })()}
 							</div>
