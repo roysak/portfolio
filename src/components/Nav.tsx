@@ -37,7 +37,7 @@ export default function Nav() {
       }`}
     >
       <div className="w-full mx-auto pl-3 py-4 pr-6 flex items-center justify-between">
-        <NavLink to="/" className="text-lg font-semibold tracking-tight text-neutral-900 hover:scale-[1.3] transition-all duration-500">
+        <NavLink to="/" className="text-lg font-semibold tracking-tight text-neutral-900 hover:scale-[1.3] transition-all duration-300">
           <img src={assetUrl('/img/logo.svg')} className="w-10 h-10" />
         </NavLink>
 
