@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { assetUrl } from "../utils/assetUrl";
 
 // ─── Switch between "password" and "pin" modes here ──────────────────────────
 const MODE: "password" | "pin" = "pin";
@@ -27,6 +28,7 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
   const [shaking, setShaking] = useState(false);
+  const [typing, setTyping] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const pinRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -45,6 +47,7 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
   function triggerError() {
     setError(true);
     setShaking(true);
+    setTyping(false);
     if (MODE === "pin") {
       setPin(Array(PIN_LENGTH).fill(""));
       setTimeout(() => pinRefs.current[0]?.focus(), 50);
@@ -69,6 +72,7 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
   function handlePinChange(index: number, digit: string) {
     if (!/^\d?$/.test(digit)) return;
     setError(false);
+    if (digit) setTyping(true);
     const next = [...pin];
     next[index] = digit;
     setPin(next);
@@ -125,6 +129,7 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
         {/* ── PIN mode ────────────────────────────────────────────────────── */}
         {MODE === "pin" && (
           <div className={`flex flex-col items-center gap-4 ${shaking ? "animate-shake" : ""}`}>
+            <img src={assetUrl(typing ? '/img/surprised.gif' : '/img/protected.gif')} alt="Protected" className="w-full" />
             <div className="flex gap-3">
               {pin.map((digit, i) => (
                 <input
@@ -166,6 +171,7 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
                 onChange={(e) => {
                   setValue(e.target.value);
                   setError(false);
+                  setTyping(e.target.value.length > 0);
                 }}
                 placeholder="Enter password"
                 autoComplete="current-password"
