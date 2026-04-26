@@ -11,7 +11,7 @@ export default function CaseStudyCard({ study }: CaseStudyCardProps) {
     <article className="group cursor-pointer flex flex-col">
       <Link to={`/case-studies/${study.link}`}>
         <div
-          className={`relative w-full aspect-4/2 rounded-2xl overflow-hidden mb-6 transition-all duration-500 ease-out ${study.color} ${study.shadow} flex items-start justify-center shadow-sm group-hover:shadow-xl group-hover:scale-[1.02]`}
+          className={`relative w-full aspect-4/2.5 rounded-2xl overflow-hidden mb-6 transition-all duration-300 ease-out ${study.color} ${study.shadow} flex items-start justify-center shadow-sm group-hover:shadow-xl group-hover:scale-[1.02]`}
         >
           <img
             src={assetUrl(study.image)}

@@ -7,7 +7,7 @@ export default function CaseStudies() {
       <h1 className="text-3xl text-primary-600 font-semibold tracking-tight mb-10">
         Case Studies
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-24 md:gap-16">
         {caseStudies.map((study) => (
           <CaseStudyCard key={study.id} study={study} />
         ))}

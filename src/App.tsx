@@ -1,4 +1,4 @@
-import { Routes, Route, HashRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import CaseStudies from "./pages/CaseStudies";
@@ -9,10 +9,11 @@ import DigitalPaintings from "./pages/DigitalPaintings";
 import Applications from "./pages/Applications";
 import Resume from "./pages/Resume";
 import CreativeCoding from "./pages/CreativeCoding";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route element={<RootLayout />}>
           <Route path="/" element={<Home />} />
@@ -23,9 +24,10 @@ function App() {
           <Route path="/works/creative-coding" element={<CreativeCoding />} />
           <Route path="/works/applications" element={<Applications />} />
           <Route path="/resume" element={<Resume />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
