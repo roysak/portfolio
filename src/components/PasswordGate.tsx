@@ -154,13 +154,13 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
             )}
             <p className="text-xs text-neutral-400 mt-2">Reach out to me for PIN</p>
             <div className="flex gap-3">
-              <a href="https://wa.me/919846666988" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border border-neutral-200 text-neutral-600 hover:bg-neutral-50 transition-colors">
-                <i className="material-symbols-rounded text-sm"><img className="w-6" src={assetUrl('/img/whatsapp.svg')} alt="Whatsapp" /></i>WhatsApp
-              </a>
-              <a href="mailto:roysak@gmail.com" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border border-neutral-200 text-neutral-600 hover:bg-neutral-50 transition-colors">
+              <a href="mailto:roysak@gmail.com" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full text-neutral-600 hover:bg-neutral-50 transition-colors">
                 <i className="material-symbols-rounded text-sm text-blue-600">alternate_email</i>Email
               </a>
-              <a href="tel:+919846666988" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border border-neutral-200 text-neutral-600 hover:bg-neutral-50 transition-colors">
+              <a href="https://wa.me/919846666988" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full text-neutral-600 hover:bg-neutral-50 transition-colors">
+                <i className="material-symbols-rounded text-sm"><img className="w-6" src={assetUrl('/img/whatsapp.svg')} alt="Whatsapp" /></i>WhatsApp
+              </a>
+              <a href="tel:+919846666988" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full text-neutral-600 hover:bg-neutral-50 transition-colors">
                 <i className="material-symbols-rounded text-sm text-green-600">call</i>Call
               </a>
             </div>
