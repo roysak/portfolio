@@ -7,9 +7,7 @@ const PIN_LENGTH = 6; // 4 or 6 — only used when MODE is "pin"
 // ─────────────────────────────────────────────────────────────────────────────
 
 const HASHES = {
-  // sha256("enter-portfolio")
   password: "48e23e7f21c9a43e3b7d5a58ba94f5793a91a8c53cf7d0b6b3b4d1ba7513ce23",
-  // sha256("741159")
   pin: "9a1304628838259a8e0e8e731aefd62794e4dfe467dd859cae9fa5339498ee95",
 };
 
@@ -154,6 +152,18 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
             {error && (
               <p className="text-xs text-red-500">Incorrect PIN. Try again.</p>
             )}
+            <p className="text-xs text-neutral-400 mt-2">Reach out to me for PIN</p>
+            <div className="flex gap-3">
+              <a href="https://wa.me/919846666988" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border border-neutral-200 text-neutral-600 hover:bg-neutral-50 transition-colors">
+                <i className="material-symbols-rounded text-sm"><img className="w-6" src={assetUrl('/img/whatsapp.svg')} alt="Whatsapp" /></i>WhatsApp
+              </a>
+              <a href="mailto:roysak@gmail.com" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border border-neutral-200 text-neutral-600 hover:bg-neutral-50 transition-colors">
+                <i className="material-symbols-rounded text-sm text-blue-600">alternate_email</i>Email
+              </a>
+              <a href="tel:+919846666988" className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full border border-neutral-200 text-neutral-600 hover:bg-neutral-50 transition-colors">
+                <i className="material-symbols-rounded text-sm text-green-600">call</i>Call
+              </a>
+            </div>
           </div>
         )}
 
