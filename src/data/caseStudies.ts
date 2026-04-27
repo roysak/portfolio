@@ -15,7 +15,7 @@ const caseStudies: CaseStudy[] = [
         id: 1,
         link: "01",
         title: "Property Panel Redesign",
-        client: "SmartOPS",
+        client: "Intelligent Automation Platform",
         description:
             "Transforming a space-heavy, stacked form into a compact, interactive property grid to speed up automation setup.",
         tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],
@@ -38,7 +38,7 @@ const caseStudies: CaseStudy[] = [
         id: 2,
         link: "02",
         title: "Dashboard Builder",
-        client: "SmartOPS",
+        client: "Intelligent Automation Platform",
         description:
             "Transforming a complex, code-based dashboard configuration process into an intuitive visual builder",
         tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],

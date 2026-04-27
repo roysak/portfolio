@@ -154,7 +154,7 @@ export default function Resume() {
 
                 {/* SmartOps */}
                 <div className="border-l-2 border-primary-200 pl-4 mb-12">
-                  <p className="font-semibold text-primary-600 uppercase tracking-wide mb-0.5">SmartOps</p>
+                  <p className="font-semibold text-primary-600 uppercase tracking-wide mb-0.5">Intelligent Automation Platform</p>
                   <p className="text-neutral-400 mb-1">Automation Workflow Builder · AI Marketplace · Dashboard Builder</p>
                   <p className="font-medium text-neutral-700 mb-2">Specialist I – UX Design <span className="font-normal text-neutral-400">· Sep 2021 – Present</span></p>
                   <ul className="flex flex-col gap-1.5">
