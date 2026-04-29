@@ -29,7 +29,7 @@ export default function CreativeCoding() {
       <section className="mb-16">
         <h2 className="text-xl font-medium mb-2">Background Effects</h2>
         <p className="text-neutral-500 leading-relaxed max-w-2xl mb-6">
-          A GPU shader that renders a tiled grid of shapes with interactive effects. Move your cursor across the canvas to see the effects. <span className="font-bold">Created Using AI Tools</span>
+          A GPU shader that renders a tiled grid of shapes with interactive effects <span className="font-bold">created Using AI Tools</span>. Move your cursor across the canvas to see the effects.
         </p>
         <div className="flex gap-2 mb-4">
           {TABS.map((tab, i) => (
@@ -47,7 +47,7 @@ export default function CreativeCoding() {
           ))}
         </div>
         <div className="w-full aspect-video rounded-xl overflow-hidden border border-neutral-200">
-          <BGFXRipples key={activeTab} {...TABS[activeTab].props} props={TABS[activeTab].props} />
+          <BGFXRipples key={activeTab} {...TABS[activeTab].props} />
         </div>
       </section>
     </main>
