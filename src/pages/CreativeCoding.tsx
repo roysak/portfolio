@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import BGFXRipples from "../components/BGFXRipples";
+import DotRipple from "../components/DotRipple";
+import FluidShader from "../components/FluidShader";
+import FluidShaderImage from "../components/FluidShaderImage";
 
 const TABS = [
   { label: "01", props: {} },
   { label: "02", props: { shape: 2 as const, size: 1, rounding: 0.1, gap: 0, spacingX: 1, spacingY: 2, color: '#F95565', glow: 20.0 } },
-  { label: "03", props: { shape: 2 as const, size: 0.8, rounding: 0.1, gap: 0.2, spacingX: 1.2, spacingY: 0.8, color: '#FFB731', glow: 20.0 } },
-  { label: "04", props: { shape: 2 as const, size: 1, rounding: 0, gap: 0.5, spacingX: 1, spacingY: 1, color: '#25D366', glow: 1.0 } },
+  { label: "03", props: { shape: 2 as const, size: 0.8, rounding: 0.1, gap: 0.2, spacingX: 1.2, spacingY: 0.5, color: '#FFB731', glow: 20.0 } },
+  { label: "04", props: { shape: 2 as const, size: 1.5, rounding: 0.2, gap: 0.5, spacingX: 2.2, spacingY: 2.2, color: '#25D366', glow: 1.0 } },
   { label: "05", props: { shape: 2 as const, size: 0.3, rounding: 0, gap: 0.5, spacingX: .2, spacingY: .2, color: '#EA4242', glow: 1.0 } },
 ];
 
@@ -27,9 +30,9 @@ export default function CreativeCoding() {
       </h1>
 
       <section className="mb-16">
-        <h2 className="text-xl font-medium mb-2">Background Effects</h2>
+        <h2 className="text-xl font-medium mb-2">Background Effects 01</h2>
         <p className="text-neutral-500 leading-relaxed max-w-2xl mb-6">
-          A GPU shader that renders a tiled grid of shapes with interactive effects <span className="font-bold">created Using AI Tools</span>. Move your cursor across the canvas to see the effects.
+          Interactive effects <span className="font-bold">created Using AI Tools</span>. Move your cursor across the canvas to see the effects.
         </p>
         <div className="flex gap-2 mb-4">
           {TABS.map((tab, i) => (
@@ -48,6 +51,28 @@ export default function CreativeCoding() {
         </div>
         <div className="w-full aspect-video rounded-xl overflow-hidden border border-neutral-200">
           <BGFXRipples key={activeTab} {...TABS[activeTab].props} />
+        </div>
+      </section>
+
+      <section className="mb-16">
+        <h2 className="text-xl font-medium mb-2">Background Effects 02</h2>
+        <div className="w-full aspect-video rounded-xl overflow-hidden border border-neutral-200">
+          <DotRipple />
+        </div>
+      </section>
+
+      <section className="mb-16">
+        <h2 className="text-xl font-medium mb-2">Background Effects 03</h2>
+        <div className="w-full aspect-video rounded-xl overflow-hidden border border-neutral-200">
+          <FluidShader />
+        </div>
+      </section>
+
+      <section className="mb-16">
+        <h2 className="text-xl font-medium mb-2">Background Effects 04</h2>
+        
+        <div className="w-full aspect-video rounded-xl overflow-hidden border border-neutral-200">
+          <FluidShaderImage imageMask="/img/image-mask.jpg" />
         </div>
       </section>
     </main>
