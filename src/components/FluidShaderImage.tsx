@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 const ITERATIONS = 15;
-const SPLAT_RADIUS = 0.05;
+const SPLAT_RADIUS = 0.01;
 
 // --- Props Interface ---
 interface FluidShaderImageProps {
@@ -136,8 +136,8 @@ interface DoubleFBO {
 }
 
 export default function FluidShaderImage({
-  viscosity = 0.15,
-  colorFade = 0.90,
+  viscosity = 0.05,
+  colorFade = 0.950,
   bgColor = '#1c1820',
   className,
   imageMask,
