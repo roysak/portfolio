@@ -4,6 +4,7 @@ import BGFXRipples from "../components/BGFXRipples";
 import DotRipple from "../components/DotRipple";
 import FluidShader from "../components/FluidShader";
 import FluidShaderImage from "../components/FluidShaderImage";
+import FluidShaderMarble from "../components/FluidShaderMarble";
 
 const TABS = [
   { label: "01", props: {} },
@@ -73,6 +74,14 @@ export default function CreativeCoding() {
         
         <div className="w-full aspect-video rounded-xl overflow-hidden border border-neutral-200">
           <FluidShaderImage imageMask="/img/image-mask.jpg" />
+        </div>
+      </section>
+
+      <section className="mb-16">
+        <h2 className="text-xl font-medium mb-2">Background Effects 05</h2>
+        
+        <div className="w-full aspect-video rounded-xl overflow-hidden border border-neutral-200">
+          <FluidShaderMarble marbleScale={0.5} marbleSpeed={0.5} />
         </div>
       </section>
     </main>
