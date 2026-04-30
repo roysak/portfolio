@@ -160,13 +160,13 @@ interface DoubleFBO {
 }
 
 export default function FluidShader({
-  thickness = 0.008,
+  thickness = 0.009,
   spacing = 0.120,
-  roundness = 0.100,
+  roundness = 0.200,
   size = 3.5,
-  viscosity = 0.15,
-  colorFade = 0.90,
-  bgColor = '#f2f0f4',
+  viscosity = 0.005,
+  colorFade = 0.960,
+  bgColor = '#1c1820',
   className,
 }: FluidShaderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
