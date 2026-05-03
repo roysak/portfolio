@@ -46,7 +46,7 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
       let gl = canvas.getContext('webgl2', params) as WebGLRenderingContext | null;
       const isWebGL2 = !!gl;
       if (!isWebGL2)
-        gl = canvas.getContext('webgl', params) || canvas.getContext('experimental-webgl', params) as WebGLRenderingContext | null;
+        gl = (canvas.getContext('webgl', params) || canvas.getContext('experimental-webgl', params)) as WebGLRenderingContext | null;
 
       if (!gl) return null;
 
@@ -615,7 +615,7 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
     function splat(x: number, y: number, dx: number, dy: number, color: [number, number, number]) {
       splatProgram.bind();
       gl.uniform1i(splatProgram.uniforms.uTarget, velocity.read.attach(0));
-      gl.uniform1f(splatProgram.uniforms.aspectRatio, canvas.width / canvas.height);
+      gl.uniform1f(splatProgram.uniforms.aspectRatio, canvas!.width / canvas!.height);
       gl.uniform2f(splatProgram.uniforms.point, x, y);
       gl.uniform3f(splatProgram.uniforms.color, dx, dy, 0.0);
       gl.uniform1f(splatProgram.uniforms.radius, correctRadius(config.SPLAT_RADIUS / 100));
@@ -629,7 +629,7 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
     }
 
     function correctRadius(radius: number) {
-      const aspectRatio = canvas.width / canvas.height;
+      const aspectRatio = canvas!.width / canvas!.height;
       return aspectRatio > 1 ? radius * aspectRatio : radius;
     }
 
@@ -673,8 +673,8 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
       pointer.id = id;
       pointer.down = true;
       pointer.moved = false;
-      pointer.texcoordX = posX / canvas.width;
-      pointer.texcoordY = 1 - posY / canvas.height;
+      pointer.texcoordX = posX / canvas!.width;
+      pointer.texcoordY = 1 - posY / canvas!.height;
       pointer.prevTexcoordX = pointer.texcoordX;
       pointer.prevTexcoordY = pointer.texcoordY;
       pointer.deltaX = 0; pointer.deltaY = 0;
@@ -684,20 +684,20 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
     function updatePointerMoveData(pointer: Pointer, posX: number, posY: number) {
       pointer.prevTexcoordX = pointer.texcoordX;
       pointer.prevTexcoordY = pointer.texcoordY;
-      pointer.texcoordX = posX / canvas.width;
-      pointer.texcoordY = 1 - posY / canvas.height;
+      pointer.texcoordX = posX / canvas!.width;
+      pointer.texcoordY = 1 - posY / canvas!.height;
       pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX);
       pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY);
       pointer.moved = Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0;
     }
 
     function correctDeltaX(delta: number) {
-      const ar = canvas.width / canvas.height;
+      const ar = canvas!.width / canvas!.height;
       return ar < 1 ? delta * ar : delta;
     }
 
     function correctDeltaY(delta: number) {
-      const ar = canvas.width / canvas.height;
+      const ar = canvas!.width / canvas!.height;
       return ar > 1 ? delta / ar : delta;
     }
 
@@ -759,11 +759,11 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
 
     // ---- Resize canvas ----
     function resizeCanvas() {
-      const width = scaleByPixelRatio(canvas.clientWidth);
-      const height = scaleByPixelRatio(canvas.clientHeight);
-      if (canvas.width !== width || canvas.height !== height) {
-        canvas.width = width;
-        canvas.height = height;
+      const width = scaleByPixelRatio(canvas!.clientWidth);
+      const height = scaleByPixelRatio(canvas!.clientHeight);
+      if (canvas!.width !== width || canvas!.height !== height) {
+        canvas!.width = width;
+        canvas!.height = height;
         return true;
       }
       return false;
