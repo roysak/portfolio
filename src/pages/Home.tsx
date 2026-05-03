@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { assetUrl } from "../utils/assetUrl";
-import SketchAnimation from "../components/SketchAnimation";
+import SketchAnimation from "../components/bgfx/SketchAnimation";
 
 export default function Home() {
     return (

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import BGFXRipples from "../components/BGFXRipples";
-import DotRipple from "../components/DotRipple";
-import FluidShader from "../components/FluidShader";
-import FluidShaderImage from "../components/FluidShaderImage";
-import FluidShaderMarble from "../components/FluidShaderMarble";
-import FluidSimulationFX from "../components/FluidSimulationFX";
+import BGFXRipples from "../components/bgfx/BGFXRipples";
+import DotRipple from "../components/bgfx/DotRipple";
+import FluidShader from "../components/bgfx/FluidShader";
+import FluidShaderImage from "../components/bgfx/FluidShaderImage";
+import FluidShaderMarble from "../components/bgfx/FluidShaderMarble";
+import FluidSimulationFX from "../components/bgfx/FluidSimulationFX";
 
 const TABS = [
   { label: "01", props: {} },
