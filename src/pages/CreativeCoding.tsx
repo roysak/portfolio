@@ -57,13 +57,13 @@ const SECTIONS: SectionConfig[] = [
     component: FluidShaderMarble,
     props: { marbleScale: 0.5, marbleSpeed: 0.5 },
   },
+  // {
+  //   label: "06",
+  //   title: "FluidSimulationFX",
+  //   component: FluidSimulationFX,
+  // },
   {
     label: "06",
-    title: "FluidSimulationFX",
-    component: FluidSimulationFX,
-  },
-  {
-    label: "07",
     title: "FluidSimulationHexFX",
     component: FluidSimulationHexFX,
     props: { thickness: 0.005, spacing: 0.08, roundness: 0.1, size: 8.0, bgColor: "#ffffff" },
