@@ -27,14 +27,8 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
       CURL: 30,
       SPLAT_RADIUS: 1,
       SPLAT_FORCE: 10000,
-      SHADING: false,
-      COLORFUL: false,
-      COLOR_UPDATE_SPEED: 1,
       PAUSED: false,
       BACK_COLOR: { r: 255, g: 255, b: 255 },
-      TRANSPARENT: true,
-      BLOOM: false,
-      SUNRAYS: false,
     };
 
     function isMobile() {
@@ -101,11 +95,7 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
     if (!ctx) return;
     const { gl, ext } = ctx;
 
-    if (isMobile()) config.DYE_RESOLUTION = 512;
-    if (!ext.supportLinearFiltering) {
-      config.DYE_RESOLUTION = 512;
-      config.SHADING = false;
-    }
+    if (isMobile() || !ext.supportLinearFiltering) config.DYE_RESOLUTION = 512;
 
     // ---- Pointer ----
     interface Pointer {
@@ -206,25 +196,10 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
 
     const displayShaderSource = `
       precision highp float; precision highp sampler2D;
-      varying vec2 vUv; varying vec2 vL; varying vec2 vR; varying vec2 vT; varying vec2 vB;
-      uniform sampler2D uTexture; uniform vec2 texelSize;
-      vec3 linearToGamma (vec3 color) {
-        color = max(color, vec3(0));
-        return max(1.055 * pow(color, vec3(0.416666667)) - 0.055, vec3(0));
-      }
+      varying vec2 vUv;
+      uniform sampler2D uTexture;
       void main () {
         vec3 c = texture2D(uTexture, vUv).rgb;
-        #ifdef SHADING
-          vec3 lc = texture2D(uTexture, vL).rgb;
-          vec3 rc = texture2D(uTexture, vR).rgb;
-          vec3 tc = texture2D(uTexture, vT).rgb;
-          vec3 bc = texture2D(uTexture, vB).rgb;
-          float dx = length(rc) - length(lc);
-          float dy = length(tc) - length(bc);
-          vec3 n = normalize(vec3(dx, dy, length(texelSize)));
-          float diffuse = clamp(dot(n, vec3(0.0, 0.0, 1.0)) + 0.7, 0.7, 1.0);
-          c *= diffuse;
-        #endif
         float a = max(c.r, max(c.g, c.b));
         gl_FragColor = vec4(c, a);
       }
@@ -342,39 +317,8 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
       }
     `);
 
-    // ---- Display material with keyword support ----
-    interface DisplayMaterial {
-      programs: Record<number, WebGLProgram>;
-      activeProgram: WebGLProgram | null;
-      uniforms: Record<string, WebGLUniformLocation | null>;
-      setKeywords(keywords: string[]): void;
-      bind(): void;
-    }
-
-    const displayMaterial: DisplayMaterial = {
-      programs: {},
-      activeProgram: null,
-      uniforms: {},
-      setKeywords(keywords: string[]) {
-        let hash = 0;
-        for (let i = 0; i < keywords.length; i++) {
-          for (let j = 0; j < keywords[i].length; j++) {
-            hash = (hash << 5) - hash + keywords[i].charCodeAt(j);
-            hash |= 0;
-          }
-        }
-        let program = this.programs[hash];
-        if (!program) {
-          const frag = compileShader(gl.FRAGMENT_SHADER, displayShaderSource, keywords);
-          program = createProgram(baseVertexShader, frag);
-          this.programs[hash] = program;
-        }
-        if (program === this.activeProgram) return;
-        this.uniforms = getUniforms(program);
-        this.activeProgram = program;
-      },
-      bind() { gl.useProgram(this.activeProgram); },
-    };
+    // ---- Display program ----
+    const displayProgram = new GLProgram(baseVertexShader, compileShader(gl.FRAGMENT_SHADER, displayShaderSource));
 
     // ---- Programs ----
     const copyProgram = new GLProgram(baseVertexShader, copyShader);
@@ -509,13 +453,6 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
       pressure = createDoubleFBO(simRes.width, simRes.height, r.internalFormat, r.format, texType, gl.NEAREST);
     }
 
-    function updateKeywords() {
-      const keywords: string[] = [];
-      if (config.SHADING) keywords.push('SHADING');
-      displayMaterial.setKeywords(keywords);
-    }
-
-    updateKeywords();
     initFramebuffers();
     multipleSplats(parseInt(String(Math.random() * 20)) + 5);
 
@@ -599,12 +536,8 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
     }
 
     function drawDisplay(target: FBO | null) {
-      const width = target == null ? gl.drawingBufferWidth : target.width;
-      const height = target == null ? gl.drawingBufferHeight : target.height;
-      displayMaterial.bind();
-      if (config.SHADING)
-        gl.uniform2f(displayMaterial.uniforms.texelSize, 1 / width, 1 / height);
-      gl.uniform1i(displayMaterial.uniforms.uTexture, dye.read.attach(0));
+      displayProgram.bind();
+      gl.uniform1i(displayProgram.uniforms.uTexture, dye.read.attach(0));
       blit(target);
     }
 
@@ -661,11 +594,6 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
         case 5: return [v, p, q];
       }
       return [0, 0, 0];
-    }
-
-    function wrap(value: number, min: number, max: number) {
-      const range = max - min;
-      return range === 0 ? min : (value - min) % range + min;
     }
 
     // ---- Pointer helpers ----
@@ -771,7 +699,6 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
 
     // ---- Main loop ----
     let lastUpdateTime = Date.now();
-    let colorUpdateTimer = 0;
     let animId: number;
 
     function update() {
@@ -780,15 +707,6 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
       lastUpdateTime = now;
 
       if (resizeCanvas()) initFramebuffers();
-
-      // Color cycling
-      if (config.COLORFUL) {
-        colorUpdateTimer += dt * config.COLOR_UPDATE_SPEED;
-        if (colorUpdateTimer >= 1) {
-          colorUpdateTimer = wrap(colorUpdateTimer, 0, 1);
-          pointers.forEach(p => { p.color = generateColor(); });
-        }
-      }
 
       // Apply splat stack
       if (splatStack.length > 0) multipleSplats(splatStack.pop()!);
