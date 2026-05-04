@@ -309,7 +309,7 @@ export default function ReactHooksCheatsheet() {
                 className="text-neutral-400 hover:text-neutral-700 transition-colors p-1.5 rounded-full hover:bg-neutral-200"
                 aria-label="Close"
               >
-                <span className="material-symbols-rounded text-xl! leading-none">close</span>
+                <span className="material-symbols-rounded text-xl! leading-none block!">close</span>
               </button>
             </div>
 
