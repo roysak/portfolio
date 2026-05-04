@@ -6,7 +6,7 @@ import DotRipple from "../components/bgfx/DotRipple";
 import FluidShader from "../components/bgfx/FluidShader";
 import FluidShaderImage from "../components/bgfx/FluidShaderImage";
 import FluidShaderMarble from "../components/bgfx/FluidShaderMarble";
-import FluidSimulationFX from "../components/bgfx/FluidSimulationFX";
+// import FluidSimulationFX from "../components/bgfx/FluidSimulationFX";
 import FluidSimulationHexFX from '../components/bgfx/FluidSimulationHexFX';
 
 interface TabVariant {
