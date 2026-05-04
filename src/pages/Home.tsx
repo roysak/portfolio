@@ -48,6 +48,13 @@ export default function Home() {
                                 <b className="font-semibold text-xl">Works</b>
                                 <p>A curated gallery of craft and code.</p>
                             </Link>
+                            {/* <Link
+                                to="/blog"
+                                className="blur-in blur-in-6 md:grow md:basis-0 inline-flex flex-col items-start gap-2 px-8 py-4 text-neutral-700 text-md rounded-xl transition-all bg-gray-50 hover:bg-primary-50">
+                                <span className="material-symbols-rounded text-primary-600 shrink-0 text-3xl!" aria-hidden="true">edit_note</span>
+                                <b className="font-semibold text-xl">Blog</b>
+                                <p>Guides, cheatsheets, and dev thoughts.</p>
+                            </Link> */}
                             <Link
                                 to="/resume"
                                 className="blur-in blur-in-6 md:grow md:basis-0 inline-flex flex-col items-start gap-2 px-8 py-4 text-neutral-700 text-md rounded-xl transition-all bg-gray-50 hover:bg-primary-50">

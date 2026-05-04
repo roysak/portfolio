@@ -10,6 +10,8 @@ import Applications from "./pages/Applications";
 import Resume from "./pages/Resume";
 import CreativeCoding from "./pages/CreativeCoding";
 import NotFound from "./pages/NotFound";
+import Blog from "./pages/Blog";
+import Article from "./pages/Article";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/works/creative-coding" element={<CreativeCoding />} />
           <Route path="/works/applications" element={<Applications />} />
           <Route path="/resume" element={<Resume />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<Article />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
