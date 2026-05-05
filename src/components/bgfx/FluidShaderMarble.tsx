@@ -162,7 +162,7 @@ interface DoubleFBO {
 export default function FluidShaderMarble({
   viscosity = 0.005,
   colorFade = 0.960,
-  bgColor = '#D1C7DB',
+  bgColor = '#1c1820',
   className,
   marbleScale = 1.0,
   marbleSpeed = 0.08,
