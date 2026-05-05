@@ -14,7 +14,7 @@ export default function Home() {
                                     const images = ["hero.png", "myself03.png"];
                                     const random = Math.random();
                                     const randomImage = images[random < 0.9 ? 0 : Math.floor(random * images.length)];
-                                    return <img src={assetUrl(`/img/${randomImage}`)} alt="A portrait of the developer" className="w-full max-w-100 md:max-w-140 m-auto" />;
+                                    return <img src={assetUrl(`/img/${randomImage}`)} fetchPriority="high" alt="A portrait of the developer" className="w-full max-w-100 md:max-w-140 m-auto" />;
                                 })()}
 							</div>
                             <div className="flex flex-col w-full lg:w-auto gap-6 md:gap-6 items-stretch px-6 py-6">
