@@ -127,7 +127,7 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
         {/* ── PIN mode ────────────────────────────────────────────────────── */}
         {MODE === "pin" && (
           <div className={`flex flex-col items-center gap-4 ${shaking ? "animate-shake" : ""}`}>
-            <img src={assetUrl(typing ? '/img/surprised.gif' : '/img/protected.gif')} alt="Protected" className="w-full" />
+            {/* <img src={assetUrl(typing ? '/img/surprised.gif' : '/img/protected.gif')} alt="Protected" className="w-full" /> */}
             <div className="flex gap-3">
               {pin.map((digit, i) => (
                 <input
