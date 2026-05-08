@@ -22,6 +22,16 @@ export const articles: Article[] = [
     readingTime: "7 min read",
   },
   {
+    slug: "typescript-array-cheatsheet",
+    title: "TypeScript Array Cheatsheet",
+    description:
+      "A comprehensive reference for TypeScript array methods — creation, mutation, search, iteration, transformation, and the new immutable ES2023 methods, all with typed examples.",
+    date: "2026-05-08",
+    category: "TypeScript",
+    tags: ["TypeScript", "Arrays", "JavaScript", "Frontend"],
+    readingTime: "9 min read",
+  },
+  {
     slug: "heuristic-evaluation",
     title: "Heuristic Evaluation",
     description:

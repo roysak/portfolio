@@ -9,6 +9,9 @@ const articleComponents: Record<string, React.LazyExoticComponent<FC>> = {
   "javascript-async-cheatsheet": lazy(
     () => import("../articles/JavaScriptAsyncCheatsheet")
   ),
+  "typescript-array-cheatsheet": lazy(
+    () => import("../articles/TypeScriptArrayCheatsheet")
+  ),
   "heuristic-evaluation": lazy(
     () => import("../articles/HeuristicEvaluation")
   ),
