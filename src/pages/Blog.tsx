@@ -14,16 +14,16 @@ const ALL_CATEGORIES: ArticleCategory[] = [
   "CSS",
 ];
 
-const categoryIcon: Record<ArticleCategory, string> = {
-  "All":        "layers",
-  "UX & Design":"design_services",
-  "JavaScript": "js",
-  "TypeScript": "code",
-  "React":      "hub",
-  "Angular":    "change_history",
-  "Frontend":   "devices",
-  "CSS":        "palette",
-};
+// const categoryIcon: Record<ArticleCategory, string> = {
+//   "All":        "layers",
+//   "UX & Design":"design_services",
+//   "JavaScript": "js",
+//   "TypeScript": "code",
+//   "React":      "hub",
+//   "Angular":    "change_history",
+//   "Frontend":   "devices",
+//   "CSS":        "palette",
+// };
 
 export default function Blog() {
   const [active, setActive] = useState<ArticleCategory>("All");
