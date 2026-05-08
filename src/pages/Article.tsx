@@ -6,6 +6,12 @@ const articleComponents: Record<string, React.LazyExoticComponent<FC>> = {
   "react-hooks-cheatsheet": lazy(
     () => import("../articles/ReactHooksCheatsheet")
   ),
+  "javascript-async-cheatsheet": lazy(
+    () => import("../articles/JavaScriptAsyncCheatsheet")
+  ),
+  "heuristic-evaluation": lazy(
+    () => import("../articles/HeuristicEvaluation")
+  ),
 };
 
 export default function Article() {
