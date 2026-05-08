@@ -17,7 +17,7 @@ const CATMULL_TENSION = 0.5;   // ← TENSION: spline roundness (0 = straight, 0
 const STROKE_WIDTH = 2;  // main line thickness in px
 
 // const SYMBOLS = '10codevvarletfunction#@$%&*(){}<>!?/\\^~|=+[];:\''.split('');
-const SYMBOLS = 'I can create images and write code'.split('');
+const SYMBOLS = 'I design and build digital experiences'.split('');
 
 // ── Colormap palette (256 steps, rainbow) ─────────────────────────────────
 const PALETTE = colormap({
