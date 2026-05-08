@@ -11,11 +11,13 @@ const MAX_SCATTER   = 40;    // px max scatter distance
 const SYM_BASE_SIZE = 16;    // base font size in px
 const SYM_ZOOM_IN   = 3.2;   // max scale for symbols flying toward viewer
 const SYM_ZOOM_OUT  = 0.25;  // min scale for symbols flying away from viewer
-const MIN_MOVE_SQ   = 20;    // skip point if moved less than ~4.5 px
-const JITTER        = 0.5;   // px of sketch wobble per stroke pass
+const MIN_MOVE_SQ     = 250;    // skip point if moved less than ~4.5 px
+const SMOOTH_PASSES   = 4;     // ← SMOOTHNESS: Laplacian passes (0 = off, 1–8 range)
+const CATMULL_TENSION = 0.5;   // ← TENSION: spline roundness (0 = straight, 0.5 = standard, 1 = very round)
+const STROKE_WIDTH = 2;  // main line thickness in px
 
-// const SYMBOLS = '10#@$%&*(){}<>!?/\\^~|=+[];:\'",.`'.split('');
-const SYMBOLS = '10codevvarletfunction#@$%&*(){}<>!?/\\^~|=+[];:\''.split('');
+// const SYMBOLS = '10codevvarletfunction#@$%&*(){}<>!?/\\^~|=+[];:\''.split('');
+const SYMBOLS = 'I can create images and write code'.split('');
 
 // ── Colormap palette (256 steps, rainbow) ─────────────────────────────────
 const PALETTE = colormap({
@@ -48,9 +50,26 @@ function getScatterAngle(x: number, y: number): number {
   return stableHash(x, y, 3) * Math.PI * 2;
 }
 
-// Deterministic sub-pixel wobble — stable per point position + pass seed
-function jit(x: number, y: number, seed: number): number {
-  return (stableHash(x, y, seed) - 0.5) * 2 * JITTER;
+/**
+ * Weighted Laplacian smoothing — each interior point is blended toward
+ * the average of its two neighbours.  More passes = smoother path.
+ */
+function smoothTrail(pts: Pt[], passes: number): Pt[] {
+  if (passes === 0 || pts.length < 3) return pts;
+  let result = pts.slice();
+  for (let p = 0; p < passes; p++) {
+    const next: Pt[] = [result[0]];
+    for (let i = 1; i < result.length - 1; i++) {
+      next.push({
+        x: result[i - 1].x * 0.25 + result[i].x * 0.5 + result[i + 1].x * 0.25,
+        y: result[i - 1].y * 0.25 + result[i].y * 0.5 + result[i + 1].y * 0.25,
+        t: result[i].t,
+      });
+    }
+    next.push(result[result.length - 1]);
+    result = next;
+  }
+  return result;
 }
 
 // ── React Component ───────────────────────────────────────────────────────
@@ -100,37 +119,38 @@ export default function SketchAnimation() {
         ctx.lineCap  = 'round';
         ctx.lineJoin = 'round';
 
-        // ── Phase 1: sketch strokes (fade out by SYM_START) ────────────
+        // Smooth trail positions before drawing (keeps original trail for aging)
+        const drawTrail = smoothTrail(trail, SMOOTH_PASSES);
+
+        // ── Phase 1: smooth strokes via Catmull-Rom → cubic Bezier ────────
         for (let pass = 0; pass < 2; pass++) {
-          for (let i = 1; i < trail.length; i++) {
-            const a   = trail[i - 1];
-            const b   = trail[i];
-            const age = now - a.t;
+          for (let i = 1; i < drawTrail.length; i++) {
+            const p0 = drawTrail[Math.max(0, i - 2)];
+            const p1 = drawTrail[i - 1];
+            const p2 = drawTrail[i];
+            const p3 = drawTrail[Math.min(drawTrail.length - 1, i + 1)];
+
+            const age = now - p1.t;
             if (age >= SYM_START) continue;
 
             const t     = age / SYM_START;
             const alpha = Math.max(0, 1 - t * t);
             if (alpha < 0.01) continue;
 
-            const ax = a.x + jit(a.x, a.y, pass);
-            const ay = a.y + jit(a.x, a.y, pass + 7);
+            // Catmull-Rom → cubic Bezier (CATMULL_TENSION controls roundness)
+            const cp1x = p1.x + (p2.x - p0.x) * CATMULL_TENSION / 3;
+            const cp1y = p1.y + (p2.y - p0.y) * CATMULL_TENSION / 3;
+            const cp2x = p2.x - (p3.x - p1.x) * CATMULL_TENSION / 3;
+            const cp2y = p2.y - (p3.y - p1.y) * CATMULL_TENSION / 3;
 
-            const prev = i >= 2 ? trail[i - 2] : a;
-            const smx  = (prev.x + a.x) * 0.5 + jit(prev.x, prev.y, pass + 2);
-            const smy  = (prev.y + a.y) * 0.5 + jit(prev.y, prev.x, pass + 9);
-            const emx  = (a.x + b.x)   * 0.5 + jit(a.x, a.y, pass + 3);
-            const emy  = (a.y + b.y)   * 0.5 + jit(a.y, a.x, pass + 10);
-
-            // Position along trail (0 = tail, 1 = head) → colormap index
-            const trailT      = trail.length > 1 ? i / (trail.length - 1) : 0;
+            const trailT      = drawTrail.length > 1 ? i / (drawTrail.length - 1) : 0;
             const strokeAlpha = alpha * (pass === 0 ? 0.85 : 0.40);
-            ctx.strokeStyle = palColor(trailT, strokeAlpha);
-            // ctx.lineWidth   = pass === 0 ? 1.6 : 0.9;
-            ctx.lineWidth   = pass === 0 ? 3 : 2;
+            ctx.strokeStyle   = palColor(trailT, strokeAlpha);
+            ctx.lineWidth     = pass === 0 ? STROKE_WIDTH : STROKE_WIDTH * 1.5;
 
             ctx.beginPath();
-            ctx.moveTo(smx, smy);
-            ctx.quadraticCurveTo(ax, ay, emx, emy);
+            ctx.moveTo(p1.x, p1.y);
+            ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
             ctx.stroke();
           }
         }
@@ -139,9 +159,9 @@ export default function SketchAnimation() {
         ctx.textBaseline = 'middle';
         ctx.textAlign    = 'center';
 
-        for (let i = 1; i < trail.length; i++) {
-          const a   = trail[i - 1];
-          const b   = trail[i];
+        for (let i = 1; i < drawTrail.length; i++) {
+          const a   = drawTrail[i - 1];
+          const b   = drawTrail[i];
           const age = now - a.t;
           if (age < SYM_START || age >= SYM_END) continue;
 
