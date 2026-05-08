@@ -22,6 +22,26 @@ export const articles: Article[] = [
     readingTime: "7 min read",
   },
   {
+    slug: "typescript-data-types",
+    title: "TypeScript Data Types",
+    description:
+      "A deep-dive reference into TypeScript's structural type system — generics, conditional types, mapped types, index types, type guards, class types, and function signatures with practical examples.",
+    date: "2026-05-08",
+    category: "TypeScript",
+    tags: ["TypeScript", "Generics", "Type Guards", "Frontend"],
+    readingTime: "11 min read",
+  },
+  {
+    slug: "typescript-variable-types",
+    title: "TypeScript Variable Types",
+    description:
+      "A complete reference to TypeScript's type system — primitives, special types, unions, intersections, literal types, interfaces, and all essential utility types with practical examples.",
+    date: "2026-05-08",
+    category: "TypeScript",
+    tags: ["TypeScript", "Types", "Generics", "Frontend"],
+    readingTime: "10 min read",
+  },
+  {
     slug: "typescript-array-cheatsheet",
     title: "TypeScript Array Cheatsheet",
     description:
@@ -29,6 +49,36 @@ export const articles: Article[] = [
     date: "2026-05-08",
     category: "TypeScript",
     tags: ["TypeScript", "Arrays", "JavaScript", "Frontend"],
+    readingTime: "9 min read",
+  },
+  {
+    slug: "laws-of-ux",
+    title: "Laws of UX",
+    description:
+      "A practical reference to the psychological principles that govern how people perceive and interact with interfaces — covering cognitive load, Gestalt principles, memory, attention, and behavioural motivation.",
+    date: "2026-05-09",
+    category: "UX & Design",
+    tags: ["UX", "Psychology", "Design", "Usability"],
+    readingTime: "11 min read",
+  },
+  {
+    slug: "design-sprint",
+    title: "Design Sprint",
+    description:
+      "A complete reference to the Google Ventures Design Sprint — team roles, all five days in detail, core sprint techniques, and how to synthesise results and decide next steps.",
+    date: "2026-05-09",
+    category: "UX & Design",
+    tags: ["UX", "Design Sprint", "Prototyping", "Research"],
+    readingTime: "10 min read",
+  },
+  {
+    slug: "design-thinking",
+    title: "Design Thinking",
+    description:
+      "A complete reference to the Design Thinking process — the 5 stages, research methods, ideation techniques, prototyping approaches, and testing strategies with real-world examples.",
+    date: "2026-05-09",
+    category: "UX & Design",
+    tags: ["UX", "Design Thinking", "Research", "Prototyping"],
     readingTime: "9 min read",
   },
   {
