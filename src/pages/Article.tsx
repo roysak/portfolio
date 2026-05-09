@@ -36,6 +36,9 @@ const articleComponents: Record<string, React.LazyExoticComponent<FC>> = {
   "css-specificity": lazy(
     () => import("../articles/CSSSpecificity")
   ),
+  "color-theory": lazy(
+    () => import("../articles/ColorTheory")
+  ),
 };
 
 export default function Article() {

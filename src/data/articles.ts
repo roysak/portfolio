@@ -111,4 +111,14 @@ export const articles: Article[] = [
     tags: ["CSS", "Specificity", "Cascade", "Frontend"],
     readingTime: "10 min read",
   },
+  {
+    slug: "color-theory",
+    title: "Color Theory",
+    description:
+      "A comprehensive reference to color theory for designers and developers — color models, the color wheel, harmonies, properties, contrast and accessibility, color psychology, and modern CSS color formats including oklch and wide-gamut.",
+    date: "2026-05-09",
+    category: "UX & Design",
+    tags: ["Color", "Design", "CSS", "Accessibility"],
+    readingTime: "13 min read",
+  },
 ];
