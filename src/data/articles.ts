@@ -91,4 +91,14 @@ export const articles: Article[] = [
     tags: ["UX", "Usability", "Design", "Research"],
     readingTime: "6 min read",
   },
+  {
+    slug: "design-systems",
+    title: "Design Systems",
+    description:
+      "A comprehensive reference covering all essential aspects of a design system — color, typography, spacing, layout, iconography, motion, tokens, component architecture, accessibility, and governance.",
+    date: "2026-05-09",
+    category: "UX & Design",
+    tags: ["Design Systems", "Tokens", "Accessibility", "UX"],
+    readingTime: "14 min read",
+  },
 ];

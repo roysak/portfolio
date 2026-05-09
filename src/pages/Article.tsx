@@ -30,6 +30,9 @@ const articleComponents: Record<string, React.LazyExoticComponent<FC>> = {
   "heuristic-evaluation": lazy(
     () => import("../articles/HeuristicEvaluation")
   ),
+  "design-systems": lazy(
+    () => import("../articles/DesignSystems")
+  ),
 };
 
 export default function Article() {
