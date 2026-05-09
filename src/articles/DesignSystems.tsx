@@ -1,21 +1,7 @@
-import { useState, useEffect } from "react";
+import { CategorizedArticle, UX_LABELS } from "./components";
+import type { TopicItem } from "./components";
 
-interface TopicVariation {
-  title: string;
-  code: string;
-}
-
-interface TopicData {
-  name: string;
-  category: string;
-  description: string;
-  syntax: string;
-  notes: string;
-  returns: string;
-  variations: TopicVariation[];
-}
-
-const topicsData: TopicData[] = [
+const topicsData: TopicItem[] = [
   // ── Foundation ────────────────────────────────────────────────────────────
   {
     name: "Color System", category: "Foundation",
@@ -225,152 +211,12 @@ const categoryColor: Record<string, string> = {
 };
 
 export default function DesignSystems() {
-  const [selectedTopic, setSelectedTopic] = useState<TopicData | null>(null);
-  const [openVariation, setOpenVariation] = useState<number | null>(0);
-
-  const categories = Array.from(new Set(topicsData.map((t) => t.category)));
-
-  useEffect(() => {
-    setOpenVariation(0);
-  }, [selectedTopic]);
-
-  useEffect(() => {
-    document.body.style.overflow = selectedTopic ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [selectedTopic]);
-
   return (
-    <>
-      {categories.map((cat) => (
-        <section key={cat} className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <h2 className="text-lg font-semibold text-neutral-800">{cat}</h2>
-            <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${categoryColor[cat]}`}>
-              {topicsData.filter((t) => t.category === cat).length} topics
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {topicsData
-              .filter((t) => t.category === cat)
-              .map((topic) => (
-                <button
-                  key={topic.name}
-                  onClick={() => setSelectedTopic(topic)}
-                  className="group flex flex-col gap-3 rounded-xl border border-neutral-200 bg-white p-5 text-left transition-all hover:border-primary-300 hover:shadow-md hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-primary-600"
-                >
-                  <span className="text-base font-semibold text-neutral-800 group-hover:text-primary-700 transition-colors leading-tight">
-                    {topic.name}
-                  </span>
-                  <span className={`self-start text-xs font-semibold px-2.5 py-0.5 rounded-full ${categoryColor[topic.category]}`}>
-                    {topic.category}
-                  </span>
-                </button>
-              ))}
-          </div>
-        </section>
-      ))}
-
-      {/* Legend */}
-      <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-500">
-        <span className="font-medium text-neutral-400 uppercase tracking-wide">Category</span>
-        {Object.entries(categoryColor).map(([cat, cls]) => (
-          <span key={cat} className={`px-2.5 py-0.5 rounded-full font-semibold ${cls}`}>
-            {cat}
-          </span>
-        ))}
-      </div>
-
-      {/* Modal */}
-      {selectedTopic && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-900/50 backdrop-blur-sm"
-          onClick={() => setSelectedTopic(null)}
-        >
-          <div
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-neutral-100 bg-neutral-50">
-              <div className="flex items-center gap-3">
-                <h2 className="text-xl font-semibold text-neutral-900">{selectedTopic.name}</h2>
-                <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${categoryColor[selectedTopic.category]}`}>
-                  {selectedTopic.category}
-                </span>
-              </div>
-              <button
-                onClick={() => setSelectedTopic(null)}
-                className="text-neutral-400 hover:text-neutral-700 transition-colors p-1.5 rounded-full hover:bg-neutral-200"
-                aria-label="Close"
-              >
-                <span className="material-symbols-rounded text-xl! leading-none block!">close</span>
-              </button>
-            </div>
-
-            {/* Modal body */}
-            <div className="p-6 max-h-[78vh] overflow-y-auto flex flex-col gap-6">
-              <p className="text-neutral-600 leading-relaxed">{selectedTopic.description}</p>
-
-              {/* Summary */}
-              <div>
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">Summary</p>
-                <pre className="bg-neutral-950 text-neutral-100 rounded-xl p-4 overflow-x-auto text-sm font-mono" style={{ userSelect: "text" }}>
-                  <code>{selectedTopic.syntax}</code>
-                </pre>
-              </div>
-
-              {/* Notes */}
-              <div>
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">Notes</p>
-                <p className="text-sm text-neutral-600 leading-relaxed bg-neutral-50 border border-neutral-100 rounded-xl p-4">
-                  {selectedTopic.notes}
-                </p>
-              </div>
-
-              {/* Outcome */}
-              <div>
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">Outcome</p>
-                <p className="text-sm text-neutral-600 leading-relaxed bg-neutral-50 border border-neutral-100 rounded-xl p-4">
-                  {selectedTopic.returns}
-                </p>
-              </div>
-
-              {/* Examples accordion */}
-              <div>
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">Examples</p>
-                <div className="rounded-xl border border-neutral-200 overflow-hidden divide-y divide-neutral-100">
-                  {selectedTopic.variations.map((variation, index) => {
-                    const isOpen = openVariation === index;
-                    return (
-                      <div key={index} className="bg-neutral-50">
-                        <button
-                          onClick={() => setOpenVariation(isOpen ? null : index)}
-                          className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-neutral-100 transition-colors"
-                        >
-                          <span className="text-sm font-semibold text-neutral-700">{variation.title}</span>
-                          <span
-                            className={`material-symbols-rounded text-base! text-neutral-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-                          >
-                            expand_more
-                          </span>
-                        </button>
-                        {isOpen && (
-                          <div className="px-4 pb-4 pt-1 bg-white">
-                            <pre className="bg-neutral-950 text-neutral-100 rounded-xl p-4 overflow-x-auto text-xs font-mono" style={{ userSelect: "text" }}>
-                              <code>{variation.code}</code>
-                            </pre>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+    <CategorizedArticle
+      items={topicsData}
+      badgeColors={categoryColor}
+      legendLabel="Category"
+      labels={UX_LABELS}
+    />
   );
 }

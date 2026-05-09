@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { FlatArticle, API_LABELS } from "./components";
+import type { TopicItem } from "./components";
 
 interface HookVariation {
   title: string;
@@ -234,148 +235,25 @@ const versionColor: Record<string, string> = {
   "19.0": "bg-amber-100 text-amber-700",
 };
 
+// Map HookData → TopicItem for the template
+const items: TopicItem[] = hooksData.map((h) => ({
+  name: h.name,
+  category: h.version,
+  description: h.description,
+  syntax: h.syntax,
+  notes: h.args,
+  returns: h.returns,
+  variations: h.variations,
+}));
+
 export default function ReactHooksCheatsheet() {
-  const [selectedHook, setSelectedHook] = useState<HookData | null>(null);
-  const [openVariation, setOpenVariation] = useState<number | null>(0);
-
-  useEffect(() => {
-    setOpenVariation(0);
-  }, [selectedHook]);
-
-  // Lock body scroll while modal is open
-  useEffect(() => {
-    if (selectedHook) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
-  }, [selectedHook]);
-
   return (
-    <>
-      {/* Hook grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-        {hooksData.map((hook) => (
-          <button
-            key={hook.name}
-            onClick={() => setSelectedHook(hook)}
-            className="group flex flex-col gap-3 rounded-xl border border-neutral-200 bg-white p-5 text-left transition-all hover:border-primary-300 hover:shadow-md hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-primary-600"
-          >
-            <span className="text-base font-semibold text-neutral-800 group-hover:text-primary-700 transition-colors leading-tight">
-              {hook.name}
-            </span>
-            <span
-              className={`self-start text-xs font-semibold px-2.5 py-0.5 rounded-full ${versionColor[hook.version] ?? "bg-neutral-100 text-neutral-600"}`}
-            >
-              v{hook.version}
-            </span>
-          </button>
-        ))}
-      </div>
-
-      {/* Legend */}
-      <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-neutral-500">
-        <span className="font-medium text-neutral-400 uppercase tracking-wide">React version</span>
-        {Object.entries(versionColor).map(([v, cls]) => (
-          <span key={v} className={`px-2.5 py-0.5 rounded-full font-semibold ${cls}`}>
-            v{v}
-          </span>
-        ))}
-      </div>
-
-      {/* Modal */}
-      {selectedHook && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-900/50 backdrop-blur-sm"
-          onClick={() => setSelectedHook(null)}
-        >
-          <div
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-neutral-100 bg-neutral-50">
-              <div className="flex items-center gap-3">
-                <h2 className="text-xl font-semibold text-neutral-900">{selectedHook.name}</h2>
-                <span
-                  className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${versionColor[selectedHook.version] ?? "bg-neutral-100 text-neutral-600"}`}
-                >
-                  v{selectedHook.version}
-                </span>
-              </div>
-              <button
-                onClick={() => setSelectedHook(null)}
-                className="text-neutral-400 hover:text-neutral-700 transition-colors p-1.5 rounded-full hover:bg-neutral-200"
-                aria-label="Close"
-              >
-                <span className="material-symbols-rounded text-xl! leading-none block!">close</span>
-              </button>
-            </div>
-
-            {/* Modal body */}
-            <div className="p-6 max-h-[78vh] overflow-y-auto flex flex-col gap-6">
-              <p className="text-neutral-600 leading-relaxed">{selectedHook.description}</p>
-
-              {/* Syntax */}
-              <div>
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">Syntax</p>
-                <pre className="bg-neutral-950 text-neutral-100 rounded-xl p-4 overflow-x-auto text-sm font-mono" style={{ userSelect: "text" }}>
-                  <code>{selectedHook.syntax}</code>
-                </pre>
-              </div>
-
-              {/* Arguments */}
-              <div>
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">Arguments</p>
-                <p className="text-sm text-neutral-600 leading-relaxed bg-neutral-50 border border-neutral-100 rounded-xl p-4">
-                  {selectedHook.args}
-                </p>
-              </div>
-
-              {/* Returns */}
-              <div>
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">Returns</p>
-                <p className="text-sm text-neutral-600 leading-relaxed bg-neutral-50 border border-neutral-100 rounded-xl p-4">
-                  {selectedHook.returns}
-                </p>
-              </div>
-
-              {/* Variations accordion */}
-              <div>
-                <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">Variations / Usage</p>
-                <div className="rounded-xl border border-neutral-200 overflow-hidden divide-y divide-neutral-100">
-                  {selectedHook.variations.map((variation, index) => {
-                    const isOpen = openVariation === index;
-                    return (
-                      <div key={index} className="bg-neutral-50">
-                        <button
-                          onClick={() => setOpenVariation(isOpen ? null : index)}
-                          className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-neutral-100 transition-colors"
-                        >
-                          <span className="text-sm font-semibold text-neutral-700">{variation.title}</span>
-                          <span
-                            className={`material-symbols-rounded text-base! text-neutral-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-                          >
-                            expand_more
-                          </span>
-                        </button>
-                        {isOpen && (
-                          <div className="px-4 pb-4 pt-1 bg-white">
-                            <pre className="bg-neutral-950 text-neutral-100 rounded-xl p-4 overflow-x-auto text-xs font-mono" style={{ userSelect: "text" }}>
-                              <code>{variation.code}</code>
-                            </pre>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+    <FlatArticle
+      items={items}
+      badgeColors={versionColor}
+      legendLabel="React version"
+      badgePrefix="v"
+      labels={API_LABELS}
+    />
   );
 }

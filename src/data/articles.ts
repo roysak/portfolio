@@ -101,4 +101,14 @@ export const articles: Article[] = [
     tags: ["Design Systems", "Tokens", "Accessibility", "UX"],
     readingTime: "14 min read",
   },
+  {
+    slug: "css-specificity",
+    title: "CSS Specificity",
+    description:
+      "A complete reference to CSS specificity — the (A,B,C) scoring model, all selector weights, inline styles, !important, cascade layers, and special selectors like :where(), :is(), :not(), and :has().",
+    date: "2026-05-09",
+    category: "CSS",
+    tags: ["CSS", "Specificity", "Cascade", "Frontend"],
+    readingTime: "10 min read",
+  },
 ];
