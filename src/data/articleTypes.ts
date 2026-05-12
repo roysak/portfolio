@@ -6,7 +6,8 @@ export type ArticleCategory =
   | "React"
   | "Angular"
   | "Frontend"
-  | "CSS";
+  | "CSS"
+  | "HTML";
 
 export interface Article {
   slug: string;

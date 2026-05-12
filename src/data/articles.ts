@@ -42,6 +42,16 @@ export const articles: Article[] = [
     readingTime: "10 min read",
   },
   {
+    slug: "typescript-cheatsheet",
+    title: "TypeScript Cheatsheet",
+    description:
+      "A practical reference to TypeScript's core language features — type annotations, inference, assertions, enums, generics, classes, and advanced type-level operators like keyof, infer, mapped types, and template literal types.",
+    date: "2026-05-12",
+    category: "TypeScript",
+    tags: ["TypeScript", "Generics", "Classes", "Frontend"],
+    readingTime: "10 min read",
+  },
+  {
     slug: "typescript-array-cheatsheet",
     title: "TypeScript Array Cheatsheet",
     description:
@@ -50,6 +60,16 @@ export const articles: Article[] = [
     category: "TypeScript",
     tags: ["TypeScript", "Arrays", "JavaScript", "Frontend"],
     readingTime: "9 min read",
+  },
+  {
+    slug: "html-cheatsheet",
+    title: "HTML Cheatsheet",
+    description:
+      "A comprehensive reference to modern HTML — document structure, semantic layout, text elements, forms, media, interactive elements (dialog, popover), global attributes, and accessibility (ARIA, Web Components).",
+    date: "2026-05-12",
+    category: "HTML",
+    tags: ["HTML", "HTML5", "Accessibility", "Web Components", "Frontend"],
+    readingTime: "12 min read",
   },
   {
     slug: "laws-of-ux",
@@ -100,6 +120,16 @@ export const articles: Article[] = [
     category: "UX & Design",
     tags: ["Design Systems", "Tokens", "Accessibility", "UX"],
     readingTime: "14 min read",
+  },
+  {
+    slug: "css-cheatsheet",
+    title: "CSS Cheatsheet",
+    description:
+      "A practical reference to modern CSS — layout (Flexbox, Grid, positioning), the box model, typography, visual effects (shadows, filters, gradients), transforms, animations, selectors, media queries, and cascade layers.",
+    date: "2026-05-12",
+    category: "CSS",
+    tags: ["CSS", "Flexbox", "Grid", "Animation", "Frontend"],
+    readingTime: "11 min read",
   },
   {
     slug: "css-specificity",

@@ -9,6 +9,9 @@ const articleComponents: Record<string, React.LazyExoticComponent<FC>> = {
   "javascript-async-cheatsheet": lazy(
     () => import("../articles/JavaScriptAsyncCheatsheet")
   ),
+  "typescript-cheatsheet": lazy(
+    () => import("../articles/TypeScriptCheatsheet")
+  ),
   "typescript-data-types": lazy(
     () => import("../articles/TypeScriptDataTypes")
   ),
@@ -17,6 +20,9 @@ const articleComponents: Record<string, React.LazyExoticComponent<FC>> = {
   ),
   "typescript-array-cheatsheet": lazy(
     () => import("../articles/TypeScriptArrayCheatsheet")
+  ),
+  "html-cheatsheet": lazy(
+    () => import("../articles/HTMLCheatsheet")
   ),
   "laws-of-ux": lazy(
     () => import("../articles/LawsOfUX")
@@ -32,6 +38,9 @@ const articleComponents: Record<string, React.LazyExoticComponent<FC>> = {
   ),
   "design-systems": lazy(
     () => import("../articles/DesignSystems")
+  ),
+  "css-cheatsheet": lazy(
+    () => import("../articles/CSSCheatsheet")
   ),
   "css-specificity": lazy(
     () => import("../articles/CSSSpecificity")
