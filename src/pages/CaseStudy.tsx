@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import caseStudy01 from "../data/caseStudy01";
 import caseStudy02 from "../data/caseStudy02";
+import caseStudy03 from "../data/caseStudy03";
 import type { CaseStudyPageData } from "../data/caseStudyTypes";
 import CaseStudyHero from "../components/casestudy/CaseStudyHero";
 import CaseStudyInPageNav from "../components/casestudy/CaseStudyInPageNav";
@@ -10,6 +11,7 @@ import { ModalProvider } from "../components/casestudy/ModalContext";
 const CASE_STUDY_DATA: Record<string, CaseStudyPageData> = {
   "01": caseStudy01,
   "02": caseStudy02,
+  "03": caseStudy03,
 };
 
 export default function CaseStudy() {

@@ -42,6 +42,18 @@ const caseStudies: CaseStudy[] = [
         description:
             "Transforming a complex, code-based dashboard configuration process into an intuitive visual builder",
         tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],
+        color: "bg-[#ebdba3] border-2 border-[#ebdba3]",
+        shadow: "shadow-[#ebdba3]/10",
+        image: "/img/dashboard-builder.png",
+    },
+    {
+        id: 3,
+        link: "03",
+        title: "Insurance Claims Validation Platform",
+        client: "Intelligent Automation Platform",
+        description:
+            "Built a hybrid rule-engine and LLM platform to automate insurance claim validation and reduce manual review time.",
+        tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],
         color: "bg-[#b7ce85] border-2 border-[#b7ce85]",
         shadow: "shadow-[#b7ce85]/10",
         image: "/img/dashboard-builder.png",
