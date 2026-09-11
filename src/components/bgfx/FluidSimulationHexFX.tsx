@@ -795,6 +795,7 @@ export default function FluidSimulationHexFX({
       canvas.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('keydown', handleKeyDown);
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, []);
 

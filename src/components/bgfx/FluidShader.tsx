@@ -367,6 +367,7 @@ export default function FluidShader({
       pressure.read.dispose(); pressure.write.dispose();
       divergence.dispose();
       renderer.dispose();
+      renderer.forceContextLoss();
       if (container.contains(canvas)) container.removeChild(canvas);
     };
   }, []);

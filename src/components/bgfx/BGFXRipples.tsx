@@ -267,6 +267,7 @@ export default function BGFXRipples({
       container.removeEventListener('mousemove', onMouseMove);
       container.removeEventListener('touchmove', onTouchMove);
       renderer.dispose();
+      renderer.forceContextLoss();
       material.dispose();
       container.removeChild(renderer.domElement);
       stateRef.current = null;

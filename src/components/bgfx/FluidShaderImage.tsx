@@ -346,6 +346,7 @@ export default function FluidShaderImage({
       fallbackMaskTex.dispose();
       loadedMaskTex?.dispose();
       renderer.dispose();
+      renderer.forceContextLoss();
       if (container.contains(canvas)) container.removeChild(canvas);
     };
   }, []);
