@@ -12,7 +12,7 @@ export default function Resume() {
               Roys A Kareem
             </h1>
             <p className="text-xl text-primary-600 font-medium mb-5">
-              Product Designer · UX Designer · Frontend Developer
+              Product Designer • Frontend Developer • AI-Integrated Product Design
             </p>
             <div className="flex flex-wrap gap-4 text-neutral-500">
               <a href="tel:+919846666988" className="inline-flex items-center gap-1.5 hover:text-primary-600 transition-colors">
@@ -72,6 +72,14 @@ export default function Resume() {
                 </div>
               </div>
               <div>
+                <p className="font-semibold text-neutral-800 uppercase tracking-wide mb-2">AI & Backend</p>
+                <div className="flex flex-wrap gap-x-4">
+                  {["Python", "FastAPI", "LLM Pipelines", "Prompt Engineering", "Elasticsearch", "OpenAI API"].map(s => (
+                    <span key={s} className="py-1 text-neutral-700">{s}</span>
+                  ))}
+                </div>
+              </div>
+              <div>
                 <p className="font-semibold text-neutral-800 uppercase tracking-wide mb-2">Tools</p>
                 <div className="flex flex-wrap gap-x-4">
                   {["Figma", "Adobe XD", "GitHub Copilot", "Claude", "Gemini", "AI-Assisted Dev"].map(s => (
@@ -95,6 +103,7 @@ export default function Resume() {
             <h2 className="text-2xl font-semibold tracking-widest text-primary-600 uppercase mb-4">Certifications</h2>
             <ul className="flex flex-col gap-3">
               {[
+                { name: "Claude Certified Developer", issuer: "Anthropic", year: "2026" },
                 { name: "Google UX Design", issuer: "Google", year: "2023" },
                 { name: "Claude Code in Action", issuer: "Anthropic", year: "2026" },
                 { name: "Enterprise Design Thinking Practitioner", issuer: "IBM", year: "2023" },
@@ -127,6 +136,7 @@ export default function Resume() {
             <h2 className="text-2xl font-semibold tracking-widest text-primary-600 uppercase mb-4">Key Achievements</h2>
             <ul className="flex flex-col gap-3">
               {[
+                "Built an AI-driven claims validation platform automating rule derivation and claim adjudication",
                 "Reduced design-to-development cycle time by ~40% using AI-assisted workflows",
                 "Built scalable design systems adopted across multiple enterprise applications",
                 "Improved workflow efficiency and usability in automation platforms",
@@ -152,7 +162,29 @@ export default function Resume() {
                   <span className="text-neutral-400 shrink-0">Dec 2016 – Present</span>
                 </div>
 
-                {/* SmartOps */}
+                {/* SmartOps - Healthcare */}
+                <div className="border-l-2 border-primary-200 pl-4 mb-12">
+                  <p className="font-semibold text-primary-600 uppercase tracking-wide mb-0.5">Product: Healthcare Claims Validation Platform</p>
+                  <p className="text-neutral-400 mb-1">Automation Workflow Builder · AI Marketplace · Dashboard Builder</p>
+                  <p className="font-medium text-neutral-700 mb-2">Specialist I - UX Design / Full-Stack Development <span className="font-normal text-neutral-400">· May 2026 – Present</span></p>
+                  <ul className="flex flex-col gap-1.5">
+                    {[
+                      "Built an AI claims validation platform to automate healthcare benefit adjudication.",
+                      "Architected a hybrid validation combining a two-stage LLM pipeline with a Python rule engine.",
+                      "Created rule lifecycle management and human-in-the-loop workflows for expert review.",
+                      "Built semantic retrieval mapping benefits to claim codes via Elasticsearch hybrid search.",
+                      "Developed the full-stack application from scratch using FastAPI and React/TypeScript.",
+                      "Stack: FastAPI, React/TypeScript, Elasticsearch, Vector Embeddings, Python, OpenAI, Claude Code, Github Copilot.",
+                    ].map(b => (
+                      <li key={b} className="flex items-start gap-2 text-neutral-600">
+                        <span className="w-1 h-1 rounded-full bg-neutral-300 shrink-0 mt-2"></span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                {/* SmartOps - Core */}
                 <div className="border-l-2 border-primary-200 pl-4 mb-12">
                   <p className="font-semibold text-primary-600 uppercase tracking-wide mb-0.5">Intelligent Automation Platform</p>
                   <p className="text-neutral-400 mb-1">Automation Workflow Builder · AI Marketplace · Dashboard Builder</p>
