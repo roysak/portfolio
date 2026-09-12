@@ -1,64 +1,33 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
+/** A single pigment dot that follows the pointer and grows over interactive elements. */
 export default function Cursor() {
-  const outerRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const outer = outerRef.current;
-    const inner = innerRef.current;
-    if (!outer || !inner) return;
+    const dot = ref.current;
+    if (!dot) return;
 
-    const onMouseMove = (e: MouseEvent) => {
-      const t = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`;
-      outer.style.transform = t;
-      inner.style.transform = t;
+    const onMove = (e: PointerEvent) => {
+      dot.style.left = `${e.clientX}px`;
+      dot.style.top = `${e.clientY}px`;
+      dot.classList.add("on");
+    };
+    const onLeave = () => dot.classList.remove("on");
+    const onOver = (e: PointerEvent) => {
+      const el = e.target as Element | null;
+      dot.classList.toggle("big", !!el?.closest("a, button, [data-cursor='big']"));
     };
 
-    const onMouseDown = () => {
-      outer.classList.add('click');
-      inner.classList.add('click');
-    };
-
-    const onMouseUp = () => {
-      outer.classList.remove('click');
-      inner.classList.remove('click');
-    };
-
-    // Use event delegation so dynamically-added links are covered
-    const onMouseOver = (e: MouseEvent) => {
-      if ((e.target as Element | null)?.closest('a, button')) {
-        outer.classList.add('hover');
-        inner.classList.add('hover');
-      }
-    };
-
-    const onMouseOut = (e: MouseEvent) => {
-      if ((e.target as Element | null)?.closest('a, button')) {
-        outer.classList.remove('hover');
-        inner.classList.remove('hover');
-      }
-    };
-
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mousedown', onMouseDown);
-    document.addEventListener('mouseup', onMouseUp);
-    document.addEventListener('mouseover', onMouseOver);
-    document.addEventListener('mouseout', onMouseOut);
-
+    document.addEventListener("pointermove", onMove);
+    document.addEventListener("pointerover", onOver);
+    document.documentElement.addEventListener("pointerleave", onLeave);
     return () => {
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mousedown', onMouseDown);
-      document.removeEventListener('mouseup', onMouseUp);
-      document.removeEventListener('mouseover', onMouseOver);
-      document.removeEventListener('mouseout', onMouseOut);
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerover", onOver);
+      document.documentElement.removeEventListener("pointerleave", onLeave);
     };
   }, []);
 
-  return (
-    <>
-      <div ref={outerRef} className="cursor_outer" />
-      <div ref={innerRef} className="cursor_inner" />
-    </>
-  );
+  return <div ref={ref} className="cursor-dot" aria-hidden="true" />;
 }

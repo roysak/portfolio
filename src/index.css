@@ -2,12 +2,81 @@
 @import "./styles/portfolio.css";
 
 /* ─── Design Tokens ─────────────────────────────────────────────────────────
-   Primary brand color: #6D4778 (deep plum/violet)
-   Used for: buttons, links, badges, accents, interactive highlights.
+   Dark-first "ink and pigment" system.
+   ink      → page ground and surfaces
+   bone     → text (three steps)
+   pigment  → the single ochre accent
+   plum     → secondary hue, carried over from the original brand (#6D4778)
+   The light variant is applied with data-theme="light" on <html>.
    ──────────────────────────────────────────────────────────────────────────── */
 
+:root {
+  --ink: #0f0d14;
+  --ink-2: #17131e;
+  --ink-3: #211b2b;
+  --line: rgba(237, 230, 218, 0.12);
+  --line-strong: rgba(237, 230, 218, 0.28);
+  --bone: #ede6da;
+  --bone-2: #a39b90;
+  --bone-3: #6f685f;
+  --pigment: #e4b04a;
+  --pigment-ink: #0f0d14;
+  --plum: #9a6fb0;
+  --plum-soft: rgba(154, 111, 176, 0.18);
+  --shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  --gutter: clamp(20px, 5vw, 72px);
+
+  /* Legacy aliases still referenced by case-study components */
+  --color-primary: #784286;
+  --color-primary-light: #8133a0;
+  --color-primary-dark: #561e63;
+  --color-primary-subtle: #e9cff0;
+
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --ink: #f2efe9;
+  --ink-2: #faf8f4;
+  --ink-3: #e7e2d9;
+  --line: rgba(23, 19, 30, 0.12);
+  --line-strong: rgba(23, 19, 30, 0.3);
+  --bone: #17131e;
+  --bone-2: #5e5866;
+  --bone-3: #8f8895;
+  --pigment: #b7811a;
+  --pigment-ink: #faf8f4;
+  --plum: #6d4778;
+  --plum-soft: rgba(109, 71, 120, 0.12);
+  --shadow: 0 30px 80px rgba(23, 19, 30, 0.22);
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-bone: var(--bone);
+  --color-bone-2: var(--bone-2);
+  --color-bone-3: var(--bone-3);
+  --color-pigment: var(--pigment);
+  --color-pigment-ink: var(--pigment-ink);
+  --color-plum: var(--plum);
+  --color-plum-soft: var(--plum-soft);
+
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+
+  --spacing-gutter: var(--gutter);
+  --shadow-lift: var(--shadow);
+}
+
+/* Original plum scale, still used by the case-study and blog components */
 @theme {
-  --color-primary-50:  #f8f0fa;
+  --color-primary-50: #f8f0fa;
   --color-primary-100: #f0dff5;
   --color-primary-200: #e0beec;
   --color-primary-300: #c890da;
@@ -18,16 +87,7 @@
   --color-primary-800: #3d1f45;
   --color-primary-900: #27112d;
   --color-primary-950: #160818;
-
-  --color-body-text: #583B61;
-}
-
-/* Semantic aliases for use in arbitrary Tailwind values or plain CSS */
-:root {
-  --color-primary:        #784286;
-  --color-primary-light:  #8133a0;
-  --color-primary-dark:   #561e63;
-  --color-primary-subtle: #e9cff0;
+  --color-body-text: #583b61;
 }
 
 html {
@@ -36,8 +96,25 @@ html {
 
 body {
   margin: 0;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 #root {
   min-height: 100svh;
+}
+
+::selection {
+  background: var(--pigment);
+  color: var(--pigment-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--pigment);
+  outline-offset: 3px;
 }

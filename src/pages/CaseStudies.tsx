@@ -1,15 +1,21 @@
 import CaseStudyCard from "../components/CaseStudyCard";
+import SectionHead from "../components/SectionHead";
 import caseStudies from "../data/caseStudies";
 
 export default function CaseStudies() {
   return (
-    <main className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full py-24 pt-12">
-      <h1 className="text-3xl text-primary-600 font-semibold tracking-tight mb-10">
-        Case Studies
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-24 md:gap-16">
-        {caseStudies.map((study) => (
-          <CaseStudyCard key={study.id} study={study} />
+    <main className="px-gutter pt-36 pb-[clamp(64px,9vw,128px)]">
+      <SectionHead
+        title={
+          <>
+            Case <em className="font-normal text-bone-2">studies</em>
+          </>
+        }
+        aside="Deep dives into the why behind the what"
+      />
+      <div className="grid gap-px bg-line border border-line">
+        {caseStudies.map((study, i) => (
+          <CaseStudyCard key={study.id} study={study} flip={i % 2 === 1} />
         ))}
       </div>
     </main>

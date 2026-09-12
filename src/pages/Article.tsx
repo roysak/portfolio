@@ -1,6 +1,7 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { articles } from "../data/articles";
 import { lazy, Suspense, type FC } from "react";
+import { useForceLightTheme } from "../hooks/useTheme";
 
 const articleComponents: Record<string, React.LazyExoticComponent<FC>> = {
   "react-hooks-cheatsheet": lazy(
@@ -53,6 +54,7 @@ const articleComponents: Record<string, React.LazyExoticComponent<FC>> = {
 export default function Article() {
   const { slug } = useParams<{ slug: string }>();
   const meta = articles.find((a) => a.slug === slug);
+  useForceLightTheme();
 
   if (!meta || !slug || !(slug in articleComponents)) {
     return <Navigate to="/blog" replace />;
@@ -61,7 +63,7 @@ export default function Article() {
   const ArticleContent = articleComponents[slug];
 
   return (
-    <main className="max-w-5xl mx-auto w-full px-6 py-24 pt-12">
+    <main className="max-w-5xl mx-auto w-full px-6 pt-36 pb-24">
       {/* Back link */}
       <Link
         to="/blog"

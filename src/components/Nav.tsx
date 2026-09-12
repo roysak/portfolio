@@ -1,69 +1,69 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { assetUrl } from "../utils/assetUrl";
-import { useScrollDirection } from "../hooks/useScrollDirection";
+import { useTheme } from "../hooks/useTheme";
+
+const links = [
+  { to: "/case-studies", label: "Case Studies" },
+  { to: "/works", label: "Works" },
+  { to: "/resume", label: "Resume" },
+];
 
 export default function Nav() {
-  const scrollDir = useScrollDirection();
   const navRef = useRef<HTMLElement>(null);
+  const { theme, toggle } = useTheme();
 
-  // Publish nav height as a CSS variable so other sticky elements can offset themselves
+  // Publish nav height as a CSS variable so sticky in-page navs can offset themselves
   useEffect(() => {
     const update = () => {
       if (navRef.current) {
-        document.documentElement.style.setProperty(
-          '--nav-height',
-          `${navRef.current.offsetHeight}px`
-        );
+        document.documentElement.style.setProperty("--nav-height", `${navRef.current.offsetHeight}px`);
       }
     };
     update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
-
-  const linkClass = ({ isActive }: { isActive: boolean }) =>
-    `text-sm font-medium transition-colors ${
-      isActive
-        ? "text-neutral-900"
-        : "text-neutral-400 hover:text-neutral-700"
-    }`;
 
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-transform duration-300 ${
-        scrollDir === 'down' ? '-translate-y-full' : 'translate-y-0'
-      }`}
+      className="site-nav fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-gutter py-4"
     >
-      <div className="w-full mx-auto pl-3 py-4 pr-6 flex items-center justify-between">
-        <NavLink to="/" className="text-lg font-semibold tracking-tight text-neutral-900 hover:scale-[1.3] transition-all duration-300">
-          <img src={assetUrl('/img/logo.svg')} className="w-10 h-10" />
-        </NavLink>
+      <NavLink to="/" className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.1em]">
+        <span
+          className="w-2.5 h-2.5 rounded-full bg-[#E4B04A] shadow-[0_0_0_4px_rgba(228,176,74,0.25)]"
+          aria-hidden="true"
+        />
+        <span className="hidden sm:inline">Roys A Kareem</span>
+      </NavLink>
 
-        <ul className="flex items-center gap-8">
-          <li>
-            <NavLink to="/case-studies" className={linkClass}>
-              Case Studies
+      <ul className="flex items-center gap-4 sm:gap-7 list-none m-0 p-0">
+        {links.map((l) => (
+          <li key={l.to}>
+            <NavLink
+              to={l.to}
+              className={({ isActive }) =>
+                `nav-link relative py-1.5 font-mono text-xs uppercase tracking-[0.1em] ${isActive ? "current" : ""}`
+              }
+            >
+              {l.label}
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/works" className={linkClass}>
-              Works
-            </NavLink>
-          </li>
-          {/* <li>
-            <NavLink to="/blog" className={linkClass}>
-              Blog
-            </NavLink>
-          </li> */}
-          <li>
-            <NavLink to="/resume" className={linkClass}>
-              Resume
-            </NavLink>
-          </li>
-        </ul>
-      </div>
+        ))}
+        <li>
+          <button
+            type="button"
+            onClick={toggle}
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+            className="w-[26px] h-[26px] rounded-full border border-current grid place-items-center"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" />
+            </svg>
+          </button>
+        </li>
+      </ul>
     </nav>
   );
 }

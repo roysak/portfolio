@@ -1,13 +1,11 @@
 import { useState } from "react";
 import type { ComponentType } from "react";
-import { Link } from "react-router-dom";
 import BGFXRipples from "../components/bgfx/BGFXRipples";
 import DotRipple from "../components/bgfx/DotRipple";
 import FluidShader from "../components/bgfx/FluidShader";
 import FluidShaderImage from "../components/bgfx/FluidShaderImage";
 import FluidShaderMarble from "../components/bgfx/FluidShaderMarble";
-// import FluidSimulationFX from "../components/bgfx/FluidSimulationFX";
-import FluidSimulationHexFX from '../components/bgfx/FluidSimulationHexFX';
+import FluidSimulationHexFX from "../components/bgfx/FluidSimulationHexFX";
 
 interface TabVariant {
   label: string;
@@ -15,8 +13,8 @@ interface TabVariant {
 }
 
 interface SectionConfig {
-  label: string;
   title: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: ComponentType<any>;
   props?: Record<string, unknown>;
   variants?: TabVariant[];
@@ -24,49 +22,24 @@ interface SectionConfig {
 
 const SECTIONS: SectionConfig[] = [
   {
-    label: "01",
     title: "BGFXRipples",
     component: BGFXRipples,
     variants: [
       { label: "A", props: {} },
-      { label: "B", props: { shape: 2, size: 1, rounding: 0.1, gap: 0, spacingX: 1, spacingY: 2, color: '#F95565', glow: 20.0 } },
-      { label: "C", props: { shape: 2, size: 0.8, rounding: 0.1, gap: 0.2, spacingX: 1.2, spacingY: 0.5, color: '#FFB731', glow: 20.0 } },
-      { label: "D", props: { shape: 2, size: 1.5, rounding: 0.2, gap: 0.5, spacingX: 2.2, spacingY: 2.2, color: '#25D366', glow: 1.0 } },
-      { label: "E", props: { shape: 2, size: 0.3, rounding: 0, gap: 0.5, spacingX: 0.2, spacingY: 0.2, color: '#EA4242', glow: 1.0 } },
+      { label: "B", props: { shape: 2, size: 1, rounding: 0.1, gap: 0, spacingX: 1, spacingY: 2, color: "#F95565", glow: 20.0 } },
+      { label: "C", props: { shape: 2, size: 0.8, rounding: 0.1, gap: 0.2, spacingX: 1.2, spacingY: 0.5, color: "#FFB731", glow: 20.0 } },
+      { label: "D", props: { shape: 2, size: 1.5, rounding: 0.2, gap: 0.5, spacingX: 2.2, spacingY: 2.2, color: "#25D366", glow: 1.0 } },
+      { label: "E", props: { shape: 2, size: 0.3, rounding: 0, gap: 0.5, spacingX: 0.2, spacingY: 0.2, color: "#EA4242", glow: 1.0 } },
     ],
   },
+  { title: "DotRipple", component: DotRipple },
+  { title: "FluidShader", component: FluidShader },
+  { title: "FluidShaderImage", component: FluidShaderImage, props: { imageMask: "/img/image-mask.jpg" } },
+  { title: "FluidShaderMarble", component: FluidShaderMarble, props: { marbleScale: 0.5, marbleSpeed: 0.5 } },
   {
-    label: "02",
-    title: "DotRipple",
-    component: DotRipple,
-  },
-  {
-    label: "03",
-    title: "FluidShader",
-    component: FluidShader,
-  },
-  {
-    label: "04",
-    title: "FluidShaderImage",
-    component: FluidShaderImage,
-    props: { imageMask: "/img/image-mask.jpg" },
-  },
-  {
-    label: "05",
-    title: "FluidShaderMarble",
-    component: FluidShaderMarble,
-    props: { marbleScale: 0.5, marbleSpeed: 0.5 },
-  },
-  // {
-  //   label: "06",
-  //   title: "FluidSimulationFX",
-  //   component: FluidSimulationFX,
-  // },
-  {
-    label: "06",
     title: "FluidSimulationHexFX",
     component: FluidSimulationHexFX,
-    props: { thickness: 0.005, spacing: 0.08, roundness: 0.1, size: 8.0, bgColor: "#ffffff" },
+    props: { thickness: 0.005, spacing: 0.08, roundness: 0.1, size: 8.0, bgColor: "#0f0d14" },
   },
 ];
 
@@ -76,9 +49,7 @@ export default function CreativeCoding() {
 
   const section = SECTIONS[activeSection];
   const Component = section.component;
-  const componentProps = section.variants
-    ? section.variants[activeVariant].props
-    : (section.props ?? {});
+  const componentProps = section.variants ? section.variants[activeVariant].props : (section.props ?? {});
 
   function handleSectionChange(i: number) {
     setActiveSection(i);
@@ -86,67 +57,57 @@ export default function CreativeCoding() {
   }
 
   return (
-    <main className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full py-24 pt-12">
-      <div className="pb-12">
-        <Link to="/works" className="text-neutral-500 hover:text-neutral-900 flex gap-2">
-          <i className="material-symbols-rounded">keyboard_backspace</i>Back to Works
-        </Link>
-      </div>
-      <h1 className="text-3xl font-semibold tracking-tight mb-10">
-        Creative Coding
-      </h1>
+    <>
+      <p className="max-w-[60ch] text-bone-2 mt-0 mb-8">
+        Interactive effects <b className="font-medium text-bone">created using AI tools</b>. Move your cursor across
+        the canvas to see the effects.
+      </p>
 
-      <section className="mb-16">
-        <p className="text-neutral-500 leading-relaxed max-w-2xl mb-6">
-          Interactive effects <span className="font-bold">created Using AI Tools</span>. Move your cursor across the canvas to see the effects.
-        </p>
-
-        {/* Section tabs */}
-        <div className="flex gap-2 mb-4 flex-wrap">
+      <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-6 items-start">
+        <ol className="list-none m-0 p-0 border-t border-line">
           {SECTIONS.map((s, i) => (
-            <button
-              key={s.label}
-              onClick={() => handleSectionChange(i)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors cursor-pointer ${
-                activeSection === i
-                  ? 'bg-primary-600 hover:bg-primary-700 text-white border-primary-600'
-                  : 'bg-white text-neutral-500 border-neutral-200 hover:border-neutral-400'
-              }`}
-            >
-              {s.label}
-            </button>
+            <li key={s.title}>
+              <button
+                type="button"
+                onClick={() => handleSectionChange(i)}
+                aria-pressed={activeSection === i}
+                className={`w-full text-left flex justify-between py-3.5 border-b border-line font-mono text-xs uppercase tracking-[0.08em] transition-colors ${
+                  activeSection === i ? "text-pigment" : "text-bone-2 hover:text-bone"
+                }`}
+              >
+                <span>{s.title}</span>
+                <span>{String(i + 1).padStart(2, "0")}</span>
+              </button>
+            </li>
           ))}
-        </div>
+        </ol>
 
-        {/* Section header */}
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-xl font-medium">Background Effects {section.label}</h2>
-
-          {/* Variant sub-tabs (only when section has variants) */}
-          {section.variants && (
-            <div className="flex gap-2">
-              {section.variants.map((v, i) => (
-                <button
-                  key={v.label}
-                  onClick={() => setActiveVariant(i)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors cursor-pointer ${
-                    activeVariant === i
-                      ? 'bg-neutral-800 text-white border-neutral-800'
-                      : 'bg-white text-neutral-500 border-neutral-200 hover:border-neutral-400'
-                  }`}
-                >
-                  {v.label}
-                </button>
-              ))}
-            </div>
-          )}
+        <div>
+          <div className="flex items-center justify-between mb-3 min-h-8">
+            <span className="label">Background effect {String(activeSection + 1).padStart(2, "0")}</span>
+            {section.variants && (
+              <div className="flex gap-1.5">
+                {section.variants.map((v, i) => (
+                  <button
+                    key={v.label}
+                    type="button"
+                    onClick={() => setActiveVariant(i)}
+                    aria-pressed={activeVariant === i}
+                    className={`w-8 h-8 rounded-full border font-mono text-[11px] transition-colors ${
+                      activeVariant === i ? "bg-bone text-ink border-bone" : "border-line-strong text-bone-2 hover:text-bone"
+                    }`}
+                  >
+                    {v.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="w-full aspect-video rounded overflow-hidden border border-line bg-ink-2">
+            <Component key={`${activeSection}-${activeVariant}`} {...componentProps} />
+          </div>
         </div>
-
-        {/* Canvas */}
-        <div className="w-full aspect-video rounded-xl overflow-hidden border border-neutral-200">
-          <Component key={`${activeSection}-${activeVariant}`} {...componentProps} />
-        </div>
-      </section>
-    </main>
+      </div>
+    </>
   );
 }

@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { articles } from "../data/articles";
 import type { ArticleCategory } from "../data/articleTypes";
+import { useForceLightTheme } from "../hooks/useTheme";
 
 const ALL_CATEGORIES: ArticleCategory[] = [
   "All",
@@ -25,6 +26,7 @@ export default function Blog() {
   const [active, setActive] = useState<ArticleCategory>("All");
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+  useForceLightTheme();
 
   const usedCategories = ALL_CATEGORIES.filter(
     (cat) => cat === "All" || sorted.some((a) => a.category === cat)
@@ -58,9 +60,9 @@ export default function Blog() {
   }
 
   return (
-    <main className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full py-24 pt-12">
+    <main className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full pt-36 pb-24">
       <header className="mb-10">
-        <h1 className="text-3xl font-semibold tracking-tight mb-3">Blog</h1>
+        <h1 className="font-display text-[clamp(34px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none mb-3">Blog</h1>
         <p className="text-neutral-500 text-md leading-relaxed">
           Practical guides, cheatsheets, and thoughts on design and frontend development.
         </p>

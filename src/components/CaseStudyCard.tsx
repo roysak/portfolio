@@ -1,52 +1,60 @@
 import { Link } from "react-router-dom";
 import type { CaseStudy } from "../data/caseStudies";
 import { assetUrl } from "../utils/assetUrl";
+import Button, { ArrowIcon } from "./Button";
 
 interface CaseStudyCardProps {
   study: CaseStudy;
+  flip?: boolean;
 }
 
-export default function CaseStudyCard({ study }: CaseStudyCardProps) {
+/** Full-width split panel: image on one side, editorial copy on the other. */
+export default function CaseStudyCard({ study, flip = false }: CaseStudyCardProps) {
   return (
-    <article className="group cursor-pointer flex flex-col">
-      <Link to={`/case-studies/${study.link}`}>
-        <div
-          className={`relative w-full aspect-4/2.5 rounded-2xl overflow-hidden mb-6 transition-all duration-300 ease-out ${study.color} ${study.shadow} flex items-start justify-center shadow-sm group-hover:shadow-xl group-hover:scale-[1.02]`}
-        >
-          <img
-            src={assetUrl(study.image)}
-            alt={study.title}
-            className="object-cover object-top w-full h-full"
-          />
-        </div>
+    <article className="group bg-ink grid grid-cols-1 md:grid-cols-2 min-h-[420px]">
+      <Link
+        to={`/case-studies/${study.link}`}
+        className={`relative overflow-hidden bg-ink-3 aspect-[16/10] md:aspect-auto ${flip ? "md:order-2" : ""}`}
+        aria-label={`Open ${study.title}`}
+      >
+        <img
+          src={assetUrl(study.image)}
+          alt={`${study.title} preview`}
+          className="w-full h-full object-cover object-left-top transition-transform duration-[900ms] ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-[1.04]"
+        />
+        <span
+          className="absolute left-5 top-5 w-7 h-7 rounded-full border-2 border-white/60"
+          style={{ background: study.swatch }}
+          aria-hidden="true"
+        />
+      </Link>
 
-        <div className="flex flex-col grow">
-          <div className="flex items-center gap-3 mb-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
-              {study.client}
-            </span>
-          </div>
-
-          <h2 className="text-2xl font-semibold mb-3 group-hover:text-neutral-600 transition-colors">
+      <div className="p-[clamp(28px,4vw,56px)] grid grid-rows-[auto_1fr_auto] gap-6">
+        <div>
+          <span className="label">
+            {study.link} · {study.client}
+          </span>
+          <h3 className="mt-2.5 mb-0 font-display font-semibold text-[clamp(30px,3.4vw,48px)] leading-none tracking-[-0.03em] text-balance">
             {study.title}
-          </h2>
-
-          <p className="text-neutral-500 leading-relaxed mb-6 grow">
-            {study.description}
-          </p>
-
-          <div className="flex flex-wrap gap-2 mt-auto">
+          </h3>
+        </div>
+        <p className="m-0 text-bone-2 max-w-[46ch]">{study.description}</p>
+        <div className="flex justify-between items-end gap-4 flex-wrap">
+          <div className="flex gap-1.5 flex-wrap">
             {study.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 border border-neutral-200 rounded-full bg-primary-50 text-primary-600 text-xs font-medium"
+                className="font-mono text-[11px] uppercase tracking-[0.06em] px-2.5 py-[5px] rounded-full bg-plum-soft text-plum"
               >
                 {tag}
               </span>
             ))}
           </div>
+          <Button to={`/case-studies/${study.link}`}>
+            Open study <ArrowIcon />
+          </Button>
         </div>
-      </Link>
+      </div>
     </article>
   );
 }
