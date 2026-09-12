@@ -12,13 +12,25 @@ interface ButtonProps {
   rel?: string;
 }
 
+/**
+ * Square, ruled, mono. Nothing here is round — a printed sheet has no pills.
+ * The primary variant fills with ink rather than accent; accent is reserved
+ * for marks and numbers.
+ */
 const base =
-  "inline-flex items-center gap-2.5 px-[22px] py-3.5 rounded-full font-mono text-xs uppercase tracking-[0.1em] border transition-[transform,background-color,color,border-color] duration-300 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-0.5";
-const ghost = "border-line-strong text-bone";
-const solid = "bg-pigment text-pigment-ink border-pigment hover:bg-bone hover:border-bone hover:text-ink";
+  "group inline-flex items-center gap-3 px-5 py-3 font-mono text-caption uppercase tracking-[0.11em] border transition-colors duration-300";
+const ghost = "border-rule-2 text-ink hover:bg-ink hover:text-paper hover:border-ink";
+const solid = "bg-ink text-paper border-ink hover:bg-accent hover:border-accent hover:text-paper";
 
 export const ArrowIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
+    aria-hidden="true"
+  >
     <path d="M5 12h14M13 5l7 7-7 7" />
   </svg>
 );

@@ -1,6 +1,6 @@
-import DynamicIcon from '../DynamicIcon';
 import type { OutcomesSection } from '../../data/caseStudyTypes';
 import { Band } from './SectionShell';
+import { Col } from '../system';
 
 interface Props {
   section: OutcomesSection;
@@ -9,24 +9,22 @@ interface Props {
 export default function OutcomesSection({ section }: Props) {
   return (
     <Band>
-      <div className="grid md:grid-cols-2 gap-[clamp(32px,5vw,72px)]">
-        {section.columns.map((col) => (
-          <div key={col.title} className="reveal">
-            <h3 className="m-0 mb-7 font-display font-semibold text-[clamp(22px,2.4vw,30px)] tracking-[-0.02em] flex items-center gap-3">
-              <DynamicIcon name={col.icon} className="w-6 h-6 text-pigment" />
-              {col.title}
-            </h3>
-            <ul className="list-none m-0 p-0 grid border-t border-line">
-              {col.items.map((item) => (
-                <li key={item.title} className="py-5 border-b border-line">
-                  <strong className="block font-medium text-bone mb-1">{item.title}</strong>
-                  <span className="text-[15px] text-bone-2">{item.description}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+      {section.columns.map((col, c) => (
+        <Col key={col.title} span={5} start={c === 0 ? 1 : 8} data-fade>
+          <h3 className="m-0 mb-5 pb-2 border-b border-rule-2 label flex gap-3">
+            <span className="text-accent">{String(c + 1).padStart(2, '0')}</span>
+            <span className="text-ink">{col.title}</span>
+          </h3>
+          <ul className="list-none m-0 p-0">
+            {col.items.map((item) => (
+              <li key={item.title} className="py-4 border-b border-rule">
+                <strong className="block font-medium text-ink mb-1.5">{item.title}</strong>
+                <span className="font-serif text-small text-ink-2">{item.description}</span>
+              </li>
+            ))}
+          </ul>
+        </Col>
+      ))}
     </Band>
   );
 }

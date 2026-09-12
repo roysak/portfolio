@@ -1,60 +1,75 @@
 import { Link } from "react-router-dom";
 import type { CaseStudy } from "../data/caseStudies";
 import { assetUrl } from "../utils/assetUrl";
-import Button, { ArrowIcon } from "./Button";
+import { ArrowIcon } from "./Button";
+import { Col, Grid } from "./system";
 
 interface CaseStudyCardProps {
   study: CaseStudy;
+  total: number;
   flip?: boolean;
 }
 
-/** Full-width split panel: image on one side, editorial copy on the other. */
-export default function CaseStudyCard({ study, flip = false }: CaseStudyCardProps) {
-  return (
-    <article className="group bg-ink grid grid-cols-1 md:grid-cols-2 min-h-[420px]">
-      <Link
-        to={`/case-studies/${study.link}`}
-        className={`relative overflow-hidden bg-ink-3 aspect-[16/10] md:aspect-auto ${flip ? "md:order-2" : ""}`}
-        aria-label={`Open ${study.title}`}
-      >
-        <img
-          src={assetUrl(study.image)}
-          alt={`${study.title} preview`}
-          className="w-full h-full object-cover object-left-top transition-transform duration-[900ms] ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-[1.04]"
-        />
-        <span
-          className="absolute left-5 top-5 w-7 h-7 rounded-full border-2 border-white/60"
-          style={{ background: study.swatch }}
-          aria-hidden="true"
-        />
-      </Link>
+/** One study, set as a full spread: plate on one leaf, the record on the other. */
+export default function CaseStudyCard({ study, total, flip = false }: CaseStudyCardProps) {
+  const to = `/case-studies/${study.link}`;
 
-      <div className="p-[clamp(28px,4vw,56px)] grid grid-rows-[auto_1fr_auto] gap-6">
-        <div>
-          <span className="label">
-            {study.link} · {study.client}
-          </span>
-          <h3 className="mt-2.5 mb-0 font-display font-semibold text-[clamp(30px,3.4vw,48px)] leading-none tracking-[-0.03em] text-balance">
-            {study.title}
-          </h3>
-        </div>
-        <p className="m-0 text-bone-2 max-w-[46ch]">{study.description}</p>
-        <div className="flex justify-between items-end gap-4 flex-wrap">
-          <div className="flex gap-1.5 flex-wrap">
-            {study.tags.map((tag) => (
+  return (
+    <article className="group py-[clamp(40px,6vw,80px)] border-b border-rule last:border-b-0">
+      <Grid className="gap-y-8 items-center">
+        <Col span={6} start={flip ? 7 : 1}>
+          <Link to={to} aria-label={`Open ${study.title}`} className="block">
+            <div data-plate className="plate-frame aspect-[16/10]">
+              <div className="plate-media plate-zoom w-full h-full">
+                <img
+                  src={assetUrl(study.image)}
+                  alt={`${study.title} preview`}
+                  loading="lazy"
+                  className="object-left-top"
+                />
+              </div>
               <span
-                key={tag}
-                className="font-mono text-[11px] uppercase tracking-[0.06em] px-2.5 py-[5px] rounded-full bg-plum-soft text-plum"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <Button to={`/case-studies/${study.link}`}>
+                className="absolute left-4 top-4 w-4 h-4 border border-paper/70"
+                style={{ background: study.swatch }}
+                aria-hidden="true"
+              />
+            </div>
+          </Link>
+        </Col>
+
+        <Col span={5} start={flip ? 1 : 8} className="max-md:mt-2">
+          <p className="label m-0 mb-4 flex gap-3">
+            <span className="text-accent">
+              {study.link} / {String(total).padStart(2, "0")}
+            </span>
+            <span>{study.client}</span>
+          </p>
+
+          <h3 className="m-0 font-display font-medium text-[clamp(28px,3.2vw,44px)] leading-[1] tracking-[-0.04em] text-balance">
+            <Link to={to} className="transition-colors group-hover:text-accent">
+              {study.title}
+            </Link>
+          </h3>
+
+          <p className="mt-4 mb-0 font-serif text-lead leading-[1.45] text-ink-2 max-w-[44ch]">
+            {study.description}
+          </p>
+
+          <dl className="mt-7 m-0 border-t border-rule">
+            <div className="flex items-baseline gap-4 py-2.5 border-b border-rule">
+              <dt className="label shrink-0 w-24">Focus</dt>
+              <dd className="m-0 text-small text-ink">{study.tags.join(" · ")}</dd>
+            </div>
+          </dl>
+
+          <Link
+            to={to}
+            className="label inline-flex items-center gap-2 mt-6 group-hover:text-accent transition-colors"
+          >
             Open study <ArrowIcon />
-          </Button>
-        </div>
-      </div>
+          </Link>
+        </Col>
+      </Grid>
     </article>
   );
 }

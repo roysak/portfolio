@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { assetUrl } from "../utils/assetUrl";
+import { Register } from "./system";
 
 // ─── Switch between "password" and "pin" modes here ──────────────────────────
 const MODE: "password" | "pin" = "pin";
@@ -22,9 +23,9 @@ async function sha256(message: string): Promise<string> {
 }
 
 const inputBase =
-    "w-11 h-14 text-center text-xl font-display font-semibold rounded border outline-none bg-ink-2 transition-colors focus:border-pigment";
+    "w-12 h-16 text-center text-2xl font-display font-medium border outline-none bg-paper-2 tabular-nums transition-colors focus:border-accent";
 const contactLink =
-    "inline-flex items-center gap-1.5 px-3 py-2 rounded-full border border-line-strong font-mono text-[11px] uppercase tracking-[0.08em] text-bone-2 hover:text-bone hover:border-bone transition-colors";
+    "label inline-flex items-center gap-2 px-3 py-2 border border-rule-2 hover:bg-ink hover:text-paper hover:border-ink transition-colors";
 
 export default function PasswordGate({
     children,
@@ -123,16 +124,21 @@ export default function PasswordGate({
     if (authenticated) return <>{children}</>;
 
     return (
-        <main className="flex flex-col items-center justify-center min-h-[70vh] px-gutter pt-32 pb-16">
-            <div className="w-full max-w-sm">
-                <div className="mb-8 text-center">
-                    <span className="label block mb-3">Password protected</span>
-                    <h1 className="m-0 font-display font-semibold text-[clamp(30px,4vw,44px)] tracking-[-0.03em] leading-none">
+        <main className="relative flex flex-col items-center justify-center min-h-[72svh] px-margin py-16">
+            <Register className="left-[calc(var(--margin)-22px)] top-8" />
+            <Register className="right-[calc(var(--margin)-22px)] top-8" />
+
+            <div className="w-full max-w-md border border-rule-2 bg-paper-2 p-[clamp(24px,4vw,48px)]">
+                <div className="mb-10 pb-6 border-b border-rule">
+                    <span className="label block mb-4 text-accent">
+                        ⊗ Sealed · Not for circulation
+                    </span>
+                    <h1 className="m-0 font-display font-medium text-[clamp(28px,3.6vw,42px)] tracking-[-0.04em] leading-none">
                         Case Studies
                     </h1>
-                    <p className="text-sm text-bone-2 mt-3 mb-0">
+                    <p className="font-serif text-small text-ink-2 mt-3 mb-0">
                         {MODE === "pin"
-                            ? `Enter your ${PIN_LENGTH}-digit PIN to continue.`
+                            ? `These plates carry client work. Enter your ${PIN_LENGTH}-digit PIN to open them.`
                             : "This section is password protected."}
                     </p>
                 </div>
@@ -173,20 +179,20 @@ export default function PasswordGate({
                                         className={[
                                             inputBase,
                                             error
-                                                ? "border-red-400 text-red-400"
-                                                : "border-line-strong text-pigment",
+                                                ? "border-accent text-accent"
+                                                : "border-rule-2 text-ink",
                                         ].join(" ")}
                                     />
                                 ))}
                             </div>
                             {error && (
-                                <p className="text-xs text-red-400 m-0">
+                                <p className="label text-accent m-0" role="alert">
                                     Incorrect PIN. Try again.
                                 </p>
                             )}
                         </div>
-                        <div className="flex flex-col items-center gap-4 mt-6">
-                            <p className="label m-0">Reach out to me for the PIN</p>
+                        <div className="flex flex-col items-center gap-4 mt-10 pt-6 border-t border-rule">
+                            <p className="label m-0">Request the PIN</p>
                             <div className="flex gap-2 flex-wrap justify-center">
                                 <a
                                     href="mailto:roysak@gmail.com?subject=Case%20Study%20Access&body=I%20would%20like%20to%20access%20your%20case%20study"
@@ -227,20 +233,20 @@ export default function PasswordGate({
                                 placeholder="Enter password"
                                 autoComplete="current-password"
                                 className={[
-                                    "w-full px-4 py-3 rounded border bg-ink-2 text-sm outline-none transition-colors focus:border-pigment",
+                                    "w-full px-4 py-3 border bg-paper-2 text-small outline-none transition-colors focus:border-accent",
                                     error
-                                        ? "border-red-400 placeholder:text-red-400"
-                                        : "border-line-strong",
+                                        ? "border-accent placeholder:text-accent"
+                                        : "border-rule-2",
                                 ].join(" ")}
                             />
                             {error && (
-                                <p className="text-xs text-red-400 -mt-1">
+                                <p className="label text-accent -mt-1" role="alert">
                                     Incorrect password. Try again.
                                 </p>
                             )}
                             <button
                                 type="submit"
-                                className="w-full bg-pigment text-pigment-ink hover:bg-bone hover:text-ink font-mono text-xs uppercase tracking-[0.1em] py-3.5 rounded-full transition-colors">
+                                className="w-full bg-ink text-paper hover:bg-accent font-mono text-caption uppercase tracking-[0.11em] py-3.5 transition-colors">
                                 Unlock
                             </button>
                         </div>

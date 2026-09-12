@@ -6,32 +6,49 @@ interface ModalProps {
   onClose: () => void;
 }
 
+/** Plate zoom — the work lifted off the page against a flat ground. */
 const Modal: React.FC<ModalProps> = ({ imageSrc, imageAlt, onClose }) => {
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();
     }
     document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    const { overflow } = document.body.style;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = overflow;
+    };
   }, [onClose]);
 
   return (
     <div
       role="dialog"
+      aria-modal="true"
       aria-label={imageAlt}
-      className="fixed inset-0 z-[1000] grid place-items-center p-6 bg-[rgba(15,13,20,0.92)] cursor-zoom-out"
+      className="fixed inset-0 z-[1000] grid place-items-center p-[clamp(20px,5vw,72px)] bg-paper/97 backdrop-blur-sm cursor-zoom-out"
       onClick={onClose}
     >
-      <img src={imageSrc} alt={imageAlt} className="max-w-full max-h-[90svh] rounded shadow-lift" />
+      <figure className="m-0 max-w-full">
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          className="max-w-full max-h-[82svh] border border-rule"
+        />
+        <figcaption className="mt-3 flex items-baseline gap-3">
+          <span className="label text-accent shrink-0">Plate</span>
+          <span className="leader" aria-hidden="true" />
+          <span className="label">{imageAlt}</span>
+        </figcaption>
+      </figure>
+
       <button
         type="button"
-        className="absolute top-5 right-5 w-11 h-11 rounded-full border border-white/30 text-[#EDE6DA] grid place-items-center hover:bg-[#EDE6DA] hover:text-[#0F0D14] transition-colors"
+        className="absolute top-5 right-5 label px-3 py-2 border border-rule-2 hover:bg-ink hover:text-paper hover:border-ink transition-colors"
         onClick={onClose}
         aria-label="Close"
       >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4" aria-hidden="true">
-          <path d="M6 6l12 12M18 6L6 18" />
-        </svg>
+        Close ✕
       </button>
     </div>
   );

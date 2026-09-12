@@ -8,7 +8,8 @@ import CaseStudyInPageNav from "../components/casestudy/CaseStudyInPageNav";
 import SectionRenderer from "../components/casestudy/SectionRenderer";
 import { ModalProvider } from "../components/casestudy/ModalContext";
 import Button, { ArrowIcon } from "../components/Button";
-import { useReveal } from "../hooks/useReveal";
+import { Col, Grid } from "../components/system";
+import { useSpreadMotion, useScrollRefresh } from "../hooks/useMotion";
 
 const CASE_STUDY_DATA: Record<string, CaseStudyPageData> = {
   "01": caseStudy01,
@@ -16,15 +17,18 @@ const CASE_STUDY_DATA: Record<string, CaseStudyPageData> = {
   "03": caseStudy03,
 };
 
+const ORDER = Object.keys(CASE_STUDY_DATA);
+
 export default function CaseStudy() {
   const { id } = useParams<{ id: string }>();
   const data = id ? CASE_STUDY_DATA[id] : undefined;
-  const pageRef = useReveal<HTMLElement>();
+  const pageRef = useSpreadMotion<HTMLElement>();
+  useScrollRefresh([id]);
 
   if (!data) {
     return (
-      <main className="px-gutter pt-36 pb-[clamp(64px,9vw,128px)] text-center">
-        <h1 className="m-0 mb-6 font-display font-semibold text-[clamp(34px,5vw,68px)] leading-[0.98] tracking-[-0.03em]">
+      <main className="px-margin py-[clamp(64px,9vw,128px)]">
+        <h1 className="m-0 mb-6 font-display font-medium text-display leading-[0.95] tracking-[-0.045em]">
           Case study not found
         </h1>
         <Button to="/case-studies">
@@ -34,35 +38,42 @@ export default function CaseStudy() {
     );
   }
 
+  const index = ORDER.indexOf(id!);
+  const next = ORDER[(index + 1) % ORDER.length];
+
   return (
     <ModalProvider>
       <main ref={pageRef} className="grow min-w-0 w-full overflow-x-clip">
-        <div className="px-gutter pt-32 pb-2">
-          <div className="max-w-6xl mx-auto w-full">
-            <Link
-              to="/case-studies"
-              className="label inline-flex gap-2 items-center hover:text-bone transition-colors"
-            >
-              <i className="material-symbols-rounded text-base!">keyboard_backspace</i>
-              Back to case studies
-            </Link>
-          </div>
+        <div className="px-margin pt-4 pb-2">
+          <Link to="/case-studies" className="label hover:text-accent transition-colors">
+            ← Back to case studies
+          </Link>
         </div>
 
         <CaseStudyHero hero={data.hero} />
         <CaseStudyInPageNav navItems={data.navItems} />
+
         {data.sections.map((section, i) => (
           <SectionRenderer key={i} section={section} />
         ))}
 
-        <div className="px-gutter py-[clamp(48px,7vw,88px)]">
-          <div className="max-w-6xl mx-auto w-full flex flex-wrap gap-4 justify-between items-center">
-            <span className="label">Thanks for scrolling.</span>
-            <Button to="/case-studies">
-              All case studies <ArrowIcon />
-            </Button>
-          </div>
-        </div>
+        {/* ── End matter ── */}
+        <section className="px-margin py-[clamp(48px,7vw,96px)] border-t border-rule">
+          <Grid className="gap-y-6 items-end">
+            <Col span={6}>
+              <span className="label">End of study {id}</span>
+              <p className="m-0 mt-3 font-serif text-[clamp(22px,2.6vw,34px)] leading-[1.2] tracking-[-0.015em]">
+                Thanks for scrolling.
+              </p>
+            </Col>
+            <Col span={5} start={8} className="flex flex-wrap gap-3 md:justify-end">
+              <Button to={`/case-studies/${next}`} primary>
+                Next study {next} <ArrowIcon />
+              </Button>
+              <Button to="/case-studies">All studies</Button>
+            </Col>
+          </Grid>
+        </section>
       </main>
     </ModalProvider>
   );

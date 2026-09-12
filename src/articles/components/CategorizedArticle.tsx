@@ -55,10 +55,13 @@ export default function CategorizedArticle({
       {categories.map((cat) => {
         const catItems = items.filter((t) => t.category === cat);
         return (
-          <section key={cat} className="mb-10">
-            <div className="flex items-center gap-3 mb-4">
-              <h2 className="text-lg font-semibold text-neutral-800">{cat}</h2>
-              <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${badgeColors[cat] ?? "bg-neutral-100 text-neutral-600"}`}>
+          <section key={cat} className="mb-12">
+            <div className="flex items-baseline gap-3 mb-5 pb-2 border-b border-rule-2">
+              <h2 className="m-0 font-display text-head font-medium tracking-[-0.025em] text-ink">
+                {cat}
+              </h2>
+              <span className="leader" aria-hidden="true" />
+              <span className="label shrink-0">
                 {catItems.length} {countLabel}
               </span>
             </div>
@@ -68,7 +71,7 @@ export default function CategorizedArticle({
                 <TopicCard
                   key={topic.name}
                   topic={topic}
-                  badgeClass={badgeColors[topic.category] ?? "bg-neutral-100 text-neutral-600"}
+                  badgeClass={badgeColors[topic.category] ?? "text-ink-2 border-rule-2"}
                   badgePrefix={badgePrefix}
                   onClick={() => setSelected(topic)}
                 />
@@ -83,7 +86,7 @@ export default function CategorizedArticle({
       {selected && (
         <TopicModal
           topic={selected}
-          badgeClass={badgeColors[selected.category] ?? "bg-neutral-100 text-neutral-600"}
+          badgeClass={badgeColors[selected.category] ?? "text-ink-2 border-rule-2"}
           badgePrefix={badgePrefix}
           labels={labels}
           onClose={() => setSelected(null)}

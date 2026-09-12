@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import type { ComponentType } from "react";
-import BGFXRipples from "../components/bgfx/BGFXRipples";
-import DotRipple from "../components/bgfx/DotRipple";
-import FluidShader from "../components/bgfx/FluidShader";
-import FluidShaderImage from "../components/bgfx/FluidShaderImage";
-import FluidShaderMarble from "../components/bgfx/FluidShaderMarble";
-import FluidSimulationHexFX from "../components/bgfx/FluidSimulationHexFX";
+import { useTheme } from "../hooks/useTheme";
+import { Caption } from "../components/system";
+
+/**
+ * Every effect is code-split: three.js and the raw-WebGL sims only ever load
+ * for the plate the visitor actually asked to see, and never on other routes.
+ */
+const BGFXRipples = lazy(() => import("../components/bgfx/BGFXRipples"));
+const DotRipple = lazy(() => import("../components/bgfx/DotRipple"));
+const FluidShader = lazy(() => import("../components/bgfx/FluidShader"));
+const FluidShaderImage = lazy(() => import("../components/bgfx/FluidShaderImage"));
+const FluidShaderMarble = lazy(() => import("../components/bgfx/FluidShaderMarble"));
+const FluidSimulationHexFX = lazy(() => import("../components/bgfx/FluidSimulationHexFX"));
 
 interface TabVariant {
   label: string;
@@ -14,6 +21,7 @@ interface TabVariant {
 
 interface SectionConfig {
   title: string;
+  technique: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: ComponentType<any>;
   props?: Record<string, unknown>;
@@ -21,16 +29,28 @@ interface SectionConfig {
 }
 
 const SECTIONS: SectionConfig[] = [
-  { title: "FluidShader", component: FluidShader },
-  { title: "FluidShaderImage", component: FluidShaderImage, props: { imageMask: "/img/image-mask.jpg" } },
-  { title: "FluidShaderMarble", component: FluidShaderMarble, props: { marbleScale: 0.5, marbleSpeed: 0.5 } },
+  { title: "FluidShader", technique: "GLSL fragment shader · three.js", component: FluidShader },
+  {
+    title: "FluidShaderImage",
+    technique: "Shader + image mask · three.js",
+    component: FluidShaderImage,
+    props: { imageMask: "/img/image-mask.jpg" },
+  },
+  {
+    title: "FluidShaderMarble",
+    technique: "Domain-warped noise · three.js",
+    component: FluidShaderMarble,
+    props: { marbleScale: 0.5, marbleSpeed: 0.5 },
+  },
   {
     title: "FluidSimulationHexFX",
+    technique: "Navier–Stokes sim · raw WebGL",
     component: FluidSimulationHexFX,
-    props: { thickness: 0.005, spacing: 0.08, roundness: 0.1, size: 8.0, bgColor: "#0f0d14" },
+    props: { thickness: 0.005, spacing: 0.08, roundness: 0.1, size: 8.0 },
   },
   {
     title: "BGFXRipples",
+    technique: "Signed-distance grid · GLSL",
     component: BGFXRipples,
     variants: [
       { label: "A", props: {} },
@@ -40,16 +60,22 @@ const SECTIONS: SectionConfig[] = [
       { label: "E", props: { shape: 2, size: 0.3, rounding: 0, gap: 0.5, spacingX: 0.2, spacingY: 0.2, color: "#EA4242", glow: 1.0 } },
     ],
   },
-  { title: "DotRipple", component: DotRipple },
+  { title: "DotRipple", technique: "Canvas 2D particle field", component: DotRipple },
 ];
 
 export default function CreativeCoding() {
   const [activeSection, setActiveSection] = useState(0);
   const [activeVariant, setActiveVariant] = useState(0);
+  const { theme } = useTheme();
 
   const section = SECTIONS[activeSection];
   const Component = section.component;
-  const componentProps = section.variants ? section.variants[activeVariant].props : (section.props ?? {});
+  const base = section.variants ? section.variants[activeVariant].props : (section.props ?? {});
+  // The hex sim paints its own ground, so it has to be told which one we're on.
+  const componentProps =
+    section.title === "FluidSimulationHexFX"
+      ? { ...base, bgColor: theme === "dark" ? "#12110f" : "#f4f1ea" }
+      : base;
 
   function handleSectionChange(i: number) {
     setActiveSection(i);
@@ -58,43 +84,51 @@ export default function CreativeCoding() {
 
   return (
     <>
-      <p className="max-w-[60ch] text-bone-2 mt-0 mb-8">
-        Interactive effects <b className="font-medium text-bone">created using AI tools</b>. Move your cursor across
-        the canvas to see the effects.
+      <p className="max-w-[56ch] font-serif text-lead text-ink-2 mt-0 mb-10">
+        Interactive effects <em className="not-italic text-ink">created using AI tools</em>. Move
+        your cursor across the plate to disturb it.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-6 items-start">
-        <ol className="list-none m-0 p-0 border-t border-line">
+      <div className="grid grid-cols-1 md:grid-cols-[minmax(200px,1fr)_2.6fr] gap-x-gutter gap-y-8 items-start">
+        <ol className="list-none m-0 p-0 border-t border-rule" aria-label="Effects">
           {SECTIONS.map((s, i) => (
             <li key={s.title}>
               <button
                 type="button"
                 onClick={() => handleSectionChange(i)}
                 aria-pressed={activeSection === i}
-                className={`w-full text-left flex justify-between py-3.5 border-b border-line font-mono text-xs uppercase tracking-[0.08em] transition-colors ${
-                  activeSection === i ? "text-pigment" : "text-bone-2 hover:text-bone"
+                className={`w-full text-left py-3 border-b border-rule transition-colors ${
+                  activeSection === i ? "text-ink" : "hover:text-ink"
                 }`}
               >
-                <span>{s.title}</span>
-                <span>{String(i + 1).padStart(2, "0")}</span>
+                <span className="label flex justify-between gap-3">
+                  <span className={activeSection === i ? "text-accent" : ""}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className={activeSection === i ? "text-ink" : ""}>{s.title}</span>
+                </span>
               </button>
             </li>
           ))}
         </ol>
 
-        <div>
-          <div className="flex items-center justify-between mb-3 min-h-8">
-            <span className="label">Background effect {String(activeSection + 1).padStart(2, "0")}</span>
+        <figure className="m-0">
+          <div className="flex items-center justify-between gap-4 mb-3 min-h-8">
+            <Caption className="text-accent">
+              PL. {String(activeSection + 1).padStart(2, "0")} / {String(SECTIONS.length).padStart(2, "0")}
+            </Caption>
             {section.variants && (
-              <div className="flex gap-1.5">
+              <div className="flex gap-px bg-rule border border-rule" role="group" aria-label="Variants">
                 {section.variants.map((v, i) => (
                   <button
                     key={v.label}
                     type="button"
                     onClick={() => setActiveVariant(i)}
                     aria-pressed={activeVariant === i}
-                    className={`w-8 h-8 rounded-full border font-mono text-[11px] transition-colors ${
-                      activeVariant === i ? "bg-bone text-ink border-bone" : "border-line-strong text-bone-2 hover:text-bone"
+                    className={`w-8 h-7 font-mono text-caption transition-colors ${
+                      activeVariant === i
+                        ? "bg-ink text-paper"
+                        : "bg-paper text-ink-3 hover:text-ink"
                     }`}
                   >
                     {v.label}
@@ -103,10 +137,25 @@ export default function CreativeCoding() {
               </div>
             )}
           </div>
-          <div className="w-full aspect-video rounded overflow-hidden border border-line bg-ink-2">
-            <Component key={`${activeSection}-${activeVariant}`} {...componentProps} />
+
+          <div className="plate-frame aspect-video">
+            <Suspense
+              fallback={
+                <div className="w-full h-full grid place-items-center">
+                  <Caption>Loading plate…</Caption>
+                </div>
+              }
+            >
+              <Component key={`${activeSection}-${activeVariant}`} {...componentProps} />
+            </Suspense>
           </div>
-        </div>
+
+          <figcaption className="mt-3 flex items-baseline gap-3">
+            <span className="text-small font-medium">{section.title}</span>
+            <span className="leader" aria-hidden="true" />
+            <Caption>{section.technique}</Caption>
+          </figcaption>
+        </figure>
       </div>
     </>
   );

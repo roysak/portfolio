@@ -1,58 +1,74 @@
 import { Link } from "react-router-dom";
 import { assetUrl } from "../utils/assetUrl";
-import SectionHead from "../components/SectionHead";
 import FlowField from "../components/bgfx/FlowField";
 import { ArrowIcon } from "../components/Button";
+import { Col, Grid, Plate, Register, Rule } from "../components/system";
+import { useSpreadMotion } from "../hooks/useMotion";
 
 const items = [
   {
     to: "/works/applications",
     title: "Applications",
     text: "Side projects and applications I've built.",
-    foot: "4 builds",
-    art: <img src={assetUrl("/img/works/app-01.png")} alt="" className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-105" />,
+    meta: "4 builds · Product",
+    art: <img src={assetUrl("/img/works/app-01.png")} alt="" width={1600} height={1200} loading="lazy" />,
   },
   {
     to: "/works/creative-coding",
     title: "Creative coding",
-    text: "Creative coding projects and experiments.",
-    foot: "6 effects · WebGL",
-    art: <FlowField count={350} scale={0.006} colors={["#9A6FB0", "#E4B04A"]} fade={0.08} />,
+    text: "Interactive background effects created using AI tools.",
+    meta: "6 effects · WebGL",
+    art: <FlowField count={350} scale={0.006} colors={["#b8390a", "#1e3a5f"]} fade={0.08} />,
   },
   {
     to: "/works/digital-paintings",
     title: "Digital paintings",
     text: "A collection of digital artwork and illustrations.",
-    foot: "9 pieces",
-    art: <img src={assetUrl("/img/dp/Forest01.png")} alt="" className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-105" />,
+    meta: "9 pieces · Digital",
+    art: <img src={assetUrl("/img/dp/Forest01.webp")} alt="" width={655} height={1000} loading="lazy" />,
   },
 ];
 
+/** The Works contents page — three plates, one per gallery. */
 export default function Works() {
+  const ref = useSpreadMotion<HTMLElement>();
+
   return (
-    <main className="px-gutter pt-36 pb-[clamp(64px,9vw,128px)]">
-      <SectionHead title="Works" aside="A curated gallery of craft and code" />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
-        {items.map((it) => (
-          <Link
-            key={it.to}
-            to={it.to}
-            className="group bg-ink hover:bg-ink-2 transition-colors duration-300 p-7 grid grid-rows-[auto_1fr_auto] gap-6"
-          >
-            <div>
-              <h2 className="m-0 font-display font-semibold text-[28px] tracking-[-0.02em]">{it.title}</h2>
-              <p className="mt-1.5 mb-0 text-[15px] text-bone-2">{it.text}</p>
-            </div>
-            <div className="rounded overflow-hidden aspect-[4/3] bg-ink-3">{it.art}</div>
-            <div className="flex justify-between items-center">
-              <span className="label">{it.foot}</span>
-              <span className="w-9 h-9 rounded-full border border-line-strong grid place-items-center transition-[background-color,color,transform] duration-300 group-hover:bg-bone group-hover:text-ink group-hover:-rotate-45">
-                <ArrowIcon />
+    <main ref={ref} className="relative px-margin pt-[clamp(28px,5vw,56px)] pb-[clamp(64px,9vw,128px)]">
+      <Register className="left-[calc(var(--margin)-22px)] top-[clamp(28px,5vw,56px)]" />
+      <Register className="right-[calc(var(--margin)-22px)] top-[clamp(28px,5vw,56px)]" />
+
+      <Grid className="gap-y-[clamp(32px,5vw,64px)]">
+        <Col span={12}>
+          <p className="label m-0 mb-5">
+            <span className="text-accent">§ 02</span> <span className="ml-3">Plates</span>
+          </p>
+          <h1 data-set className="m-0 font-display font-medium text-display leading-[0.95] tracking-[-0.045em]">
+            Works
+          </h1>
+          <p className="mt-5 m-0 font-serif text-lead text-ink-2 max-w-[46ch]">
+            A curated gallery of craft and code — things built, things painted, things that only
+            exist while the page is open.
+          </p>
+          <div className="mt-8">
+            <Rule />
+          </div>
+        </Col>
+
+        {items.map((it, i) => (
+          <Col key={it.to} span={4}>
+            <Link to={it.to} className="group block">
+              <Plate no={i + 1} total={items.length} title={it.title} meta={it.meta} zoom>
+                {it.art}
+              </Plate>
+              <p className="mt-3 mb-0 font-serif text-small text-ink-2">{it.text}</p>
+              <span className="label inline-flex items-center gap-2 mt-3 group-hover:text-accent transition-colors">
+                Open plate <ArrowIcon />
               </span>
-            </div>
-          </Link>
+            </Link>
+          </Col>
         ))}
-      </div>
+      </Grid>
     </main>
   );
 }

@@ -1,78 +1,97 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import type { CarouselSection } from '../../data/caseStudyTypes';
 import { assetUrl } from '../../utils/assetUrl';
 import { useModal } from './ModalContext';
 import { Band, SectionIntro } from './SectionShell';
+import { Col } from '../system';
 
 interface Props {
   section: CarouselSection;
 }
 
-const ARROW_CLASS =
-  'absolute top-[40%] -translate-y-1/2 w-11 h-11 rounded-full grid place-items-center bg-ink border border-line-strong text-bone opacity-0 group-hover:opacity-100 focus:opacity-100 transition-[opacity,background-color,color,transform] duration-300 hover:bg-bone hover:text-ink hover:border-bone';
+const NAV_CLASS =
+  'label px-3 py-2 border border-rule-2 hover:bg-ink hover:text-paper hover:border-ink transition-colors';
 
+/** A plate sequence. Case study 01 ships 18 unlabelled slides, so the folio
+    counter carries the position rather than a caption that isn't there. */
 export default function Carousel({ section }: Props) {
   const { openModal } = useModal();
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState(0);
 
   function scroll(direction: number) {
-    if (!carouselRef.current) return;
-    const amount = carouselRef.current.clientWidth * 0.85;
-    carouselRef.current.scrollBy({ left: direction * amount, behavior: 'smooth' });
+    const track = trackRef.current;
+    if (!track) return;
+    const amount = track.clientWidth * 0.9;
+    track.scrollBy({ left: direction * amount, behavior: 'smooth' });
   }
+
+  function handleScroll() {
+    const track = trackRef.current;
+    if (!track) return;
+    const per = track.scrollWidth / section.slides.length;
+    setIndex(Math.min(section.slides.length - 1, Math.round(track.scrollLeft / per)));
+  }
+
+  const total = String(section.slides.length).padStart(2, '0');
 
   return (
     <Band id={section.anchor}>
       <SectionIntro title={section.title} subtitle={section.subtitle} />
 
-      <div className="reveal relative group">
-        {/* Track */}
-        <div
-          ref={carouselRef}
-          className="flex w-full min-w-0 overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 pb-8"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-          {section.slides.map((slide, i) => (
-            <figure
-              key={i}
-              className="m-0 snap-center shrink-0 w-full md:w-[85%] flex flex-col items-center"
-            >
-              <div className="bg-ink-2 border border-line p-4 w-full">
-                <img
-                  src={assetUrl(slide.image)}
-                  alt={slide.label}
-                  className="w-full h-auto rounded object-cover cursor-zoom-in"
-                  onClick={() => openModal(assetUrl(slide.image), slide.label)}
-                />
-              </div>
-              <figcaption className="text-center mt-4">
-                <span className="label block">{slide.label}</span>
-                <span className="block text-[13px] text-bone-3 mt-1">{slide.sublabel}</span>
-              </figcaption>
-            </figure>
-          ))}
+      <Col span={12}>
+        <div className="flex items-center justify-between gap-4 mb-3">
+          <span className="label text-accent">
+            PL. {String(index + 1).padStart(2, '0')} / {total}
+          </span>
+          <div className="flex gap-2">
+            <button onClick={() => scroll(-1)} className={NAV_CLASS} aria-label="Previous slide">
+              ← Prev
+            </button>
+            <button onClick={() => scroll(1)} className={NAV_CLASS} aria-label="Next slide">
+              Next →
+            </button>
+          </div>
         </div>
 
-        <button
-          onClick={() => scroll(-1)}
-          className={`${ARROW_CLASS} left-2 sm:-left-5`}
-          aria-label="Previous slide"
+        <div
+          ref={trackRef}
+          onScroll={handleScroll}
+          className="flex w-full min-w-0 overflow-x-auto snap-x snap-mandatory gap-gutter pb-2"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          <span className="material-symbols-rounded block!" style={{ fontSize: '22px' }} aria-hidden="true">
-            chevron_left
-          </span>
-        </button>
-
-        <button
-          onClick={() => scroll(1)}
-          className={`${ARROW_CLASS} right-2 sm:-right-5`}
-          aria-label="Next slide"
-        >
-          <span className="material-symbols-rounded block!" style={{ fontSize: '22px' }} aria-hidden="true">
-            chevron_right
-          </span>
-        </button>
-      </div>
+          {section.slides.map((slide, i) => {
+            const label = slide.label?.trim();
+            const sublabel = slide.sublabel?.trim();
+            return (
+              <figure key={i} className="m-0 snap-center shrink-0 w-full md:w-[86%]">
+                <button
+                  type="button"
+                  onClick={() => openModal(assetUrl(slide.image), label || `Slide ${i + 1}`)}
+                  className="block w-full cursor-zoom-in"
+                  aria-label={`Zoom: ${label || `slide ${i + 1}`}`}
+                >
+                  <div className="plate-frame">
+                    <img src={assetUrl(slide.image)} alt={label || ''} loading="lazy" />
+                  </div>
+                </button>
+                <figcaption className="mt-3 flex items-baseline gap-3">
+                  <span className="label shrink-0">
+                    {String(i + 1).padStart(2, '0')} / {total}
+                  </span>
+                  <span className="leader" aria-hidden="true" />
+                  {(label || sublabel) && (
+                    <span className="text-right min-w-0">
+                      {label && <span className="block text-small font-medium">{label}</span>}
+                      {sublabel && <span className="label block mt-0.5">{sublabel}</span>}
+                    </span>
+                  )}
+                </figcaption>
+              </figure>
+            );
+          })}
+        </div>
+      </Col>
     </Band>
   );
 }

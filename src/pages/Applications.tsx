@@ -1,35 +1,51 @@
 import { useState } from "react";
 import { assetUrl } from "../utils/assetUrl";
 import Modal from "../components/Modal";
+import { Col, Grid, Plate } from "../components/system";
+import { useSpreadMotion } from "../hooks/useMotion";
 
 const images = [
-  { file: "app-01.png", alt: "App 1" },
-  { file: "app-02.png", alt: "App 2" },
-  { file: "app-03.png", alt: "App 3" },
-  { file: "app-04.png", alt: "App 4" },
+  { file: "app-01.png", alt: "Application screenshot 01", meta: "Web · Interface" },
+  { file: "app-02.png", alt: "Application screenshot 02", meta: "Web · Interface" },
+  { file: "app-03.png", alt: "Application screenshot 03", meta: "Web · Interface" },
+  { file: "app-04.png", alt: "Application screenshot 04", meta: "Web · Interface" },
 ];
 
 export default function Applications() {
-  const [selected, setSelected] = useState<{ file: string; alt: string } | null>(null);
+  const [selected, setSelected] = useState<(typeof images)[number] | null>(null);
+  const ref = useSpreadMotion<HTMLDivElement>();
 
   return (
-    <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[18px]">
+    <div ref={ref}>
+      <p className="max-w-[56ch] font-serif text-lead text-ink-2 mt-0 mb-10">
+        Side projects and applications I've built — the ones where the design and the deployment
+        were the same pair of hands.
+      </p>
+
+      <Grid className="gap-y-[clamp(32px,4vw,56px)]">
         {images.map((img, i) => (
-          <figure
-            key={img.file}
-            data-cursor="big"
-            className="m-0 border border-line rounded overflow-hidden bg-ink-2 cursor-zoom-in"
-            onClick={() => setSelected(img)}
-          >
-            <img src={assetUrl(`/img/works/${img.file}`)} alt={img.alt} className="w-full" loading="lazy" />
-            <figcaption className="px-3.5 py-3 border-t border-line flex justify-between">
-              <span className="label">App {String(i + 1).padStart(2, "0")}</span>
-              <span className="label">View</span>
-            </figcaption>
-          </figure>
+          <Col key={img.file} span={6}>
+            <Plate
+              no={i + 1}
+              total={images.length}
+              title={`Application ${String(i + 1).padStart(2, "0")}`}
+              meta={img.meta}
+              ratio="4 / 3"
+              zoom
+              onClick={() => setSelected(img)}
+              className="cursor-zoom-in"
+            >
+              <img
+                src={assetUrl(`/img/works/${img.file}`)}
+                alt={img.alt}
+                width={1600}
+                height={1200}
+                loading="lazy"
+              />
+            </Plate>
+          </Col>
         ))}
-      </div>
+      </Grid>
 
       {selected && (
         <Modal
@@ -38,6 +54,6 @@ export default function Applications() {
           onClose={() => setSelected(null)}
         />
       )}
-    </>
+    </div>
   );
 }

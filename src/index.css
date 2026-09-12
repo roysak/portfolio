@@ -1,101 +1,156 @@
 @import "tailwindcss";
+
+/* Self-hosted faces — no render-blocking CDN request, no third-party hop. */
+@import "@fontsource-variable/inter-tight";
+@import "@fontsource-variable/newsreader";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+
 @import "./styles/portfolio.css";
 
-/* ─── Design Tokens ─────────────────────────────────────────────────────────
-   Dark-first "ink and pigment" system.
-   ink      → page ground and surfaces
-   bone     → text (three steps)
-   pigment  → the single ochre accent
-   plum     → secondary hue, carried over from the original brand (#6D4778)
-   The light variant is applied with data-theme="light" on <html>.
+/* ─── Design tokens ─────────────────────────────────────────────────────────
+   "The Annual" — a printed design annual, set in a browser.
+
+   paper   → the stock: page ground and tint blocks
+   ink     → what is printed on it: text, three steps
+   rule    → hairlines; the only decoration this system has
+   accent  → vermilion, the first ink. Used sparingly: register marks,
+             plate numbers, active states, one word in the hero.
+   accent-2→ prussian blue, the second ink. Diagrams, links, data.
+
+   Paper is the default. Ink is the alternate, applied with
+   data-theme="dark" on <html>.
    ──────────────────────────────────────────────────────────────────────────── */
 
 :root {
-  --ink: #0f0d14;
-  --ink-2: #17131e;
-  --ink-3: #211b2b;
-  --line: rgba(237, 230, 218, 0.12);
-  --line-strong: rgba(237, 230, 218, 0.28);
-  --bone: #ede6da;
-  --bone-2: #a39b90;
-  --bone-3: #6f685f;
-  --pigment: #e4b04a;
-  --pigment-ink: #0f0d14;
-  --plum: #9a6fb0;
-  --plum-soft: rgba(154, 111, 176, 0.18);
-  --shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
-  --gutter: clamp(20px, 5vw, 72px);
+  --paper: #f4f1ea;
+  --paper-2: #ebe7dd;
+  --paper-3: #ded9cc;
+  --rule: rgba(18, 17, 15, 0.16);
+  --rule-2: rgba(18, 17, 15, 0.38);
+  --ink: #12110f;
+  --ink-2: #55514a;
+  --ink-3: #7c766c;
+  --accent: #b8390a;
+  --accent-soft: rgba(184, 57, 10, 0.1);
+  --accent-2: #1e3a5f;
+  --accent-2-soft: rgba(30, 58, 95, 0.09);
+  --lift: 0 1px 0 var(--rule);
+
+  /* Page geometry */
+  --margin: clamp(20px, 5vw, 80px);
+  --gutter: clamp(16px, 2vw, 28px);
+  --cols: 12;
+
+  /* Modular scale, 4px baseline */
+  --t-hero: clamp(52px, 10.5vw, 168px);
+  --t-display: clamp(36px, 6vw, 84px);
+  --t-title: clamp(26px, 3.4vw, 48px);
+  --t-head: clamp(20px, 2.2vw, 30px);
+  --t-lead: clamp(19px, 1.7vw, 25px);
+  --t-body: 17px;
+  --t-small: 14px;
+  --t-caption: 11px;
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #12110f;
+  --paper-2: #1a1815;
+  --paper-3: #24211c;
+  --rule: rgba(244, 241, 234, 0.14);
+  --rule-2: rgba(244, 241, 234, 0.34);
+  --ink: #f4f1ea;
+  --ink-2: #a8a298;
+  --ink-3: #857f75;
+  --accent: #f2793d;
+  --accent-soft: rgba(242, 121, 61, 0.12);
+  --accent-2: #93b4d8;
+  --accent-2-soft: rgba(147, 180, 216, 0.12);
 
   color-scheme: dark;
 }
 
-:root[data-theme="light"] {
-  --ink: #f2efe9;
-  --ink-2: #faf8f4;
-  --ink-3: #e7e2d9;
-  --line: rgba(23, 19, 30, 0.12);
-  --line-strong: rgba(23, 19, 30, 0.3);
-  --bone: #17131e;
-  --bone-2: #5e5866;
-  --bone-3: #8f8895;
-  --pigment: #b7811a;
-  --pigment-ink: #faf8f4;
-  --plum: #6d4778;
-  --plum-soft: rgba(109, 71, 120, 0.12);
-  --shadow: 0 30px 80px rgba(23, 19, 30, 0.22);
-  color-scheme: light;
-}
-
 @theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-paper-3: var(--paper-3);
+  --color-rule: var(--rule);
+  --color-rule-2: var(--rule-2);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-ink-3: var(--ink-3);
-  --color-line: var(--line);
-  --color-line-strong: var(--line-strong);
-  --color-bone: var(--bone);
-  --color-bone-2: var(--bone-2);
-  --color-bone-3: var(--bone-3);
-  --color-pigment: var(--pigment);
-  --color-pigment-ink: var(--pigment-ink);
-  --color-plum: var(--plum);
-  --color-plum-soft: var(--plum-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-2: var(--accent-2);
+  --color-accent-2-soft: var(--accent-2-soft);
 
-  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
-  --font-sans: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Inter Tight Variable", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Inter Tight Variable", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Newsreader Variable", "Iowan Old Style", Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
 
-  --spacing-gutter: var(--gutter);
-  --shadow-lift: var(--shadow);
-}
+  --text-hero: var(--t-hero);
+  --text-display: var(--t-display);
+  --text-title: var(--t-title);
+  --text-head: var(--t-head);
+  --text-lead: var(--t-lead);
+  --text-body: var(--t-body);
+  --text-small: var(--t-small);
+  --text-caption: var(--t-caption);
 
-/* Original plum scale, still used by the blog and article components */
-@theme {
-  --color-primary-50: #f8f0fa;
-  --color-primary-100: #f0dff5;
-  --color-primary-200: #e0beec;
-  --color-primary-300: #c890da;
-  --color-primary-400: #aa62c4;
-  --color-primary-500: #8c43aa;
-  --color-primary-600: #6d4778;
-  --color-primary-700: #573060;
-  --color-primary-800: #3d1f45;
-  --color-primary-900: #27112d;
-  --color-primary-950: #160818;
-  --color-body-text: #583b61;
+  --spacing-margin: var(--margin);
+  --spacing-gutter: var(--gutter);
+
+  /* The article bodies each carry their own category-badge colour maps written
+     against these two scales. Rather than edit fifteen files, the scales are
+     remapped onto the shared tokens so badges follow the ground like anything
+     else. Kept deliberately flat — badges are labels, not decoration. */
+  --color-primary-50: var(--accent-soft);
+  --color-primary-100: var(--accent-soft);
+  --color-primary-200: var(--rule);
+  --color-primary-300: var(--rule-2);
+  --color-primary-400: var(--ink-3);
+  --color-primary-500: var(--accent);
+  --color-primary-600: var(--accent);
+  --color-primary-700: var(--accent);
+  --color-primary-800: var(--ink);
+  --color-primary-900: var(--ink);
+  --color-primary-950: var(--ink);
+
+  --color-neutral-50: var(--paper-2);
+  --color-neutral-100: var(--paper-3);
+  --color-neutral-200: var(--rule);
+  --color-neutral-300: var(--rule-2);
+  --color-neutral-400: var(--ink-3);
+  --color-neutral-500: var(--ink-3);
+  --color-neutral-600: var(--ink-2);
+  --color-neutral-700: var(--ink-2);
+  --color-neutral-800: var(--ink);
+  --color-neutral-900: var(--ink);
+
+  --color-body-text: var(--ink-2);
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+/* Lenis drives scrolling; native smooth behaviour would fight it. */
+html.lenis {
+  scroll-behavior: auto;
+}
+
 body {
   margin: 0;
-  background: var(--ink);
-  color: var(--bone);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans);
-  font-size: 17px;
-  line-height: 1.55;
+  font-size: var(--t-body);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
 
@@ -104,11 +159,11 @@ body {
 }
 
 ::selection {
-  background: var(--pigment);
-  color: var(--pigment-ink);
+  background: var(--accent);
+  color: var(--paper);
 }
 
 :focus-visible {
-  outline: 2px solid var(--pigment);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }

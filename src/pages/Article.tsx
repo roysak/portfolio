@@ -1,7 +1,7 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { articles } from "../data/articles";
 import { lazy, Suspense, type FC } from "react";
-import { useForceLightTheme } from "../hooks/useTheme";
+import { Col, Grid, Register } from "../components/system";
 
 const articleComponents: Record<string, React.LazyExoticComponent<FC>> = {
   "react-hooks-cheatsheet": lazy(
@@ -54,7 +54,6 @@ const articleComponents: Record<string, React.LazyExoticComponent<FC>> = {
 export default function Article() {
   const { slug } = useParams<{ slug: string }>();
   const meta = articles.find((a) => a.slug === slug);
-  useForceLightTheme();
 
   if (!meta || !slug || !(slug in articleComponents)) {
     return <Navigate to="/blog" replace />;
@@ -63,60 +62,63 @@ export default function Article() {
   const ArticleContent = articleComponents[slug];
 
   return (
-    <main className="max-w-5xl mx-auto w-full px-6 pt-36 pb-24">
-      {/* Back link */}
-      <Link
-        to="/blog"
-        className="inline-flex items-center gap-1.5 text-sm text-neutral-400 hover:text-primary-600 transition-colors mb-10"
-      >
-        <span className="material-symbols-rounded text-base!">arrow_back</span>
-        Back to Blog
-      </Link>
+    <main className="relative px-margin pt-[clamp(28px,5vw,56px)] pb-[clamp(64px,9vw,128px)]">
+      <Register className="left-[calc(var(--margin)-22px)] top-[clamp(28px,5vw,56px)]" />
+      <Register className="right-[calc(var(--margin)-22px)] top-[clamp(28px,5vw,56px)]" />
 
-      {/* Article header */}
-      <header className="mb-10 pb-10 border-b border-neutral-200">
-        <div className="flex flex-wrap gap-2 mb-4">
-          {meta.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-primary-100 text-primary-700"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-neutral-900 mb-4">
-          {meta.title}
-        </h1>
-        <p className="text-lg text-neutral-500 leading-relaxed mb-6">{meta.description}</p>
-        <div className="flex items-center gap-4 text-sm text-neutral-400">
-          <span className="inline-flex items-center gap-1.5">
-            <span className="material-symbols-rounded text-base!">calendar_today</span>
-            {new Date(meta.date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="material-symbols-rounded text-base!">schedule</span>
-            {meta.readingTime}
-          </span>
-        </div>
-      </header>
+      <Grid className="gap-y-8">
+        <Col span={12} className="pb-4 border-b border-rule">
+          <Link to="/blog" className="label hover:text-accent transition-colors">
+            ← Back to notes
+          </Link>
+        </Col>
 
-      {/* Article body */}
-      <article>
-        <Suspense
-          fallback={
-            <div className="flex items-center justify-center py-24 text-neutral-400">
-              <span className="material-symbols-rounded animate-spin text-3xl!">progress_activity</span>
+        {/* ── Standfirst ── */}
+        <Col span={8}>
+          <p className="label m-0 mb-5 flex flex-wrap gap-x-3">
+            <span className="text-accent">{meta.category}</span>
+            <span>{meta.tags.join(" · ")}</span>
+          </p>
+          <h1 className="m-0 font-display font-medium text-title leading-[1.02] tracking-[-0.04em] text-balance">
+            {meta.title}
+          </h1>
+          <p className="mt-5 mb-0 font-serif text-lead leading-[1.45] text-ink-2 max-w-[54ch]">
+            {meta.description}
+          </p>
+        </Col>
+
+        <Col span={3} start={10} className="self-end max-md:mt-2">
+          <dl className="m-0 border-t border-rule">
+            <div className="flex items-baseline gap-3 py-2 border-b border-rule">
+              <dt className="label shrink-0 w-16">Published</dt>
+              <dd className="m-0 text-small">
+                {new Date(meta.date).toLocaleDateString("en-GB", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </dd>
             </div>
-          }
-        >
-          <ArticleContent />
-        </Suspense>
-      </article>
+            <div className="flex items-baseline gap-3 py-2 border-b border-rule">
+              <dt className="label shrink-0 w-16">Reading</dt>
+              <dd className="m-0 text-small">{meta.readingTime}</dd>
+            </div>
+          </dl>
+        </Col>
+
+        {/* ── Body ── */}
+        <Col span={12} className="mt-[clamp(24px,4vw,48px)] pt-8 border-t border-rule-2">
+          <article>
+            <Suspense
+              fallback={
+                <p className="label py-24 text-center">Setting the page…</p>
+              }
+            >
+              <ArticleContent />
+            </Suspense>
+          </article>
+        </Col>
+      </Grid>
     </main>
   );
 }

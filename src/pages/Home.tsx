@@ -3,12 +3,12 @@ import { assetUrl } from "../utils/assetUrl";
 import caseStudies from "../data/caseStudies";
 import FlowField from "../components/bgfx/FlowField";
 import Button, { ArrowIcon } from "../components/Button";
-import SectionHead from "../components/SectionHead";
 import { HoverPeekProvider } from "../components/HoverPeek";
 import { usePeek } from "../components/peekContext";
-import { useReveal } from "../hooks/useReveal";
+import { Col, Grid, LocalTime, Plate, Register, Spread, SpreadHead } from "../components/system";
+import { useSpreadMotion } from "../hooks/useMotion";
 
-const marqueeWords = [
+const tickerWords = [
   "Design systems",
   "Workflow automation",
   "Dashboard builders",
@@ -29,175 +29,211 @@ const facts = [
   { value: "30", unit: "%", label: "Less prototyping effort with AI tools" },
 ];
 
-function IndexRow({ study }: { study: (typeof caseStudies)[number] }) {
+const works = [
+  {
+    to: "/works/applications",
+    title: "Applications",
+    text: "Side projects and applications I've built.",
+    meta: "4 builds · Product",
+    media: <img src={assetUrl("/img/works/app-01.png")} alt="Screenshot of a web application built by Roys" width={1600} height={1200} loading="lazy" />,
+  },
+  {
+    to: "/works/creative-coding",
+    title: "Creative coding",
+    text: "Interactive background effects created using AI tools.",
+    meta: "6 effects · WebGL",
+    media: <FlowField count={340} scale={0.006} colors={["#b8390a", "#1e3a5f"]} fade={0.08} />,
+  },
+  {
+    to: "/works/digital-paintings",
+    title: "Digital paintings",
+    text: "A collection of digital artwork and illustrations.",
+    meta: "9 pieces · Digital",
+    media: <img src={assetUrl("/img/dp/Forest01.webp")} alt="Digital painting of a forest" width={655} height={1000} loading="lazy" />,
+  },
+];
+
+/** A table-of-contents row: number, title, leader dots, folio. */
+function IndexRow({ study, total }: { study: (typeof caseStudies)[number]; total: number }) {
   const peek = usePeek();
   return (
-    <li className="border-b border-line">
+    <li>
       <Link
         to={`/case-studies/${study.link}`}
         onPointerEnter={() => peek.show(assetUrl(study.image))}
         onPointerLeave={peek.hide}
-        className="group grid grid-cols-[40px_1fr_auto] md:grid-cols-[64px_1.3fr_1fr_auto] gap-x-6 gap-y-3 items-center py-7 transition-[padding] duration-300 ease-[cubic-bezier(.2,.8,.2,1)] hover:pl-4"
+        className="group block border-b border-rule py-6 transition-[padding-left] duration-500 ease-[cubic-bezier(.16,1,.3,1)] hover:pl-3"
       >
-        <span className="font-mono text-[13px] text-bone-3">{study.link}</span>
-        <h3 className="m-0 font-display font-semibold text-[clamp(24px,3.2vw,44px)] leading-none tracking-[-0.025em] transition-colors group-hover:text-pigment">
-          {study.title}
-        </h3>
-        <p className="m-0 text-[15px] text-bone-2 max-w-[46ch] col-start-2 col-span-2 md:col-start-auto md:col-span-1">
-          {study.description}
-        </p>
-        <span className="row-start-1 col-start-3 md:col-start-auto w-11 h-11 rounded-full border border-line-strong grid place-items-center transition-[background-color,transform,color] duration-300 group-hover:bg-bone group-hover:text-ink group-hover:-rotate-45">
+        <div className="flex items-baseline gap-5">
+          <span className="label text-accent shrink-0">{study.link}</span>
+          <h3 className="m-0 font-display font-medium text-[clamp(24px,3.4vw,46px)] leading-none tracking-[-0.035em] transition-colors group-hover:text-accent">
+            {study.title}
+          </h3>
+          <span className="leader max-sm:hidden" aria-hidden="true" />
+          <span className="label shrink-0 max-sm:hidden">
+            {study.link} / {String(total).padStart(2, "0")}
+          </span>
           <ArrowIcon />
-        </span>
+        </div>
+        <div className="mt-3 flex flex-wrap items-baseline gap-x-6 gap-y-1 pl-[calc(3ch+1.25rem)] max-sm:pl-0">
+          <p className="m-0 font-serif text-small text-ink-2 max-w-[58ch]">{study.description}</p>
+          <span className="label">{study.tags.join(" · ")}</span>
+        </div>
       </Link>
     </li>
   );
 }
 
 export default function Home() {
-  const pageRef = useReveal<HTMLElement>();
+  const pageRef = useSpreadMotion<HTMLElement>();
 
   return (
     <main ref={pageRef} className="grow min-w-0 w-full overflow-x-clip">
-      {/* ── Hero ── */}
-      <section className="relative min-h-[78svh] grid content-end overflow-hidden border-b border-line pt-32 pb-12 px-gutter">
-        <div className="absolute inset-0">
-          <FlowField count={1100} />
-        </div>
-        <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,transparent_30%,var(--ink)_92%)]" />
+      {/* ─── Cover ─────────────────────────────────────────────────────── */}
+      <section className="relative px-margin pt-[clamp(28px,5vw,64px)] pb-[clamp(40px,6vw,80px)]">
+        <Register className="left-[calc(var(--margin)-22px)] top-[clamp(28px,5vw,64px)]" />
+        <Register className="right-[calc(var(--margin)-22px)] top-[clamp(28px,5vw,64px)]" />
 
-        <div className="relative grid gap-7">
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
+        <Grid className="gap-y-[clamp(28px,4vw,56px)]">
+          {/* Masthead */}
+          <Col span={12} className="flex flex-wrap justify-between gap-x-8 gap-y-2 pb-4 border-b border-rule">
+            <span className="label label-ink">Roys A Kareem</span>
             <span className="label">Product Designer</span>
             <span className="label">Frontend Developer</span>
-            <span className="label">AI-Integrated Product Design</span>
-            <span className="label">Kochi, India</span>
-          </div>
+            <span className="label max-md:hidden">AI-Integrated Product Design</span>
+            <LocalTime />
+          </Col>
 
-          <h1 className="m-0 font-display font-bold text-[clamp(56px,11.5vw,176px)] leading-[0.9] tracking-[-0.035em] text-balance [font-variation-settings:'opsz'_96]">
-            <span className="rise-word"><span>Pixels.</span></span>{" "}
-            <span className="rise-word"><span>Code.</span></span>{" "}
-            <span className="rise-word"><span className="text-pigment">Impact.</span></span>
-          </h1>
+          {/* Title */}
+          <Col span={12}>
+            <h1
+              data-set
+              className="m-0 font-display font-medium text-hero leading-[0.86] tracking-[-0.05em]"
+            >
+              <span className="line-mask">
+                <span>Pixels.</span>
+              </span>
+              <span className="line-mask">
+                <span>Code.</span>
+              </span>
+              <span className="line-mask">
+                <span className="text-accent">Impact.</span>
+              </span>
+            </h1>
+          </Col>
 
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-end">
-            <p className="m-0 max-w-[42ch] text-[clamp(17px,1.6vw,21px)] text-bone-2 text-pretty">
-              Crafting colorful, user-centric experiences from the first pixel to the final deployment.{" "}
-              <b className="font-medium text-bone">Fifteen years</b> of enterprise UX, design systems and workflow
-              automation, now built with AI in the loop.
+          {/* Standfirst, actions, and one plate */}
+          <Col span={4} className="self-end">
+            <p className="m-0 font-serif text-lead leading-[1.45] text-ink-2 text-pretty">
+              Crafting colorful, user-centric experiences from the first pixel to the final
+              deployment. <em className="not-italic text-ink">Fifteen years</em> of enterprise UX,
+              design systems and workflow automation, now built with AI in the loop.
             </p>
-            <div className="flex flex-wrap gap-3.5">
+            <div className="flex flex-wrap gap-3 mt-7">
               <Button to="/case-studies" primary>
                 Read the case studies <ArrowIcon />
               </Button>
               <Button to="/resume">Resume</Button>
             </div>
-          </div>
-        </div>
+          </Col>
+
+          <Col span={5} start={8} className="self-end">
+            <Plate title="Frontispiece — Flow field" meta="Generative · Canvas 2D" ratio="16 / 10">
+              <FlowField count={900} />
+            </Plate>
+          </Col>
+        </Grid>
       </section>
 
-      {/* ── Marquee ── */}
-      <div className="overflow-hidden border-b border-line py-3.5 whitespace-nowrap" aria-hidden="true">
-        <div className="marquee-track">
-          {[...marqueeWords, ...marqueeWords].map((w, i) => (
-            <span key={i} className="label tracking-[0.12em]">
-              <i className="not-italic text-pigment mr-12">◆</i>
+      {/* ─── Ticker rule ───────────────────────────────────────────────── */}
+      <div
+        className="no-select overflow-hidden border-y border-rule py-2.5 whitespace-nowrap bg-paper-2"
+        aria-hidden="true"
+      >
+        <div className="ticker-track">
+          {[...tickerWords, ...tickerWords].map((w, i) => (
+            <span key={i} className="label inline-flex items-center">
+              <i className="not-italic text-accent mx-8">✳</i>
               {w}
             </span>
           ))}
         </div>
       </div>
 
-      {/* ── Case study index ── */}
-      <section className="px-gutter py-[clamp(64px,9vw,128px)] border-b border-line">
-        <SectionHead
+      {/* ─── Contents ──────────────────────────────────────────────────── */}
+      <Spread id="contents" rule={false}>
+        <SpreadHead
+          index="§ 01"
+          label="Contents"
           title={
             <>
-              Selected <em className="font-normal text-bone-2">case studies</em>
+              Selected <span className="font-serif font-normal italic text-ink-2">case studies</span>
             </>
           }
-          aside="Deep dives into the why behind the what"
+          aside="Deep dives into the why behind the what — research, constraint, trade-off and outcome."
         />
-        <HoverPeekProvider>
-          <ul className="list-none m-0 p-0 border-t border-line">
-            {caseStudies.map((s) => (
-              <IndexRow key={s.id} study={s} />
+        <Col span={12} className="mt-[clamp(32px,5vw,64px)]">
+          <HoverPeekProvider>
+            <ul className="list-none m-0 p-0 border-t border-rule">
+              {caseStudies.map((s) => (
+                <IndexRow key={s.id} study={s} total={caseStudies.length} />
+              ))}
+            </ul>
+          </HoverPeekProvider>
+        </Col>
+      </Spread>
+
+      {/* ─── Plates ────────────────────────────────────────────────────── */}
+      <Spread id="works" tone="tint">
+        <SpreadHead index="§ 02" label="Plates" title="Works" aside="A curated gallery of craft and code." />
+        <Col span={12} className="mt-[clamp(32px,5vw,64px)]">
+          <Grid className="gap-y-10">
+            {works.map((w, i) => (
+              <Col key={w.to} span={4}>
+                <Link to={w.to} className="group block">
+                  <Plate no={i + 1} total={works.length} title={w.title} meta={w.meta} zoom>
+                    {w.media}
+                  </Plate>
+                  <p className="mt-3 m-0 font-serif text-small text-ink-2">{w.text}</p>
+                </Link>
+              </Col>
             ))}
-          </ul>
-        </HoverPeekProvider>
-      </section>
+          </Grid>
+        </Col>
+      </Spread>
 
-      {/* ── Works triptych ── */}
-      <section className="px-gutter py-[clamp(64px,9vw,128px)] border-b border-line">
-        <SectionHead title="Works" aside="A curated gallery of craft and code" />
-        <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
-          <Panel to="/works/applications" title="Applications" text="Side projects and applications I've built." foot="4 builds">
-            <img src={assetUrl("/img/works/app-01.png")} alt="Screenshot of a web application built by Roys" className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-105" />
-          </Panel>
-          <Panel to="/works/creative-coding" title="Creative coding" text="Interactive background effects created using AI tools." foot="6 effects · WebGL">
-            <FlowField count={350} scale={0.006} colors={["#9A6FB0", "#E4B04A"]} fade={0.08} />
-          </Panel>
-          <Panel to="/works/digital-paintings" title="Digital paintings" text="A collection of digital artwork and illustrations." foot="9 pieces">
-            <img src={assetUrl("/img/dp/Forest01.png")} alt="Digital painting of a forest" className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-105" />
-          </Panel>
-        </div>
-      </section>
-
-      {/* ── About ── */}
-      <section className="px-gutter py-[clamp(64px,9vw,128px)] border-b border-line">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_.9fr] gap-[clamp(32px,6vw,96px)] items-start">
-          <p className="reveal m-0 font-display font-normal text-[clamp(24px,3vw,40px)] leading-[1.2] tracking-[-0.02em] text-pretty">
-            I design and ship the same product. Design systems, automation workflow builders and dashboard tooling
-            for enterprise platforms, with <b className="font-semibold text-pigment">AI-assisted workflows</b>{" "}
-            shortening the distance between a sketch and a deployed screen.
+      {/* ─── Colophon of the practice ──────────────────────────────────── */}
+      <Spread id="about">
+        <Col span={7}>
+          <p className="label m-0 mb-6">
+            <span className="text-accent">§ 03</span> <span className="ml-3">Statement</span>
           </p>
-          <div className="reveal grid grid-cols-2 border-t border-line">
-            {facts.map((f, i) => (
-              <div
-                key={f.label}
-                className={`py-5 border-b border-line ${i % 2 === 0 ? "pr-6 border-r" : "pl-6"}`}
-              >
-                <div className="font-display font-semibold text-[clamp(36px,4vw,56px)] leading-none tracking-[-0.03em] tabular-nums">
+          <p
+            data-fade
+            className="m-0 font-serif font-normal text-[clamp(23px,2.9vw,40px)] leading-[1.28] tracking-[-0.015em] text-pretty"
+          >
+            I design and ship the same product. Design systems, automation workflow builders and
+            dashboard tooling for enterprise platforms, with{" "}
+            <em className="not-italic text-accent">AI-assisted workflows</em> shortening the distance
+            between a sketch and a deployed screen.
+          </p>
+        </Col>
+
+        <Col span={4} start={9} className="max-lg:mt-10">
+          <p className="label m-0 mb-3">By the numbers</p>
+          <dl className="m-0 border-t border-rule">
+            {facts.map((f) => (
+              <div key={f.label} className="flex items-baseline gap-5 py-4 border-b border-rule">
+                <dt className="m-0 font-display font-medium text-[34px] leading-none tracking-[-0.04em] tabular-nums w-[3.2ch] shrink-0">
                   {f.value}
-                  <small className="text-[0.5em] text-pigment ml-0.5">{f.unit}</small>
-                </div>
-                <span className="label block mt-2">{f.label}</span>
+                  <span className="text-accent text-[0.55em] align-super">{f.unit}</span>
+                </dt>
+                <dd className="label m-0">{f.label}</dd>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
+          </dl>
+        </Col>
+      </Spread>
     </main>
-  );
-}
-
-function Panel({
-  to,
-  title,
-  text,
-  foot,
-  children,
-}: {
-  to: string;
-  title: string;
-  text: string;
-  foot: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link
-      to={to}
-      className="group bg-ink hover:bg-ink-2 transition-colors duration-300 p-7 grid grid-rows-[auto_1fr_auto] gap-6 relative overflow-hidden"
-    >
-      <div>
-        <h3 className="m-0 font-display font-semibold text-[28px] tracking-[-0.02em]">{title}</h3>
-        <p className="mt-1.5 mb-0 text-[15px] text-bone-2">{text}</p>
-      </div>
-      <div className="relative rounded overflow-hidden aspect-[4/3] bg-ink-3">{children}</div>
-      <div className="flex justify-between items-center">
-        <span className="label">{foot}</span>
-        <span className="label">Open</span>
-      </div>
-    </Link>
   );
 }

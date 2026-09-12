@@ -3,6 +3,7 @@ import type { DeepDiveSection } from '../../data/caseStudyTypes';
 import { assetUrl } from '../../utils/assetUrl';
 import { useModal } from './ModalContext';
 import { Band, SectionIntro, FrameCaption } from './SectionShell';
+import { Col } from '../system';
 
 interface Props {
   section: DeepDiveSection;
@@ -11,59 +12,68 @@ interface Props {
 export default function DeepDiveTabs({ section }: Props) {
   const { openModal } = useModal();
   const [activeId, setActiveId] = useState(section.tabs[0]?.id ?? '');
+  const active = section.tabs.find((t) => t.id === activeId);
 
   return (
     <Band id={section.anchor} tone="deep">
       <SectionIntro title={section.title} subtitle={section.subtitle} />
 
-      <div className="grid md:grid-cols-12 gap-[clamp(28px,4vw,56px)]">
-        {/* Tab nav */}
-        <div className="reveal md:col-span-4 grid content-start gap-2">
-          {section.tabs.map((tab) => {
+      {/* Index */}
+      <Col span={4}>
+        <div className="border-t border-rule-2" role="tablist" aria-label={String(section.title)}>
+          {section.tabs.map((tab, i) => {
             const isActive = tab.id === activeId;
             return (
               <button
                 key={tab.id}
+                role="tab"
+                aria-selected={isActive}
                 onClick={() => setActiveId(tab.id)}
-                className={`w-full text-left p-5 border transition-colors duration-300 ${
-                  isActive
-                    ? 'bg-ink border-line-strong text-bone'
-                    : 'bg-transparent border-line text-bone-2 hover:text-bone hover:border-line-strong'
+                className={`w-full text-left py-4 border-b border-rule transition-colors duration-300 ${
+                  isActive ? '' : 'opacity-60 hover:opacity-100'
                 }`}
               >
-                <h4
-                  className={`m-0 mb-1.5 font-display font-semibold text-[18px] tracking-[-0.02em] ${
-                    isActive ? 'text-pigment' : ''
-                  }`}
-                >
-                  {tab.title}
-                </h4>
-                <p className="m-0 text-[14px] text-bone-2">{tab.description}</p>
+                <span className="flex items-baseline gap-3">
+                  <span className={`label ${isActive ? 'text-accent' : ''}`}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="min-w-0">
+                    <span
+                      className={`block font-display font-medium text-[18px] tracking-[-0.02em] ${
+                        isActive ? 'text-accent' : 'text-ink'
+                      }`}
+                    >
+                      {tab.title}
+                    </span>
+                    <span className="block mt-1 font-serif text-small text-ink-2">
+                      {tab.description}
+                    </span>
+                  </span>
+                </span>
               </button>
             );
           })}
         </div>
+      </Col>
 
-        {/* Tab content */}
-        <div className="md:col-span-8 flex items-center">
-          {section.tabs.map((tab) =>
-            tab.id === activeId ? (
-              <figure
-                key={tab.id}
-                className="reveal m-0 w-full bg-ink border border-line p-5 flex flex-col items-center"
-              >
-                <FrameCaption>{tab.caption}</FrameCaption>
-                <img
-                  src={assetUrl(tab.image)}
-                  alt={tab.caption}
-                  className="w-full rounded cursor-zoom-in"
-                  onClick={() => openModal(assetUrl(tab.image), tab.caption)}
-                />
-              </figure>
-            ) : null
-          )}
-        </div>
-      </div>
+      {/* Plate */}
+      <Col span={7} start={6}>
+        {active && (
+          <figure key={active.id} className="m-0">
+            <FrameCaption>{active.caption}</FrameCaption>
+            <button
+              type="button"
+              onClick={() => openModal(assetUrl(active.image), active.caption)}
+              className="block w-full cursor-zoom-in"
+              aria-label={`Zoom: ${active.caption}`}
+            >
+              <div className="plate-frame">
+                <img src={assetUrl(active.image)} alt={active.caption} loading="lazy" />
+              </div>
+            </button>
+          </figure>
+        )}
+      </Col>
     </Band>
   );
 }
