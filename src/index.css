@@ -26,12 +26,6 @@
   --shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
   --gutter: clamp(20px, 5vw, 72px);
 
-  /* Legacy aliases still referenced by case-study components */
-  --color-primary: #784286;
-  --color-primary-light: #8133a0;
-  --color-primary-dark: #561e63;
-  --color-primary-subtle: #e9cff0;
-
   color-scheme: dark;
 }
 
@@ -74,7 +68,7 @@
   --shadow-lift: var(--shadow);
 }
 
-/* Original plum scale, still used by the case-study and blog components */
+/* Original plum scale, still used by the blog and article components */
 @theme {
   --color-primary-50: #f8f0fa;
   --color-primary-100: #f0dff5;

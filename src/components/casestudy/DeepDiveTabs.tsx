@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { DeepDiveSection } from '../../data/caseStudyTypes';
 import { assetUrl } from '../../utils/assetUrl';
 import { useModal } from './ModalContext';
+import { Band, SectionIntro, FrameCaption } from './SectionShell';
 
 interface Props {
   section: DeepDiveSection;
@@ -12,61 +13,57 @@ export default function DeepDiveTabs({ section }: Props) {
   const [activeId, setActiveId] = useState(section.tabs[0]?.id ?? '');
 
   return (
-    <div className="bg-primary-700 text-white" id={section.anchor}>
-      <section className="py-24 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto">
-        <div className="max-w-2xl mb-12">
-          <h2 className="text-3xl font-bold mb-4">{section.title}</h2>
-          <p className="text-gray-300">{section.subtitle}</p>
-        </div>
+    <Band id={section.anchor} tone="deep">
+      <SectionIntro title={section.title} subtitle={section.subtitle} />
 
-        <div className="grid md:grid-cols-12 gap-12">
-          {/* Tab nav */}
-          <div className="md:col-span-4 space-y-2">
-            {section.tabs.map((tab) => {
-              const isActive = tab.id === activeId;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveId(tab.id)}
-                  className={`w-full text-left p-6 rounded-2xl transition-all duration-200 border ${
-                    isActive
-                      ? 'bg-white/10 border-white/20 shadow-lg text-white'
-                      : 'border-transparent hover:bg-white/5 text-gray-300 hover:text-gray-200'
+      <div className="grid md:grid-cols-12 gap-[clamp(28px,4vw,56px)]">
+        {/* Tab nav */}
+        <div className="reveal md:col-span-4 grid content-start gap-2">
+          {section.tabs.map((tab) => {
+            const isActive = tab.id === activeId;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveId(tab.id)}
+                className={`w-full text-left p-5 border transition-colors duration-300 ${
+                  isActive
+                    ? 'bg-ink border-line-strong text-bone'
+                    : 'bg-transparent border-line text-bone-2 hover:text-bone hover:border-line-strong'
+                }`}
+              >
+                <h4
+                  className={`m-0 mb-1.5 font-display font-semibold text-[18px] tracking-[-0.02em] ${
+                    isActive ? 'text-pigment' : ''
                   }`}
                 >
-                  <h4 className="font-bold mb-2">{tab.title}</h4>
-                  <p className="text-sm opacity-80 text-gray-300">
-                    {tab.description}
-                  </p>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Tab content */}
-          <div className="md:col-span-8 flex items-center">
-            {section.tabs.map((tab) =>
-              tab.id === activeId ? (
-                <div
-                  key={tab.id}
-                  className="w-full bg-primary-800 rounded-2xl flex flex-col items-center border border-primary-700 shadow-sm p-6 relative overflow-hidden group"
-                >
-                  <p className="text-gray-300 font-medium text-sm tracking-wide uppercase mb-3">
-                    {tab.caption}
-                  </p>
-                  <img
-                    src={assetUrl(tab.image)}
-                    alt={tab.caption}
-                    className="w-full rounded cursor-zoom-in"
-                    onClick={() => openModal(assetUrl(tab.image), tab.caption)}
-                  />
-                  {/* <div className="absolute inset-0 border-2 border-dashed border-transparent group-hover:border-gray-600 rounded-2xl transition-colors duration-300" /> */}
-                </div>
-              ) : null
-            )}
-          </div>
+                  {tab.title}
+                </h4>
+                <p className="m-0 text-[14px] text-bone-2">{tab.description}</p>
+              </button>
+            );
+          })}
         </div>
-      </section>
-    </div>
+
+        {/* Tab content */}
+        <div className="md:col-span-8 flex items-center">
+          {section.tabs.map((tab) =>
+            tab.id === activeId ? (
+              <figure
+                key={tab.id}
+                className="reveal m-0 w-full bg-ink border border-line p-5 flex flex-col items-center"
+              >
+                <FrameCaption>{tab.caption}</FrameCaption>
+                <img
+                  src={assetUrl(tab.image)}
+                  alt={tab.caption}
+                  className="w-full rounded cursor-zoom-in"
+                  onClick={() => openModal(assetUrl(tab.image), tab.caption)}
+                />
+              </figure>
+            ) : null
+          )}
+        </div>
+      </div>
+    </Band>
   );
 }

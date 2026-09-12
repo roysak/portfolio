@@ -1,5 +1,6 @@
 import DynamicIcon from '../DynamicIcon';
 import type { CalloutSection } from '../../data/caseStudyTypes';
+import { Band } from './SectionShell';
 
 interface Props {
   section: CalloutSection;
@@ -7,15 +8,14 @@ interface Props {
 
 export default function CalloutCard({ section }: Props) {
   return (
-    <section className="py-24 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto">
-      <div className="bg-primary-50 rounded-3xl p-10 md:p-16 text-center max-w-4xl mx-auto border border-primary-100">
-        <DynamicIcon
-          name={section.icon}
-          className="w-12 h-12 text-primary-600 mx-auto mb-6"
-        />
-        <h2 className="text-3xl font-bold mb-4 text-gray-900">{section.title}</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">{section.description}</p>
+    <Band>
+      <div className="reveal bg-ink-2 border border-line p-[clamp(28px,5vw,64px)] max-w-4xl mx-auto grid justify-items-center gap-5 text-center">
+        <DynamicIcon name={section.icon} className="w-12 h-12 text-pigment" />
+        <h2 className="m-0 font-display font-semibold text-[clamp(26px,3.2vw,42px)] leading-[1.05] tracking-[-0.03em] text-balance">
+          {section.title}
+        </h2>
+        <p className="m-0 text-bone-2 max-w-[54ch] text-pretty">{section.description}</p>
       </div>
-    </section>
+    </Band>
   );
 }

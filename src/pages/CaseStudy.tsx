@@ -7,7 +7,8 @@ import CaseStudyHero from "../components/casestudy/CaseStudyHero";
 import CaseStudyInPageNav from "../components/casestudy/CaseStudyInPageNav";
 import SectionRenderer from "../components/casestudy/SectionRenderer";
 import { ModalProvider } from "../components/casestudy/ModalContext";
-import { useForceLightTheme } from "../hooks/useTheme";
+import Button, { ArrowIcon } from "../components/Button";
+import { useReveal } from "../hooks/useReveal";
 
 const CASE_STUDY_DATA: Record<string, CaseStudyPageData> = {
   "01": caseStudy01,
@@ -18,43 +19,51 @@ const CASE_STUDY_DATA: Record<string, CaseStudyPageData> = {
 export default function CaseStudy() {
   const { id } = useParams<{ id: string }>();
   const data = id ? CASE_STUDY_DATA[id] : undefined;
-  // Case-study sections are authored against a light ground.
-  useForceLightTheme();
+  const pageRef = useReveal<HTMLElement>();
 
   if (!data) {
     return (
-      <main className="max-w-6xl w-full mx-auto px-6 pt-36 pb-24 text-center">
-        <h1 className="text-3xl font-semibold mb-4">Case Study Not Found</h1>
-        <Link
-          to="/case-studies"
-          className="text-neutral-500 hover:text-neutral-900 underline"
-        >
-          Back to Case Studies
-        </Link>
+      <main className="px-gutter pt-36 pb-[clamp(64px,9vw,128px)] text-center">
+        <h1 className="m-0 mb-6 font-display font-semibold text-[clamp(34px,5vw,68px)] leading-[0.98] tracking-[-0.03em]">
+          Case study not found
+        </h1>
+        <Button to="/case-studies">
+          Back to case studies <ArrowIcon />
+        </Button>
       </main>
     );
   }
 
   return (
-	<ModalProvider>
-		<div className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full pt-28">
-			<Link
-				to="/case-studies"
-				className="label inline-flex gap-2 items-center hover:text-bone transition-colors">
-				<i className="material-symbols-rounded text-base!">keyboard_backspace</i>Back to Case Studies
-			</Link>
-		</div>
-		<div className="min-h-screen bg-white text-gray-900">
-			<CaseStudyHero hero={data.hero} />
-			<CaseStudyInPageNav navItems={data.navItems} />
-			{data.sections.map((section, i) => (
-			  <SectionRenderer key={i} section={section} />
-			))}
-			<footer className="py-12 text-center text-gray-400 text-sm border-t border-gray-100">
-				<p>Thanks for scrolling.</p>
-			</footer>
-		</div>
+    <ModalProvider>
+      <main ref={pageRef} className="grow min-w-0 w-full overflow-x-clip">
+        <div className="px-gutter pt-32 pb-2">
+          <div className="max-w-6xl mx-auto w-full">
+            <Link
+              to="/case-studies"
+              className="label inline-flex gap-2 items-center hover:text-bone transition-colors"
+            >
+              <i className="material-symbols-rounded text-base!">keyboard_backspace</i>
+              Back to case studies
+            </Link>
+          </div>
+        </div>
+
+        <CaseStudyHero hero={data.hero} />
+        <CaseStudyInPageNav navItems={data.navItems} />
+        {data.sections.map((section, i) => (
+          <SectionRenderer key={i} section={section} />
+        ))}
+
+        <div className="px-gutter py-[clamp(48px,7vw,88px)]">
+          <div className="max-w-6xl mx-auto w-full flex flex-wrap gap-4 justify-between items-center">
+            <span className="label">Thanks for scrolling.</span>
+            <Button to="/case-studies">
+              All case studies <ArrowIcon />
+            </Button>
+          </div>
+        </div>
+      </main>
     </ModalProvider>
   );
 }
-

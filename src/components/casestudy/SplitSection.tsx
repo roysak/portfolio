@@ -1,24 +1,17 @@
 import type { SplitSectionData } from '../../data/caseStudyTypes';
 import { assetUrl } from '../../utils/assetUrl';
 import { useModal } from './ModalContext';
+import { Band, FrameCaption } from './SectionShell';
 
 interface Props {
   section: SplitSectionData;
 }
 
-const BULLET_ICONS: Record<string, React.ReactNode> = {
-  check: (
-    <span className="material-symbols-rounded text-green-500 shrink-0" style={{ fontSize: '20px' }} aria-hidden="true">check_circle</span>
-  ),
-  warning: (
-    <span className="material-symbols-rounded text-amber-500 shrink-0" style={{ fontSize: '20px' }} aria-hidden="true">warning</span>
-  ),
-  error: (
-    <span className="material-symbols-rounded text-red-400 shrink-0" style={{ fontSize: '20px' }} aria-hidden="true">error</span>
-  ),
-  info: (
-    <span className="material-symbols-rounded text-blue-400 shrink-0" style={{ fontSize: '20px' }} aria-hidden="true">info</span>
-  ),
+const BULLET_ICONS: Record<string, { name: string; className: string }> = {
+  check: { name: 'check_circle', className: 'text-emerald-400' },
+  warning: { name: 'warning', className: 'text-pigment' },
+  error: { name: 'error', className: 'text-rose-400' },
+  info: { name: 'info', className: 'text-plum' },
 };
 
 export default function SplitSection({ section }: Props) {
@@ -26,43 +19,48 @@ export default function SplitSection({ section }: Props) {
   const imageLeft = section.imagePosition === 'left';
 
   return (
-    <section
-      id={section.anchor}
-      className="py-24 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto"
-    >
-      <div className="grid md:grid-cols-2 gap-16 items-center">
+    <Band id={section.anchor}>
+      <div className="grid md:grid-cols-2 gap-[clamp(32px,5vw,72px)] items-center">
         {/* Text */}
-        <div className={imageLeft ? 'md:order-2' : 'md:order-1'}>
-          <h2 className="text-3xl font-bold mb-6">{section.title}</h2>
-          <p className="text-gray-600 mb-6 leading-relaxed">{section.description}</p>
-          <ul className="space-y-4">
-            {section.bullets.map((bullet, i) => (
-              <li key={i} className="flex gap-3 text-sm text-gray-700">
-                {BULLET_ICONS[bullet.variant]}
-                {bullet.text}
-              </li>
-            ))}
+        <div className={`reveal ${imageLeft ? 'md:order-2' : 'md:order-1'}`}>
+          <h2 className="m-0 mb-5 font-display font-semibold text-[clamp(28px,3.6vw,52px)] leading-[1.02] tracking-[-0.03em] text-balance">
+            {section.title}
+          </h2>
+          <p className="m-0 mb-7 text-bone-2 text-pretty">{section.description}</p>
+          <ul className="list-none m-0 p-0 grid gap-3.5">
+            {section.bullets.map((bullet, i) => {
+              const icon = BULLET_ICONS[bullet.variant] ?? BULLET_ICONS.info;
+              return (
+                <li key={i} className="flex gap-3 text-[15px] text-bone">
+                  <span
+                    className={`material-symbols-rounded shrink-0 ${icon.className}`}
+                    style={{ fontSize: '20px' }}
+                    aria-hidden="true"
+                  >
+                    {icon.name}
+                  </span>
+                  {bullet.text}
+                </li>
+              );
+            })}
           </ul>
         </div>
 
         {/* Image */}
-        <div
-          className={`w-full bg-gray-100 rounded-2xl flex flex-col items-center border border-gray-200 shadow-sm p-6 relative overflow-hidden group ${
+        <figure
+          className={`reveal m-0 w-full bg-ink-2 border border-line p-5 flex flex-col items-center ${
             imageLeft ? 'md:order-1' : 'md:order-2'
           }`}
         >
-          <p className="text-gray-500 font-medium text-sm tracking-wide uppercase mb-3">
-            {section.imageCaption}
-          </p>
+          <FrameCaption>{section.imageCaption}</FrameCaption>
           <img
             src={assetUrl(section.image)}
             alt={section.imageAlt}
-            className="object-cover rounded shadow-sm w-full cursor-zoom-in"
+            className="object-cover rounded w-full cursor-zoom-in"
             onClick={() => openModal(assetUrl(section.image), section.imageAlt)}
           />
-          {/* <div className="absolute inset-0 border-2 border-dashed border-transparent group-hover:border-gray-300 rounded-2xl transition-colors duration-300" /> */}
-        </div>
+        </figure>
       </div>
-    </section>
+    </Band>
   );
 }
