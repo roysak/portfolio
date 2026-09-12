@@ -25,3 +25,23 @@ export function cancelWebGLContextRelease(canvas: HTMLCanvasElement) {
     pendingRelease.delete(canvas);
   }
 }
+
+interface DisposableRenderer {
+  domElement: HTMLCanvasElement;
+  forceContextLoss(): void;
+}
+
+/**
+ * Same deferral as scheduleWebGLContextRelease, for a three.js WebGLRenderer.
+ * Its canvas is created fresh per mount, so there is nothing to cancel on
+ * setup, but deferring still protects any in-flight async callback (e.g. a
+ * texture load) that resolves just after a StrictMode throwaway cleanup.
+ */
+export function scheduleRendererRelease(renderer: DisposableRenderer) {
+  const canvas = renderer.domElement;
+  const timer = setTimeout(() => {
+    pendingRelease.delete(canvas);
+    renderer.forceContextLoss();
+  }, 0);
+  pendingRelease.set(canvas, timer);
+}
