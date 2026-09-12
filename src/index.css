@@ -1,74 +1,159 @@
 @import "tailwindcss";
 @import "./styles/portfolio.css";
 
-/* ─── Design Tokens ─────────────────────────────────────────────────────────
-   Dark-first "ink and pigment" system.
-   ink      → page ground and surfaces
-   bone     → text (three steps)
-   pigment  → the single ochre accent
-   plum     → secondary hue, carried over from the original brand (#6D4778)
-   The light variant is applied with data-theme="light" on <html>.
-   ──────────────────────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════════════
+   TWO HANDS — a dual-identity design system.
 
-:root {
-  --ink: #0f0d14;
-  --ink-2: #17131e;
-  --ink-3: #211b2b;
-  --line: rgba(237, 230, 218, 0.12);
-  --line-strong: rgba(237, 230, 218, 0.28);
-  --bone: #ede6da;
-  --bone-2: #a39b90;
-  --bone-3: #6f685f;
-  --pigment: #e4b04a;
-  --pigment-ink: #0f0d14;
-  --plum: #9a6fb0;
-  --plum-soft: rgba(154, 111, 176, 0.18);
-  --shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
-  --gutter: clamp(20px, 5vw, 72px);
+   The portfolio belongs to one person who does two jobs, so it has two skins
+   and the visitor can flip between them. Every token below is defined twice.
+
+     data-mode="design"  warm paper, editorial serif, vermilion ink, soft radii
+     data-mode="code"    deep ink, grotesk + mono, acid lime, hairline radii
+
+   Component code never branches on the mode. It reads tokens, and the tokens
+   change underneath it — so a single set of components renders both worlds.
+
+   Naming is inherited from the previous system and deliberately inverted:
+     --ink   → the page ground        --bone    → the text
+     --line  → hairline rules         --pigment → the accent that carries
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── DESIGN mode · paper and pigment ─────────────────────────────────────── */
+:root,
+:root[data-mode="design"] {
+  --ink: #f0eae0;
+  --ink-2: #fbf8f2;
+  --ink-3: #e2d9c9;
+  --ink-invert: #191512;
+
+  --bone: #191512;
+  --bone-2: #5b5248;
+  --bone-3: #8f8578;
+  --bone-invert: #fbf8f2;
+
+  --line: rgba(25, 21, 18, 0.14);
+  --line-strong: rgba(25, 21, 18, 0.34);
+
+  --pigment: #c9401d;
+  --pigment-ink: #fbf8f2;
+  --pigment-soft: rgba(201, 64, 29, 0.1);
+  --plum: #6d4778;
+  --plum-soft: rgba(109, 71, 120, 0.12);
+  --ochre: #b7811a;
+
+  --shadow: 0 24px 60px -24px rgba(25, 21, 18, 0.28);
+  --shadow-sm: 0 2px 14px -6px rgba(25, 21, 18, 0.24);
+
+  /* Type — an editorial serif leads, the grotesk supports */
+  --display-family: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --display-weight: 400;
+  --display-tracking: -0.018em;
+  --display-leading: 0.94;
+
+  /* Shape — paper is soft and handled */
+  --radius: 16px;
+  --radius-sm: 9px;
+  --radius-pill: 999px;
+
+  /* Texture — paper grain, no scanlines */
+  --grain-opacity: 0.055;
+  --grain-blend: multiply;
+  --scan-opacity: 0;
+
+  color-scheme: light;
+}
+
+/* ─── CODE mode · ink and signal ──────────────────────────────────────────── */
+:root[data-mode="code"] {
+  --ink: #080a0d;
+  --ink-2: #0f1218;
+  --ink-3: #171c25;
+  --ink-invert: #e8edf4;
+
+  --bone: #e8edf4;
+  --bone-2: #97a2b2;
+  --bone-3: #5a6474;
+  --bone-invert: #080a0d;
+
+  --line: rgba(232, 237, 244, 0.11);
+  --line-strong: rgba(232, 237, 244, 0.3);
+
+  --pigment: #c8f55c;
+  --pigment-ink: #080a0d;
+  --pigment-soft: rgba(200, 245, 92, 0.12);
+  --plum: #9a8cff;
+  --plum-soft: rgba(154, 140, 255, 0.16);
+  --ochre: #ffc46b;
+
+  --shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
+  --shadow-sm: 0 2px 18px -6px rgba(0, 0, 0, 0.6);
+
+  /* Type — an engineered grotesk leads, the mono supports */
+  --display-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --display-weight: 700;
+  --display-tracking: -0.04em;
+  --display-leading: 0.88;
+
+  /* Shape — machined corners */
+  --radius: 3px;
+  --radius-sm: 2px;
+  --radius-pill: 3px;
+
+  /* Texture — less grain, faint scanlines */
+  --grain-opacity: 0.05;
+  --grain-blend: overlay;
+  --scan-opacity: 0.35;
 
   color-scheme: dark;
 }
 
-:root[data-theme="light"] {
-  --ink: #f2efe9;
-  --ink-2: #faf8f4;
-  --ink-3: #e7e2d9;
-  --line: rgba(23, 19, 30, 0.12);
-  --line-strong: rgba(23, 19, 30, 0.3);
-  --bone: #17131e;
-  --bone-2: #5e5866;
-  --bone-3: #8f8895;
-  --pigment: #b7811a;
-  --pigment-ink: #faf8f4;
-  --plum: #6d4778;
-  --plum-soft: rgba(109, 71, 120, 0.12);
-  --shadow: 0 30px 80px rgba(23, 19, 30, 0.22);
-  color-scheme: light;
+/* ─── Mode-invariant tokens ───────────────────────────────────────────────── */
+:root {
+  --gutter: clamp(20px, 5vw, 72px);
+  --measure: 62ch;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-io: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
+/* ─── Tailwind bindings ───────────────────────────────────────────────────── */
 @theme inline {
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-ink-3: var(--ink-3);
+  --color-ink-invert: var(--ink-invert);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-bone: var(--bone);
   --color-bone-2: var(--bone-2);
   --color-bone-3: var(--bone-3);
+  --color-bone-invert: var(--bone-invert);
   --color-pigment: var(--pigment);
   --color-pigment-ink: var(--pigment-ink);
+  --color-pigment-soft: var(--pigment-soft);
   --color-plum: var(--plum);
   --color-plum-soft: var(--plum-soft);
+  --color-ochre: var(--ochre);
 
-  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--display-family);
   --font-sans: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-grotesk: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
 
   --spacing-gutter: var(--gutter);
+
+  --radius-art: var(--radius);
+  --radius-art-sm: var(--radius-sm);
+  --radius-art-pill: var(--radius-pill);
+
   --shadow-lift: var(--shadow);
+  --shadow-card: var(--shadow-sm);
+
+  --ease-art: var(--ease);
+  --ease-swap: var(--ease-io);
 }
 
-/* Original plum scale, still used by the blog and article components */
+/* Plum scale retained for the blog and article components */
 @theme {
   --color-primary-50: #f8f0fa;
   --color-primary-100: #f0dff5;
@@ -84,8 +169,11 @@
   --color-body-text: #583b61;
 }
 
+/* ─── Base ────────────────────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
+  /* The in-page navs and anchors clear the fixed masthead */
+  scroll-padding-top: calc(var(--nav-height, 72px) + 24px);
 }
 
 body {
@@ -96,7 +184,12 @@ body {
   font-size: 17px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  /* Ground and text cross-fade on every mode flip, even without view transitions */
+  transition:
+    background-color 0.45s var(--ease),
+    color 0.45s var(--ease);
 }
 
 #root {
@@ -111,4 +204,12 @@ body {
 :focus-visible {
   outline: 2px solid var(--pigment);
   outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Instrument Serif is drawn light; the display token carries its own weight
+   so headings never get a synthetic bold in design mode. */
+.font-display {
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
 }

@@ -1,21 +1,25 @@
 import CaseStudyCard from "../components/CaseStudyCard";
 import SectionHead from "../components/SectionHead";
 import caseStudies from "../data/caseStudies";
+import { useReveal } from "../hooks/useReveal";
 
 export default function CaseStudies() {
+  const pageRef = useReveal<HTMLElement>();
+
   return (
-    <main className="px-gutter pt-36 pb-[clamp(64px,9vw,128px)]">
+    <main ref={pageRef} className="px-gutter pt-36 pb-[clamp(64px,9vw,128px)]">
       <SectionHead
+        index="01"
         title={
           <>
-            Case <em className="font-normal text-bone-2">studies</em>
+            Case <em className="font-serif italic text-bone-2">studies</em>
           </>
         }
-        aside="Deep dives into the why behind the what"
+        aside={`${caseStudies.length} deep dives · enterprise platforms`}
       />
-      <div className="grid gap-px bg-line border border-line">
+      <div className="reveal grid gap-px bg-line border border-line">
         {caseStudies.map((study, i) => (
-          <CaseStudyCard key={study.id} study={study} flip={i % 2 === 1} />
+          <CaseStudyCard key={study.id} study={study} index={i + 1} flip={i % 2 === 1} />
         ))}
       </div>
     </main>

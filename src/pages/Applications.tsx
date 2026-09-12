@@ -3,29 +3,40 @@ import { assetUrl } from "../utils/assetUrl";
 import Modal from "../components/Modal";
 
 const images = [
-  { file: "app-01.png", alt: "App 1" },
-  { file: "app-02.png", alt: "App 2" },
-  { file: "app-03.png", alt: "App 3" },
-  { file: "app-04.png", alt: "App 4" },
+  { file: "app-01.png", alt: "Application 01" },
+  { file: "app-02.png", alt: "Application 02" },
+  { file: "app-03.png", alt: "Application 03" },
+  { file: "app-04.png", alt: "Application 04" },
 ];
 
 export default function Applications() {
-  const [selected, setSelected] = useState<{ file: string; alt: string } | null>(null);
+  const [selected, setSelected] = useState<(typeof images)[number] | null>(null);
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[18px]">
+      <p className="max-w-[60ch] text-bone-2 mt-0 mb-10">
+        Side projects and internal tools, designed and built end to end. Click any frame to open it full size.
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {images.map((img, i) => (
           <figure
             key={img.file}
             data-cursor="big"
-            className="m-0 border border-line rounded overflow-hidden bg-ink-2 cursor-zoom-in"
+            className="group m-0 border border-line rounded-art overflow-hidden bg-ink-2 cursor-zoom-in transition-colors duration-500 hover:border-line-strong"
             onClick={() => setSelected(img)}
           >
-            <img src={assetUrl(`/img/works/${img.file}`)} alt={img.alt} className="w-full" loading="lazy" />
-            <figcaption className="px-3.5 py-3 border-t border-line flex justify-between">
-              <span className="label">App {String(i + 1).padStart(2, "0")}</span>
-              <span className="label">View</span>
+            <div className="overflow-hidden">
+              <img
+                src={assetUrl(`/img/works/${img.file}`)}
+                alt={img.alt}
+                loading="lazy"
+                className="w-full transition-transform duration-700 ease-art group-hover:scale-[1.03]"
+              />
+            </div>
+            <figcaption className="px-4 py-3.5 border-t border-line flex justify-between items-center">
+              <span className="label tag-num">{String(i + 1).padStart(2, "0")}</span>
+              <span className="label transition-colors group-hover:text-pigment">View</span>
             </figcaption>
           </figure>
         ))}

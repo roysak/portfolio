@@ -14,6 +14,9 @@ export function useReveal<T extends HTMLElement>() {
     if (!root) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return;
+    // Without the observer we must never hide anything, or the content would
+    // stay invisible for good.
+    if (!("IntersectionObserver" in window)) return;
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -24,7 +27,9 @@ export function useReveal<T extends HTMLElement>() {
           }
         }
       },
-      { threshold: 0.12 },
+      // Fire as soon as any sliver enters: a threshold large enough to need a
+      // chunk of a tall section visible can leave it hidden on short viewports.
+      { threshold: 0, rootMargin: "0px 0px -5% 0px" },
     );
 
     root.querySelectorAll<HTMLElement>(".reveal").forEach((el) => {
