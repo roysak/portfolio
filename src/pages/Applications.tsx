@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { assetUrl } from "../utils/assetUrl";
 import Modal from "../components/Modal";
 
@@ -14,30 +13,21 @@ export default function Applications() {
   const [selected, setSelected] = useState<{ file: string; alt: string } | null>(null);
 
   return (
-    <main className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full py-24 pt-12">
-      <div className="pb-12">
-          <Link
-              to="/works"
-              className="text-neutral-500 hover:text-neutral-900 flex gap-2">
-              <i className="material-symbols-rounded">keyboard_backspace</i>Back to Works
-          </Link>
-      </div>
-      <h1 className="text-3xl font-semibold tracking-tight mb-10">
-        Applications
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        {images.map((img) => (
-          <div
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-[18px]">
+        {images.map((img, i) => (
+          <figure
             key={img.file}
-            className="border border-neutral-200 rounded-lg overflow-hidden cursor-pointer"
+            data-cursor="big"
+            className="m-0 border border-line rounded overflow-hidden bg-ink-2 cursor-zoom-in"
             onClick={() => setSelected(img)}
           >
-            <img
-              src={assetUrl(`/img/works/${img.file}`)}
-              alt={img.alt}
-              className="w-full h-auto"
-            />
-          </div>
+            <img src={assetUrl(`/img/works/${img.file}`)} alt={img.alt} className="w-full" loading="lazy" />
+            <figcaption className="px-3.5 py-3 border-t border-line flex justify-between">
+              <span className="label">App {String(i + 1).padStart(2, "0")}</span>
+              <span className="label">View</span>
+            </figcaption>
+          </figure>
         ))}
       </div>
 
@@ -48,6 +38,6 @@ export default function Applications() {
           onClose={() => setSelected(null)}
         />
       )}
-    </main>
+    </>
   );
 }

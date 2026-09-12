@@ -1,245 +1,281 @@
-/* Portfolio custom styles — non-Tailwind rules only */
+/* Portfolio custom styles — rules that are awkward to express in Tailwind */
 
-*{
-    user-select: none;
+* {
+  user-select: none;
 }
 
-/* ─── Custom Cursor (desktop/fine-pointer only) ──────────────────────────── */
+/* ─── Film grain overlay ─────────────────────────────────────────────────── */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ─── Mono label ─────────────────────────────────────────────────────────── */
+.label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bone-2);
+}
+
+/* ─── Custom cursor (fine pointers only) ────────────────────────────────── */
 @media (pointer: fine) {
-    /* * {
-    cursor: none !important;
-  } */
-
-    button {
-        cursor: pointer;
-    }
-
-    .cursor_outer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 36px;
-        height: 36px;
-        border: 4px solid var(--color-primary);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        opacity: 1;
-        transition:
-            width 0.2s ease,
-            height 0.2s ease,
-            border-color 0.2s ease,
-            opacity 0.2s ease;
-        will-change: transform;
-    }
-
-    .cursor_inner {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 16px;
-        height: 16px;
-        background: var(--color-primary);
-        border-radius: 50px;
-        pointer-events: none;
-        z-index: 9999;
-        opacity: 0.8;
-        transition:
-            width 0.15s ease,
-            height 0.15s ease,
-            background-color 0.15s ease;
-        will-change: transform;
-    }
-
-    .cursor_outer.hover {
-        width: 64px;
-        height: 64px;
-        border-width: 2px;
-        border-color: var(--color-primary);
-        opacity: 0.2;
-    }
-
-    .cursor_inner.hover {
-        width: 6px;
-        height: 6px;
-        opacity: 0.2;
-    }
-
-    .cursor_outer.click {
-        width: 28px;
-        height: 28px;
-    }
-
-    .cursor_inner.click {
-        width: 10px;
-        height: 10px;
-    }
-}
-
-/* ─── Material Symbols Rounded defaults ─────────────────────────────────── */
-.material-symbols-rounded {
-    font-variation-settings:
-        "FILL" 1,
-        "wght" 400,
-        "GRAD" 0,
-        "opsz" 24;
-    font-display: block;
-    user-select: none;
-    line-height: 1;
-    display: inline-block;
-}
-
-::selection {
-    background-color: #e5e5e5; /* neutral-200 equivalent */
-}
-
-/* Arrow icon transition helpers not expressible purely in Tailwind */
-.card-arrow {
+  button {
+    cursor: pointer;
+  }
+  .cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 80;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #e4b04a;
+    pointer-events: none;
+    mix-blend-mode: difference;
     opacity: 0;
-    transform: translateY(0.5rem) translateX(-0.5rem);
+    transform: translate(-50%, -50%);
     transition:
-        opacity 0.3s ease-out,
-        transform 0.3s ease-out;
-}
-
-.group:hover .card-arrow {
+      width 0.25s ease,
+      height 0.25s ease,
+      opacity 0.25s ease;
+    will-change: left, top;
+  }
+  .cursor-dot.on {
     opacity: 1;
-    transform: translateY(0) translateX(0);
+  }
+  .cursor-dot.big {
+    width: 56px;
+    height: 56px;
+    opacity: 0.5;
+  }
+}
+@media (pointer: coarse) {
+  .cursor-dot,
+  .peek {
+    display: none;
+  }
 }
 
-/* Add styles for the ScrollToTop button */
-button.fixed.bottom-4.right-4 {
-    z-index: 1000; /* Ensure it appears above other elements */
+/* ─── Nav (difference blend keeps it legible over anything) ─────────────── */
+.site-nav {
+  mix-blend-mode: difference;
+  color: #ede6da;
+}
+.site-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transition: right 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.site-nav .nav-link:hover::after,
+.site-nav .nav-link.current::after {
+  right: 0;
 }
 
-button.fixed.bottom-4.right-4:hover {
-    background-color: #2563eb; /* Darker blue on hover */
+/* ─── Hero headline rise ────────────────────────────────────────────────── */
+@keyframes rise {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.rise-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+.rise-word > span {
+  display: inline-block;
+  animation: rise 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.rise-word:nth-child(2) > span {
+  animation-delay: 0.08s;
+}
+.rise-word:nth-child(3) > span {
+  animation-delay: 0.16s;
 }
 
-/* ─── Home page blur-in entrance animation ───────────────────────────────── */
-@keyframes blurIn {
-    from {
-        opacity: 0;
-        filter: blur(10px);
-        transform: translateY(-14px);
-    }
-    to {
-        opacity: 1;
-        filter: blur(0);
-        transform: translateY(0);
-    }
+/* ─── Marquee ───────────────────────────────────────────────────────────── */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: inline-flex;
+  gap: 48px;
+  animation: marquee 38s linear infinite;
 }
 
-.blur-in {
-    opacity: 0;
-    animation: blurIn 0.4s ease-out forwards;
+/* ─── Scroll reveal ─────────────────────────────────────────────────────── */
+.reveal {
+  transition:
+    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.9s ease;
+}
+.reveal.pre {
+  transform: translateY(28px);
+  opacity: 0.001;
 }
 
-.blur-in-1 { animation-delay: 0ms; }
-.blur-in-2 { animation-delay: 60ms; }
-.blur-in-3 { animation-delay: 120ms; }
+/* ─── Cursor-following image preview ────────────────────────────────────── */
+.peek {
+  position: fixed;
+  z-index: 40;
+  width: 320px;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+  box-shadow: var(--shadow);
+  background: var(--ink-3);
+}
+.peek.on {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ─── Masonry (digital paintings) ───────────────────────────────────────── */
+.masonry {
+  columns: 3;
+  column-gap: 18px;
+}
+.masonry > * {
+  break-inside: avoid;
+  margin-bottom: 18px;
+}
+@media (max-width: 900px) {
+  .masonry {
+    columns: 2;
+  }
+}
+@media (max-width: 520px) {
+  .masonry {
+    columns: 1;
+  }
+}
 
 /* ─── Password gate shake animation ─────────────────────────────────────── */
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    15%       { transform: translateX(-6px); }
-    30%       { transform: translateX(6px); }
-    45%       { transform: translateX(-5px); }
-    60%       { transform: translateX(5px); }
-    75%       { transform: translateX(-3px); }
-    90%       { transform: translateX(3px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(-6px);
+  }
+  30% {
+    transform: translateX(6px);
+  }
+  45% {
+    transform: translateX(-5px);
+  }
+  60% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+  90% {
+    transform: translateX(3px);
+  }
 }
-
 .animate-shake {
-    animation: shake 0.5s ease-out;
-}
-.blur-in-4 { animation-delay: 180ms; }
-.blur-in-5 { animation-delay: 240ms; }
-.blur-in-6 { animation-delay: 300ms; }
-
-/* ─── Digital Paintings Gallery (Masonry Layout) ─────────────────────────── */
-.gallery-masonry {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    width: 100%;
+  animation: shake 0.5s ease-out;
 }
 
-.gallery-item {
-    overflow: hidden;
-    border-radius: 8px;
-    aspect-ratio: auto;
+/* ─── Material Symbols Rounded defaults (case-study components) ─────────── */
+.material-symbols-rounded {
+  font-variation-settings:
+    "FILL" 1,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+  font-display: block;
+  user-select: none;
+  line-height: 1;
+  display: inline-block;
 }
 
-.gallery-image {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    transition:
-        transform 0.3s ease-out,
-        box-shadow 0.3s ease-out;
+.card-arrow {
+  opacity: 0;
+  transform: translateY(0.5rem) translateX(-0.5rem);
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
+}
+.group:hover .card-arrow {
+  opacity: 1;
+  transform: translateY(0) translateX(0);
 }
 
-.gallery-item:hover .gallery-image {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
-
-/* Tablet layout: 2 columns */
-@media (max-width: 1024px) {
-    .gallery-masonry {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-}
-
-/* Mobile layout: 1 column */
-@media (max-width: 640px) {
-    .gallery-masonry {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-}
-
-/* ─── Article prose styles ───────────────────────────────────────────────── */
+/* ─── Article prose styles ──────────────────────────────────────────────── */
 .prose-article {
-    color: #404040;
-    line-height: 1.75;
+  color: #404040;
+  line-height: 1.75;
 }
-
 .prose-article h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #171717;
-    margin-top: 2.5rem;
-    margin-bottom: 0.5rem;
-    line-height: 1.3;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #171717;
+  margin-top: 2.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
 }
-
 .prose-article p {
-    margin-bottom: 1rem;
-    color: #525252;
+  margin-bottom: 1rem;
+  color: #525252;
 }
-
 .prose-article code {
-    font-family: "ui-monospace", "SFMono-Regular", "Menlo", monospace;
-    font-size: 0.875rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
 }
-
 .prose-article pre {
-    user-select: text;
+  user-select: text;
 }
-
 .prose-article table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
-
 .prose-article th,
 .prose-article td {
-    padding: 0.625rem 1.25rem;
-    text-align: left;
+  padding: 0.625rem 1.25rem;
+  text-align: left;
 }
 
-
+/* ─── Reduced motion ────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .rise-word > span,
+  .marquee-track {
+    animation: none !important;
+  }
+  .reveal,
+  .peek,
+  .cursor-dot {
+    transition: none !important;
+  }
+  .reveal.pre {
+    transform: none;
+    opacity: 1;
+  }
+}

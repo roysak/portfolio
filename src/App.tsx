@@ -1,5 +1,6 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
+import WorksLayout from "./layouts/WorksLayout";
 import Home from "./pages/Home";
 import CaseStudies from "./pages/CaseStudies";
 import CaseStudy from "./pages/CaseStudy";
@@ -22,9 +23,11 @@ function App() {
           <Route path="/case-studies" element={<PasswordGate><CaseStudies /></PasswordGate>} />
           <Route path="/case-studies/:id" element={<PasswordGate><CaseStudy /></PasswordGate>} />
           <Route path="/works" element={<Works />} />
-          <Route path="/works/digital-paintings" element={<DigitalPaintings />} />
-          <Route path="/works/creative-coding" element={<CreativeCoding />} />
-          <Route path="/works/applications" element={<Applications />} />
+          <Route path="/works" element={<WorksLayout />}>
+            <Route path="digital-paintings" element={<DigitalPaintings />} />
+            <Route path="creative-coding" element={<CreativeCoding />} />
+            <Route path="applications" element={<Applications />} />
+          </Route>
           <Route path="/resume" element={<Resume />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<Article />} />

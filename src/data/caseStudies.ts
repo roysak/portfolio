@@ -5,8 +5,8 @@ export interface CaseStudy {
     client: string;
     description: string;
     tags: string[];
-    color: string;
-    shadow: string;
+    /** Hex swatch shown on the card; carried over from the original card colours. */
+    swatch: string;
     image: string;
 }
 
@@ -19,21 +19,9 @@ const caseStudies: CaseStudy[] = [
         description:
             "Transforming a space-heavy, stacked form into a compact, interactive property grid to speed up automation setup.",
         tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],
-        color: "bg-[#bd97d7] border-2 border-[#bd97d7]",
-        shadow: "shadow-[#bd97d7]/10",
+        swatch: "#bd97d7",
         image: "/img/automationstory.png",
     },
-    // {
-    //   id: 2,
-    //   link: "02",
-    //   title: "Dashboard Builder",
-    //   client: "SmartOPS",
-    //   description: "Designing an intuitive, modular dashboard builder on top of a rigid pre-established backend",
-    //   tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],
-    //   color: "bg-slate-200",
-    //   shadow: "shadow-slate-100/50",
-    //   image: "/img/dashboard-builder.png",
-    // },
     {
         id: 2,
         link: "02",
@@ -42,8 +30,7 @@ const caseStudies: CaseStudy[] = [
         description:
             "Transforming a complex, code-based dashboard configuration process into an intuitive visual builder",
         tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],
-        color: "bg-[#ebdba3] border-2 border-[#ebdba3]",
-        shadow: "shadow-[#ebdba3]/10",
+        swatch: "#ebdba3",
         image: "/img/dashboard-builder.png",
     },
     {
@@ -54,8 +41,7 @@ const caseStudies: CaseStudy[] = [
         description:
             "Built a hybrid rule-engine and LLM platform to automate insurance claim validation and reduce manual review time.",
         tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],
-        color: "bg-[#b7ce85] border-2 border-[#b7ce85]",
-        shadow: "shadow-[#b7ce85]/10",
+        swatch: "#b7ce85",
         image: "/img/dashboard-builder.png",
     },
 ];

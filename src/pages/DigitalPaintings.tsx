@@ -1,62 +1,55 @@
 import { useState } from "react";
 import { assetUrl } from "../utils/assetUrl";
 import Modal from "../components/Modal";
-import { Link } from "react-router-dom";
+
+const paintings = [
+  "Aerial_View.png",
+  "Birch_tree.png",
+  "Birds01.png",
+  "Sea01.png",
+  "SeaShore01.png",
+  "WaterFall03.png",
+  "ColorStudy01.png",
+  "Doorway01.png",
+  "Forest01.png",
+];
+
+const pretty = (file: string) =>
+  file
+    .replace(/\.[^.]+$/, "")
+    .replace(/_/g, " ")
+    .replace(/(\d+)$/, " $1");
 
 export default function DigitalPaintings() {
-  const [selectedPainting, setSelectedPainting] = useState<string | null>(null);
-
-  const paintings = [
-    "Aerial_View.png",
-    "Birch_tree.png",
-    "Birds01.png",
-    "Sea01.png",
-    "SeaShore01.png",
-    "WaterFall03.png",
-    "ColorStudy01.png",
-    "Doorway01.png",
-    "Forest01.png",
-  ];
+  const [selected, setSelected] = useState<string | null>(null);
 
   return (
-    <main className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full py-24 pt-12">
-      <div className="pb-12">
-          <Link
-              to="/works"
-              className="text-neutral-500 hover:text-neutral-900 flex gap-2">
-              <i className="material-symbols-rounded">keyboard_backspace</i>Back to Works
-          </Link>
-      </div>
-      <h1 className="text-3xl font-semibold tracking-tight mb-10">
-        Digital Paintings
-      </h1>
-      <p className="text-neutral-500 leading-relaxed max-w-2xl mb-12">
-        A curated gallery of digital paintings and illustrations.
-      </p>
-      
-      <div className="gallery-masonry">
-        {paintings.map((painting) => (
-          <div
-            key={painting}
-            className="gallery-item cursor-pointer"
-            onClick={() => setSelectedPainting(painting)}
+    <>
+      <p className="max-w-[60ch] text-bone-2 mt-0 mb-8">A curated gallery of digital paintings and illustrations.</p>
+      <div className="masonry">
+        {paintings.map((p) => (
+          <figure
+            key={p}
+            data-cursor="big"
+            className="group relative m-0 rounded overflow-hidden bg-ink-3 cursor-zoom-in"
+            onClick={() => setSelected(p)}
           >
             <img
-              src={assetUrl(`/img/dp/${painting}`)}
-              alt={painting.replace(/\.[^.]+$/, "").replace(/_/g, " ")}
-              className="gallery-image"
+              src={assetUrl(`/img/dp/${p}`)}
+              alt={pretty(p)}
+              loading="lazy"
+              className="w-full transition-transform duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-[1.03]"
             />
-          </div>
+            <figcaption className="absolute inset-x-0 bottom-0 pt-10 pb-3 px-3.5 bg-[linear-gradient(transparent,rgba(15,13,20,.85))] text-[#EDE6DA] font-mono text-[11px] uppercase tracking-[0.1em] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              {pretty(p)}
+            </figcaption>
+          </figure>
         ))}
       </div>
 
-      {selectedPainting && (
-        <Modal
-          imageSrc={assetUrl(`/img/dp/${selectedPainting}`)}
-          imageAlt={selectedPainting.replace(/\.[^.]+$/, "").replace(/_/g, " ")}
-          onClose={() => setSelectedPainting(null)}
-        />
+      {selected && (
+        <Modal imageSrc={assetUrl(`/img/dp/${selected}`)} imageAlt={pretty(selected)} onClose={() => setSelected(null)} />
       )}
-    </main>
+    </>
   );
 }

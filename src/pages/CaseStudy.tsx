@@ -7,6 +7,7 @@ import CaseStudyHero from "../components/casestudy/CaseStudyHero";
 import CaseStudyInPageNav from "../components/casestudy/CaseStudyInPageNav";
 import SectionRenderer from "../components/casestudy/SectionRenderer";
 import { ModalProvider } from "../components/casestudy/ModalContext";
+import { useForceLightTheme } from "../hooks/useTheme";
 
 const CASE_STUDY_DATA: Record<string, CaseStudyPageData> = {
   "01": caseStudy01,
@@ -17,10 +18,12 @@ const CASE_STUDY_DATA: Record<string, CaseStudyPageData> = {
 export default function CaseStudy() {
   const { id } = useParams<{ id: string }>();
   const data = id ? CASE_STUDY_DATA[id] : undefined;
+  // Case-study sections are authored against a light ground.
+  useForceLightTheme();
 
   if (!data) {
     return (
-      <main className="max-w-6xl w-full mx-auto px-6 py-24 text-center">
+      <main className="max-w-6xl w-full mx-auto px-6 pt-36 pb-24 text-center">
         <h1 className="text-3xl font-semibold mb-4">Case Study Not Found</h1>
         <Link
           to="/case-studies"
@@ -34,11 +37,11 @@ export default function CaseStudy() {
 
   return (
 	<ModalProvider>
-		<div className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full pt-12">
+		<div className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full pt-28">
 			<Link
 				to="/case-studies"
-				className="text-neutral-500 hover:text-neutral-900 flex gap-2">
-				<i className="material-symbols-rounded">keyboard_backspace</i>Back to Case Studies
+				className="label inline-flex gap-2 items-center hover:text-bone transition-colors">
+				<i className="material-symbols-rounded text-base!">keyboard_backspace</i>Back to Case Studies
 			</Link>
 		</div>
 		<div className="min-h-screen bg-white text-gray-900">
