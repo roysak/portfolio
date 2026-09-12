@@ -5,6 +5,7 @@ Adapted for React by Roys A Kareem
 */
 
 import { useEffect, useRef } from 'react';
+import { releaseWebGLContext } from './releaseWebGLContext';
 
 interface FluidSimulationHexFXProps {
   className?: string;
@@ -795,7 +796,7 @@ export default function FluidSimulationHexFX({
       canvas.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('keydown', handleKeyDown);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      releaseWebGLContext(gl);
     };
   }, []);
 

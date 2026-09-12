@@ -5,6 +5,7 @@ Adapted for React by Roys A Kareem
 */
 
 import { useEffect, useRef } from 'react';
+import { releaseWebGLContext } from './releaseWebGLContext';
 
 interface FluidSimulationFXProps {
   className?: string;
@@ -736,6 +737,7 @@ export default function FluidSimulationFX({ className }: FluidSimulationFXProps)
       canvas.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('keydown', handleKeyDown);
+      releaseWebGLContext(gl);
     };
   }, []);
 
