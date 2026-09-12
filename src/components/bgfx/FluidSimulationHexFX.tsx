@@ -5,7 +5,7 @@ Adapted for React by Roys A Kareem
 */
 
 import { useEffect, useRef } from 'react';
-import { releaseWebGLContext } from './releaseWebGLContext';
+import { cancelWebGLContextRelease, scheduleWebGLContextRelease } from './releaseWebGLContext';
 
 interface FluidSimulationHexFXProps {
   className?: string;
@@ -31,6 +31,8 @@ export default function FluidSimulationHexFX({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    cancelWebGLContextRelease(canvas);
 
     const config = {
       SIM_RESOLUTION: 128,
@@ -109,6 +111,7 @@ export default function FluidSimulationHexFX({
     const ctx = getWebGLContext(canvas);
     if (!ctx) return;
     const { gl, ext } = ctx;
+    if (!ext.formatRGBA || !ext.formatRG || !ext.formatR) return;
 
     if (isMobile() || !ext.supportLinearFiltering) config.DYE_RESOLUTION = 512;
 
@@ -796,7 +799,7 @@ export default function FluidSimulationHexFX({
       canvas.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('keydown', handleKeyDown);
-      releaseWebGLContext(gl);
+      scheduleWebGLContextRelease(canvas, gl);
     };
   }, []);
 

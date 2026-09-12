@@ -21,6 +21,14 @@ interface SectionConfig {
 }
 
 const SECTIONS: SectionConfig[] = [
+  { title: "FluidShader", component: FluidShader },
+  { title: "FluidShaderImage", component: FluidShaderImage, props: { imageMask: "/img/image-mask.jpg" } },
+  { title: "FluidShaderMarble", component: FluidShaderMarble, props: { marbleScale: 0.5, marbleSpeed: 0.5 } },
+  {
+    title: "FluidSimulationHexFX",
+    component: FluidSimulationHexFX,
+    props: { thickness: 0.005, spacing: 0.08, roundness: 0.1, size: 8.0, bgColor: "#0f0d14" },
+  },
   {
     title: "BGFXRipples",
     component: BGFXRipples,
@@ -33,14 +41,6 @@ const SECTIONS: SectionConfig[] = [
     ],
   },
   { title: "DotRipple", component: DotRipple },
-  { title: "FluidShader", component: FluidShader },
-  { title: "FluidShaderImage", component: FluidShaderImage, props: { imageMask: "/img/image-mask.jpg" } },
-  { title: "FluidShaderMarble", component: FluidShaderMarble, props: { marbleScale: 0.5, marbleSpeed: 0.5 } },
-  {
-    title: "FluidSimulationHexFX",
-    component: FluidSimulationHexFX,
-    props: { thickness: 0.005, spacing: 0.08, roundness: 0.1, size: 8.0, bgColor: "#0f0d14" },
-  },
 ];
 
 export default function CreativeCoding() {

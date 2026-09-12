@@ -28,7 +28,7 @@ export default function Nav() {
   return (
     <nav
       ref={navRef}
-      className="site-nav fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-gutter py-4"
+      className="site-nav fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-gutter py-4"
     >
       <NavLink to="/" className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.1em]">
         {/* <span

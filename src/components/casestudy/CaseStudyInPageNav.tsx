@@ -47,7 +47,7 @@ export default function CaseStudyInPageNav({ navItems }: Props) {
 
   return (
     <nav
-      className="sticky z-40 bg-ink/85 backdrop-blur-md border-b border-line transition-[top] duration-300"
+      className="sticky z-50 bg-ink/85 backdrop-blur-md border-b border-line transition-[top] duration-300"
       style={{ top: scrollDir === 'up' ? 'var(--nav-height, 72px)' : '0px' }}
     >
       <div className="max-w-6xl mx-auto px-gutter py-3.5 flex justify-center">
