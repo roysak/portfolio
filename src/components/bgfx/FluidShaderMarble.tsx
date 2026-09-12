@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { scheduleRendererRelease } from './releaseWebGLContext';
 
 const ITERATIONS = 15;
 const SPLAT_RADIUS = 0.008;
@@ -369,7 +370,7 @@ export default function FluidShaderMarble({
       pressure.read.dispose(); pressure.write.dispose();
       divergence.dispose();
       renderer.dispose();
-      renderer.forceContextLoss();
+      scheduleRendererRelease(renderer);
       if (container.contains(canvas)) container.removeChild(canvas);
     };
   }, []);

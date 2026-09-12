@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import * as THREE from 'three';
+import { scheduleRendererRelease } from './releaseWebGLContext';
 
 const MAX_TRAIL = 25;
 
@@ -267,7 +268,7 @@ export default function BGFXRipples({
       container.removeEventListener('mousemove', onMouseMove);
       container.removeEventListener('touchmove', onTouchMove);
       renderer.dispose();
-      renderer.forceContextLoss();
+      scheduleRendererRelease(renderer);
       material.dispose();
       container.removeChild(renderer.domElement);
       stateRef.current = null;

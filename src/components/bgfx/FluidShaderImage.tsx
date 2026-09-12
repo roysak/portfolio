@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { scheduleRendererRelease } from './releaseWebGLContext';
 
 const ITERATIONS = 15;
 const SPLAT_RADIUS = 0.01;
@@ -151,6 +152,8 @@ export default function FluidShaderImage({
     const container = containerRef.current;
     if (!container) return;
 
+    let isActive = true;
+
     let width = container.clientWidth;
     let height = container.clientHeight;
 
@@ -199,10 +202,16 @@ export default function FluidShaderImage({
 
     let loadedMaskTex: THREE.Texture | null = null;
     if (imageMask) {
-      new THREE.TextureLoader().load(imageMask, (tex) => {
-        loadedMaskTex = tex;
-        displayMat.uniforms.uMask.value = tex;
-      });
+      new THREE.TextureLoader().load(
+        imageMask,
+        (tex) => {
+          if (!isActive) { tex.dispose(); return; }
+          loadedMaskTex = tex;
+          displayMat.uniforms.uMask.value = tex;
+        },
+        undefined,
+        (err) => console.error('FluidShaderImage: failed to load imageMask', imageMask, err)
+      );
     }
     const splatMat = createMaterial(splatShader, {
       uTarget: { value: null },
@@ -334,6 +343,7 @@ export default function FluidShaderImage({
     step();
 
     return () => {
+      isActive = false;
       cancelAnimationFrame(animId);
       ro.disconnect();
       canvas.removeEventListener('mousemove', handleMouseMove);
@@ -346,7 +356,7 @@ export default function FluidShaderImage({
       fallbackMaskTex.dispose();
       loadedMaskTex?.dispose();
       renderer.dispose();
-      renderer.forceContextLoss();
+      scheduleRendererRelease(renderer);
       if (container.contains(canvas)) container.removeChild(canvas);
     };
   }, []);
