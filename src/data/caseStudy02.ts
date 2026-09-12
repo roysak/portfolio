@@ -32,8 +32,8 @@ const caseStudy02: CaseStudyPageData = {
     {
       type: 'cardGrid',
       anchor: 'ecosystem',
-      background: 'gray',
-      iconColorClass: 'bg-blue-50 text-blue-500',
+      background: 'raised',
+      accent: 'plum',
       title: 'The Application Ecosystem',
       subtitle:
         'The dashboard builder is the centerpiece of a larger, modular analytics application consisting of three main pillars.',

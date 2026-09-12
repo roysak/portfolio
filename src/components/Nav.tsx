@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useTheme } from "../hooks/useTheme";
+import { assetUrl } from "../utils/assetUrl";
 
 const links = [
   { to: "/case-studies", label: "Case Studies" },
@@ -30,10 +31,11 @@ export default function Nav() {
       className="site-nav fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-gutter py-4"
     >
       <NavLink to="/" className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.1em]">
-        <span
+        {/* <span
           className="w-2.5 h-2.5 rounded-full bg-[#E4B04A] shadow-[0_0_0_4px_rgba(228,176,74,0.25)]"
           aria-hidden="true"
-        />
+        /> */}
+        <img src={assetUrl("/img/logo.svg")} alt="Roys A Kareem" className="w-[40px] h-auto" />
         <span className="hidden sm:inline">Roys A Kareem</span>
       </NavLink>
 

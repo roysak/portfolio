@@ -39,19 +39,19 @@ export default function CaseStudyInPageNav({ navItems }: Props) {
   }, [navItems]);
 
   const linkClass = (anchor: string) =>
-    `text-sm font-medium transition-colors ${
+    `font-mono text-[11px] uppercase tracking-[0.1em] px-3.5 py-2 rounded-full border transition-colors duration-300 ${
       activeAnchor === anchor
-        ? 'text-neutral-900'
-        : 'text-neutral-400 hover:text-neutral-700'
+        ? 'bg-bone text-ink border-bone'
+        : 'border-line-strong text-bone-2 hover:text-bone'
     }`;
 
   return (
     <nav
-      className="sticky z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-[top] duration-300"
+      className="sticky z-40 bg-ink/85 backdrop-blur-md border-b border-line transition-[top] duration-300"
       style={{ top: scrollDir === 'up' ? 'var(--nav-height, 72px)' : '0px' }}
     >
-      <div className="max-w-6xl mx-auto px-6 py-4 flex justify-center items-center">
-        <div className="hidden md:flex gap-8">
+      <div className="max-w-6xl mx-auto px-gutter py-3.5 flex justify-center">
+        <div className="hidden md:flex gap-2 flex-wrap justify-center">
           {navItems.map((item) => (
             <a
               key={item.anchor}

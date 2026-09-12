@@ -37,8 +37,10 @@ export interface CardGridItem {
 export interface CardGridSection {
   type: 'cardGrid';
   anchor: string;
-  background: 'white' | 'gray';
-  iconColorClass: string; // e.g. 'bg-red-50 text-red-500'
+  /** Ground for the band: the page ink, or one step lifted off it. */
+  background: 'base' | 'raised';
+  /** Accent hue for the card icons, drawn from the site palette. */
+  accent: 'pigment' | 'plum';
   title: string;
   subtitle: string;
   cards: CardGridItem[];

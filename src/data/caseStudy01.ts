@@ -33,8 +33,8 @@ const caseStudy01: CaseStudyPageData = {
     {
       type: 'cardGrid',
       anchor: 'heuristics',
-      background: 'gray',
-      iconColorClass: 'bg-red-50 text-red-500',
+      background: 'raised',
+      accent: 'pigment',
       title: 'Heuristic Evaluation (V1)',
       subtitle:
         'The legacy stacked layout was evaluated against usability heuristics to identify structural inefficiencies impacting speed, clarity, and cognitive load.',
@@ -139,8 +139,8 @@ const caseStudy01: CaseStudyPageData = {
         {
       type: 'cardGrid',
       anchor: 'impact',
-      background: 'white',
-      iconColorClass: 'bg-green-50 text-green-600',
+      background: 'base',
+      accent: 'plum',
       title: 'Impact',
       subtitle:
         'Post-redesign observations and usability validation indicated strong improvements in efficiency and usability.',

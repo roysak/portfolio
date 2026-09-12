@@ -31,8 +31,8 @@ const caseStudy03: CaseStudyPageData = {
     {
       type: 'cardGrid',
       anchor: 'ecosystem',
-      background: 'gray',
-      iconColorClass: 'bg-blue-50 text-blue-500',
+      background: 'raised',
+      accent: 'plum',
       title: 'The Application Ecosystem',
       subtitle:
         'BenVal is organized around three connected pillars that take a benefit rule set from raw source documents through to an auditable, reviewable claim decision.',

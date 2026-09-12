@@ -2,10 +2,14 @@ import { useRef } from 'react';
 import type { CarouselSection } from '../../data/caseStudyTypes';
 import { assetUrl } from '../../utils/assetUrl';
 import { useModal } from './ModalContext';
+import { Band, SectionIntro } from './SectionShell';
 
 interface Props {
   section: CarouselSection;
 }
+
+const ARROW_CLASS =
+  'absolute top-[40%] -translate-y-1/2 w-11 h-11 rounded-full grid place-items-center bg-ink border border-line-strong text-bone opacity-0 group-hover:opacity-100 focus:opacity-100 transition-[opacity,background-color,color,transform] duration-300 hover:bg-bone hover:text-ink hover:border-bone';
 
 export default function Carousel({ section }: Props) {
   const { openModal } = useModal();
@@ -18,16 +22,10 @@ export default function Carousel({ section }: Props) {
   }
 
   return (
-    <section
-      id={section.anchor}
-      className="py-24 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto border-b border-gray-100"
-    >
-      <div className="mb-12 text-center max-w-3xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4">{section.title}</h2>
-        <p className="text-gray-600">{section.subtitle}</p>
-      </div>
+    <Band id={section.anchor}>
+      <SectionIntro title={section.title} subtitle={section.subtitle} />
 
-      <div className="relative max-w-5xl mx-auto group">
+      <div className="reveal relative group">
         {/* Track */}
         <div
           ref={carouselRef}
@@ -35,44 +33,46 @@ export default function Carousel({ section }: Props) {
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {section.slides.map((slide, i) => (
-            <div
+            <figure
               key={i}
-              className="snap-center shrink-0 w-full md:w-[85%] flex flex-col items-center"
+              className="m-0 snap-center shrink-0 w-full md:w-[85%] flex flex-col items-center"
             >
-              <div className="bg-gray-50 rounded-2xl border border-gray-200 shadow-sm p-4 w-full">
+              <div className="bg-ink-2 border border-line p-4 w-full">
                 <img
                   src={assetUrl(slide.image)}
                   alt={slide.label}
-                  className="w-full h-auto rounded-xl shadow-sm border border-gray-200 object-cover cursor-zoom-in"
+                  className="w-full h-auto rounded object-cover cursor-zoom-in"
                   onClick={() => openModal(assetUrl(slide.image), slide.label)}
                 />
               </div>
-              <p className="text-sm font-bold text-gray-500 mt-4 uppercase tracking-wider">
-                {slide.label}
-              </p>
-              <p className="text-xs text-gray-400 mt-1">{slide.sublabel}</p>
-            </div>
+              <figcaption className="text-center mt-4">
+                <span className="label block">{slide.label}</span>
+                <span className="block text-[13px] text-bone-3 mt-1">{slide.sublabel}</span>
+              </figcaption>
+            </figure>
           ))}
         </div>
 
-        {/* Prev */}
         <button
           onClick={() => scroll(-1)}
-          className="absolute left-2 sm:-left-4 top-[40%] -translate-y-1/2 bg-white text-gray-800 p-3 rounded-full shadow-lg border border-gray-200 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-primary-50 hover:text-primary-600 hover:scale-110 focus:opacity-100"
+          className={`${ARROW_CLASS} left-2 sm:-left-5`}
           aria-label="Previous slide"
         >
-          <span className="material-symbols-rounded block!" style={{ fontSize: '24px' }} aria-hidden="true">chevron_left</span>
+          <span className="material-symbols-rounded block!" style={{ fontSize: '22px' }} aria-hidden="true">
+            chevron_left
+          </span>
         </button>
 
-        {/* Next */}
         <button
           onClick={() => scroll(1)}
-          className="absolute right-2 sm:-right-4 top-[40%] -translate-y-1/2 bg-white text-gray-800 p-3 rounded-full shadow-lg border border-gray-200 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-primary-50 hover:text-primary-600 hover:scale-110 focus:opacity-100"
+          className={`${ARROW_CLASS} right-2 sm:-right-5`}
           aria-label="Next slide"
         >
-          <span className="material-symbols-rounded block!" style={{ fontSize: '24px' }} aria-hidden="true">chevron_right</span>
+          <span className="material-symbols-rounded block!" style={{ fontSize: '22px' }} aria-hidden="true">
+            chevron_right
+          </span>
         </button>
       </div>
-    </section>
+    </Band>
   );
 }

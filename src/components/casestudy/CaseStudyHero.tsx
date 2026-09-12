@@ -6,57 +6,41 @@ interface Props {
 }
 
 export default function CaseStudyHero({ hero }: Props) {
+    const meta = [
+        { label: "Role", value: hero.meta.role },
+        { label: "Platform", value: hero.meta.platform },
+        { label: "Tools", value: hero.meta.tools },
+        { label: "Focus", value: hero.meta.focus },
+    ];
+
     return (
         <section
             id="hero"
-            className="py-24 px-6 md:px-12 lg:px-24 max-w-6xl mx-auto pt-24 pb-20">
-            <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-50 text-primary-600 text-xs font-semibold uppercase tracking-wide mb-4">
+            className="px-gutter pt-10 pb-[clamp(56px,8vw,104px)] border-b border-line">
+            <div className="max-w-6xl mx-auto w-full grid gap-8">
+                <span className="inline-flex items-center gap-2 w-max px-3.5 py-1.5 rounded-full bg-plum-soft text-plum font-mono text-[11px] uppercase tracking-[0.08em]">
                     {hero.badgeIcon && (
-                        <DynamicIcon
-                            name={hero.badgeIcon}
-                            className="w-4 h-4"
-                        />
+                        <DynamicIcon name={hero.badgeIcon} className="w-4 h-4" />
                     )}
                     {hero.badge}
-                </div>
+                </span>
 
-                <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-gray-900 leading-tight mb-8">
+                <h1 className="m-0 font-display font-semibold text-[clamp(40px,6.5vw,88px)] leading-[0.98] tracking-[-0.035em] text-balance">
                     {hero.title}
                 </h1>
 
-                <p className="text-xl text-gray-600 leading-relaxed mb-12 max-w-2xl">
+                <p className="m-0 max-w-[52ch] text-[clamp(17px,1.5vw,21px)] text-bone-2 text-pretty">
                     {hero.description}
                 </p>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-gray-100 pt-10">
-                    <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
-                            Role
-                        </p>
-                        <p className="font-medium text-sm">{hero.meta.role}</p>
-                    </div>
-                    <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
-                            Platform
-                        </p>
-                        <p className="font-medium text-sm">
-                            {hero.meta.platform}
-                        </p>
-                    </div>
-                    <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
-                            Tools
-                        </p>
-                        <p className="font-medium text-sm">{hero.meta.tools}</p>
-                    </div>
-                    <div>
-                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
-                            Focus
-                        </p>
-                        <p className="font-medium text-sm">{hero.meta.focus}</p>
-                    </div>
-                </div>
+                <dl className="m-0 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-7 border-t border-line pt-9">
+                    {meta.map((m) => (
+                        <div key={m.label}>
+                            <dt className="label">{m.label}</dt>
+                            <dd className="m-0 mt-2 text-[15px] text-bone">{m.value}</dd>
+                        </div>
+                    ))}
+                </dl>
             </div>
         </section>
     );

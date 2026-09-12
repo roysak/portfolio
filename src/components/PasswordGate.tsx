@@ -142,7 +142,7 @@ export default function PasswordGate({
                     <div>
                         <div
                             className={`flex flex-col items-center gap-4 ${shaking ? "animate-shake" : ""}`}>
-                            <img
+                            {/* <img
                                 src={assetUrl(
                                     typing
                                         ? "/img/surprised.gif"
@@ -150,7 +150,7 @@ export default function PasswordGate({
                                 )}
                                 alt="Protected"
                                 className="w-full rounded"
-                            />
+                            /> */}
                             <div className="flex gap-3">
                                 {pin.map((digit, i) => (
                                     <input
