@@ -5,6 +5,31 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" media="(prefers-color-scheme: light)" />
     <link rel="icon" type="image/svg+xml" href="/favicon-white.svg" media="(prefers-color-scheme: dark)">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f0eae0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#080a0d" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="description"
+      content="Roys A Kareem — product designer and frontend developer. Fifteen years of enterprise UX, design systems and workflow automation, now built with AI in the loop."
+    />
+    <!-- Resolve the design/code mode before first paint so the ground never flashes -->
+    <script>
+      (function () {
+        var m = "design";
+        try {
+          var stored = localStorage.getItem("mode");
+          if (stored === "design" || stored === "code") m = stored;
+          // ?mode=code makes either half of the site directly linkable
+          var q = new URLSearchParams(location.search).get("mode");
+          if (q === "design" || q === "code") {
+            m = q;
+            localStorage.setItem("mode", m);
+          }
+        } catch (e) { /* storage unavailable */ }
+        var r = document.documentElement;
+        r.setAttribute("data-mode", m);
+        r.style.colorScheme = m === "code" ? "dark" : "light";
+      })();
+    </script>
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -15,7 +40,7 @@
     <title>Roys A Kareem | Product Designer - UX Designer - Frontend Developer | Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet" />
     <script type="module" crossorigin src="/assets/index.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/index-jsx-runtime.js">
