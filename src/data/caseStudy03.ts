@@ -35,7 +35,7 @@ const caseStudy03: CaseStudyPageData = {
       accent: 'plum',
       title: 'The Application Ecosystem',
       subtitle:
-        'BenVal is organized around three connected pillars that take a benefit rule set from raw source documents through to an auditable, reviewable claim decision.',
+        'Application is organized around three connected pillars that take a benefit rule set from raw source documents through to an auditable, reviewable claim decision.',
       cards: [
         {
           icon: 'rule',
@@ -69,7 +69,7 @@ const caseStudy03: CaseStudyPageData = {
         'A FastAPI backend organized into self-contained feature packages, backed by Elasticsearch for both structured and vector data, with a React SPA frontend.',
       root: {
         icon: 'account_tree',
-        title: 'BenVal Backend',
+        title: 'Backend',
         subtitle: 'FastAPI app (app.py)',
       },
       branches: [
@@ -140,7 +140,7 @@ const caseStudy03: CaseStudyPageData = {
       ],
       image: '/img/03/manual-review.png',
       imageAlt: 'Manual claim review workflow',
-      imageCaption: 'Legacy workflow: manual cross-referencing against static rule sheets',
+      imageCaption: 'Legacy workflow: manual cross-referencing',
       imagePosition: 'right',
     },
 
@@ -149,7 +149,7 @@ const caseStudy03: CaseStudyPageData = {
       icon: 'hub',
       title: 'Deterministic Rules, LLM Judgment',
       description:
-        'Rather than choosing between rigid rule automation or fully LLM-driven decisions, BenVal combines both: the deterministic rule engine handles claims with a clearly selected rule, while LLM adjudication (across nano/mini/main tiers and an internal SG agent) resolves ambiguous matches and nuanced benefit language, with every decision routed through a human review queue.',
+        'Rather than choosing between rigid rule automation or fully LLM-driven decisions, it combines both: the deterministic rule engine handles claims with a clearly selected rule, while LLM adjudication (across nano/mini/main tiers and an internal SG agent) resolves ambiguous matches and nuanced benefit language, with every decision routed through a human review queue.',
     },
 
     {
@@ -157,7 +157,7 @@ const caseStudy03: CaseStudyPageData = {
       anchor: 'solution',
       title: 'A Hybrid Validation Engine',
       description:
-        'BenVal retrieves the most relevant SOT rules for a claim via vector search over Elasticsearch, then routes adjudication through whichever mechanism fits the claim: an exact rule engine pass, or an LLM call sized to the complexity of the case.',
+        'Application retrieves the most relevant SOT rules for a claim via vector search over Elasticsearch, then routes adjudication through whichever mechanism fits the claim: an exact rule engine pass, or an LLM call sized to the complexity of the case.',
       bullets: [
         { variant: 'check', text: 'Vector search over embedded SOT rules for fast, relevant rule retrieval.' },
         { variant: 'check', text: 'Deterministic rule engine for claims with an already-selected, well-defined rule.' },

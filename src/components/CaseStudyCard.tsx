@@ -20,19 +20,14 @@ export default function CaseStudyCard({ study, index, flip = false }: CaseStudyC
     <article className="group bg-ink grid grid-cols-1 md:grid-cols-2 min-h-110">
       <Link
         to={`/case-studies/${study.link}`}
-        className={`relative overflow-hidden bg-ink-3 aspect-16/10 md:aspect-auto ${flip ? "md:order-2" : ""}`}
+        className={`relative overflow-hidden bg-ink-3 border-20 border-ink aspect-16/10 md:aspect-auto ${flip ? "md:order-2" : ""}`}
         aria-label={`Open ${study.title}`}
       >
         <img
           src={assetUrl(study.image)}
           alt={`${study.title} preview`}
           loading="lazy"
-          className="w-full h-full object-cover object-top-left scale-105 rotate-[0.6deg] transition-transform duration-900 ease-art group-hover:scale-100 group-hover:rotate-0"
-        />
-        <span
-          className="absolute left-5 top-5 w-7 h-7 rounded-full ring-2 ring-white/50"
-          style={{ background: study.swatch }}
-          aria-hidden="true"
+          className="w-full h-full object-cover scale-105 rotate-[0.6deg] transition-transform duration-900 ease-art group-hover:scale-100 group-hover:rotate-0"
         />
       </Link>
 

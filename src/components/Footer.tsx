@@ -38,7 +38,7 @@ export default function Footer() {
               © {year} · Roys A Kareem · Kochi, India
             </span>
             <span className="label">
-              Built with React, Tailwind and a canvas or two ·{" "}
+              Built with React, Tailwind and canvas ·{" "}
               <span className="text-pigment">{mode === "code" ? "code" : "design"} mode</span>
             </span>
           </div>
