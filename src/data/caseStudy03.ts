@@ -5,15 +5,15 @@ const caseStudy03: CaseStudyPageData = {
 
   hero: {
     type: 'hero',
-    badge: 'Insurance Claims Validation Platform',
+    badge: 'Insurance Claims Validation',
     badgeIcon: 'fact_check',
-    title: 'BenVal: Validating Claims Against a Living Source of Truth',
+    title: 'Validating Claims Against a Living Source of Truth',
     description:
       'Designed and built an end-to-end platform that validates insurance claim line items against a benefit "Source of Truth" rule set, pairing a deterministic rule engine with LLM-based matching and adjudication to cut manual review time while keeping a human in the loop.',
     meta: {
       role: 'Full-Stack Engineer (Backend architecture, LLM pipeline, frontend delivery)',
       platform: 'FastAPI + React/Vite Web Application',
-      tools: 'Elasticsearch, Azure OpenAI, Internal SG Agent Gateway',
+      tools: 'Elasticsearch, Azure OpenAI',
       focus: 'Deterministic + LLM Hybrid Validation, Human-in-the-Loop Review',
     },
   },

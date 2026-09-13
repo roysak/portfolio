@@ -11,17 +11,24 @@ import { useReveal } from "../hooks/useReveal";
 import { useMode } from "../theme/modeContext";
 
 const capabilities = [
+  "User experience",
+  "User interface",
+  "Prototyping",
+  "Wireframing",
   "Design systems",
-  "Workflow automation",
-  "Dashboard builders",
-  "Angular",
   "React",
+  "JavaScript",
   "TypeScript",
+  "Angular",
   "FastAPI",
-  "LLM pipelines",
-  "WebGL",
+  "LLM",
+  "Prompt engineering",
   "Digital painting",
-  "WCAG",
+  "Claude Code",
+  "Github Copilot",
+  "WebGL",
+  "Canvas",
+  "Accessibility",
 ];
 
 const facts = [
@@ -34,7 +41,7 @@ const facts = [
 const disciplines = [
   {
     k: "Design",
-    items: ["User research", "Interaction design", "Design systems", "Prototyping", "Accessibility"],
+    items: ["Design systems", "Prototyping", "Wireframing", "Accessibility", "Interaction design" ],
   },
   {
     k: "Code",
@@ -42,7 +49,7 @@ const disciplines = [
   },
   {
     k: "AI in the loop",
-    items: ["LLM pipelines", "Prompt engineering", "Claude Code", "Copilot-assisted builds", "Rule engines"],
+    items: ["Prompt engineering", "Agentic AI", "Claude code", "Github copilot", "LLM pipelines"],
   },
 ];
 
@@ -117,9 +124,7 @@ function Hero() {
             className="lift-in m-0 max-w-[46ch] text-[clamp(17px,1.7vw,22px)] text-bone-2 text-pretty"
             style={{ "--i": 1 } as React.CSSProperties}
           >
-            I design the thing and then I ship it. <b className="font-medium text-bone">Fifteen years</b> of enterprise
-            UX, design systems and workflow automation — now with AI in the loop, from the first sketch to the
-            deployed screen.
+             I design the thing and build it. <b className="font-medium text-bone">Fifteen years</b> of UX and UI — now with AI woven through every step, from the first sketch to the working solution.
           </p>
           <div className="lift-in flex flex-wrap gap-3.5" style={{ "--i": 2 } as React.CSSProperties}>
             <Button to="/case-studies" primary>
@@ -224,13 +229,8 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-[clamp(36px,6vw,96px)] items-start">
           <div className="reveal grid gap-8">
             <span className="label tag-num text-pigment">01 — Approach</span>
-            <p className="m-0 font-display text-[clamp(26px,3.4vw,46px)] leading-[1.16] text-pretty">
-              Most teams hand a design over a wall. I walk it across myself — design systems, automation workflow
-              builders and dashboard tooling for enterprise platforms, with{" "}
-              <em className="text-pigment not-italic">AI-assisted workflows</em> shortening the distance between a
-              sketch and a deployed screen.
-            </p>
-            <div className="grid sm:grid-cols-3 gap-px bg-line border border-line">
+            <p className="m-0 font-display text-[clamp(26px,3.4vw,46px)] leading-[1.6] text-pretty">I don’t just build with AI—<em className="text-pigment not-italic">I build for AI</em>, seamlessly weaving intelligent solutions from rapid front-end prototypes straight into the final user experience.</p>
+            <div className="grid sm:grid-cols-3 gap-px bg-line border border-line hidden">
               {disciplines.map((d) => (
                 <div key={d.k} className="bg-ink p-5 grid gap-3 content-start">
                   <span className="label text-pigment">{d.k}</span>

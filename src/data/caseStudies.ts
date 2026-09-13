@@ -36,7 +36,7 @@ const caseStudies: CaseStudy[] = [
     {
         id: 3,
         link: "03",
-        title: "Insurance Claims Validation Platform",
+        title: "Insurance Claims Validation",
         client: "Intelligent Automation Platform",
         description:
             "Built a hybrid rule-engine and LLM platform to automate insurance claim validation and reduce manual review time.",
