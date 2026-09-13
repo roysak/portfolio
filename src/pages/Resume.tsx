@@ -170,7 +170,7 @@ export default function Resume() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-end">
           <div>
             <h1 className="m-0 font-display text-[clamp(46px,9vw,132px)] leading-[0.9] text-balance">
-              Roys <em className="font-serif italic text-pigment">A</em> Kareem
+              <em className="font-serif italic text-pigment"></em>Roys A Kareem
             </h1>
             <p className="mt-5 mb-0 text-[clamp(16px,1.6vw,20px)] text-bone-2">
               Product Designer · Frontend Developer · AI-Integrated Product Design
