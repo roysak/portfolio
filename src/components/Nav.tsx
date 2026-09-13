@@ -6,7 +6,7 @@ import ModeSwitch from "./ModeSwitch";
 const links = [
   { to: "/case-studies", label: "Case studies" },
   { to: "/works", label: "Works" },
-  { to: "/blog", label: "Blog" },
+  // { to: "/blog", label: "Blog" },
   { to: "/resume", label: "Resume" },
 ];
 

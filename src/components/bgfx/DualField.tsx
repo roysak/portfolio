@@ -208,7 +208,7 @@ export default function DualField({
 
       ctx.globalCompositeOperation = "lighter";
       ctx.lineCap = "square";
-      ctx.lineWidth = 1 * dpr;
+      ctx.lineWidth = 0.5 * dpr;
 
       for (const p of traces) {
         if (p.t >= 1) {
@@ -230,7 +230,7 @@ export default function DualField({
 
         const prevX = p.x + (p.tx - p.x) * p.t;
         const prevY = p.y + (p.ty - p.y) * p.t;
-        p.t = Math.min(1, p.t + 0.08);
+        p.t = Math.min(1, p.t + 0.05);
         const curX = p.x + (p.tx - p.x) * p.t;
         const curY = p.y + (p.ty - p.y) * p.t;
 

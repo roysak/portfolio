@@ -113,6 +113,7 @@ figcaption {
   border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--ink-2) 70%, transparent);
   backdrop-filter: blur(8px);
+  width: 160px;
   transition:
     border-radius 0.5s var(--ease),
     border-color 0.3s var(--ease);

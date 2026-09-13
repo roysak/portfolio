@@ -70,7 +70,7 @@ function Hero() {
   return (
     <section className="relative min-h-[92svh] flex flex-col justify-end overflow-hidden border-b border-line px-gutter pt-32 pb-10">
       <div className="absolute inset-0" aria-hidden="true">
-        <DualField density={1100} />
+        <DualField density={500} />
       </div>
       {/* Scrim: the field breathes through the upper half, the type sits on solid ground */}
       <div
@@ -84,11 +84,11 @@ function Hero() {
       <div className="relative grid gap-8">
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
           <div className="flex flex-wrap gap-x-5 gap-y-2">
-            {["Product Designer", "Frontend Developer", "AI-Integrated Design", "Kochi, India"].map((l, i) => (
+            {["Product Designer", "Frontend Developer", "AI-Integrated Design"].map((l, i) => (
               <span key={l} className="label lift-in" style={{ "--i": i } as React.CSSProperties}>
                 {l}
               </span>
-            ))}
+            ))} <span className="label lift-in"> • Kochi, India</span>
           </div>
           <span className="label label-strong inline-flex items-center gap-2">
             <span className="relative flex w-2 h-2" aria-hidden="true">
