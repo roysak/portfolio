@@ -20,6 +20,7 @@ const caseStudy03: CaseStudyPageData = {
   navItems: [
     { anchor: 'ecosystem', label: 'Ecosystem' },
     { anchor: 'architecture', label: 'Architecture' },
+    { anchor: 'ux-architecture', label: 'UX-Driven Decisions' },
     { anchor: 'challenge', label: 'Challenge' },
     { anchor: 'solution', label: 'Solution' },
     { anchor: 'flow', label: 'Validation Flow' },
@@ -124,6 +125,36 @@ const caseStudy03: CaseStudyPageData = {
           ],
         },
       ],
+    },
+
+    {
+      type: 'split',
+      anchor: 'ux-architecture',
+      title: 'Architecture Decisions Driven by Reviewer Experience',
+      description:
+        'The hybrid engine and data model weren\u2019t just built for correctness \u2014 several structural choices exist specifically because of how a claims reviewer works, reasons, and builds trust in an automated decision.',
+      bullets: [
+        {
+          variant: 'check',
+          text: 'Every adjudication result carries its decision path (rule engine vs. LLM tier), so the UI can show reviewers *why* a verdict was reached, not just what it was \u2014 this was an architectural requirement, not a display afterthought.',
+        },
+        {
+          variant: 'check',
+          text: 'SOT rules are stored and rendered as recursive nested conditions, mirroring how benefit clauses actually nest in source documents, so a `NestedRuleConditionView` component can walk arbitrarily deep logic without a schema rewrite.',
+        },
+        {
+          variant: 'check',
+          text: 'The HITL review queue was deliberately decoupled from the admin-gated SOT management endpoints, so any authenticated reviewer can audit and override claims without waiting on admin access \u2014 a permissions split that exists to keep review throughput unblocked.',
+        },
+        {
+          variant: 'check',
+          text: 'Telemetry and cost data live on a separate dashboard surface rather than inline in the validation screen, keeping the reviewer\u2019s per-claim workspace focused while still giving admins the visibility to tune model-tier usage.',
+        },
+      ],
+      image: '/img/03/claim-hitl.png',
+      imageAlt: 'HITL claim review drawer with clause checklist',
+      imageCaption: 'Case file drawer: clause checklist and evidence ledger reviewers use to reason through a claim',
+      imagePosition: 'right',
     },
 
     {
@@ -235,7 +266,7 @@ const caseStudy03: CaseStudyPageData = {
           id: 'claim-hitl',
           title: 'Claim HITL Review',
           description:
-            'A dedicated review queue lets any authenticated user audit claim decisions, add overrides, and track status changes over time, independent of the admin-only write restrictions applied elsewhere in the app.',
+            'A dedicated review queue lets any authenticated user audit claim decisions, add overrides, and track status changes over time, independent of the admin-only write restrictions applied elsewhere in the app. A slide-in case file drawer, clause checklist, evidence ledger, and financial reconciliation panel mirror the way a reviewer actually works a claim, without leaving the claim list.',
           caption: 'Claim HITL review workflow',
           image: '/img/03/claim-hitl.png',
         },
@@ -251,7 +282,7 @@ const caseStudy03: CaseStudyPageData = {
           id: 'rule-management',
           title: 'SOT Rule Management',
           description:
-            'Admins can generate, edit, and re-embed SOT rules from uploaded benefit-header data, keeping the rule set current as source documents change.',
+            'Admins can generate, edit, and re-embed SOT rules from uploaded benefit-header data, keeping the rule set current as source documents change. Nested benefit conditions are rendered with a recursive component so arbitrarily deep clause logic stays readable instead of collapsing into raw JSON.',
           caption: 'Managing the Source of Truth rule set',
           image: '/img/03/manage-sot.png',
         },
