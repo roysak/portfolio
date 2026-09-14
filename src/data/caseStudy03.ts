@@ -105,7 +105,7 @@ const caseStudy03: CaseStudyPageData = {
               title: 'Adjudicate',
               subitems: [
                 { text: 'Deterministic rule engine', badge: { text: 'Rule-based', variant: 'required' } },
-                { text: 'LLM adjudication (GPT nano/mini/main, SG agent)', badge: { text: 'Model tiers', variant: 'optional' } },
+                { text: 'LLM adjudication (GPT nano/mini/main)', badge: { text: 'Model tiers', variant: 'optional' } },
               ],
             },
           ],
@@ -180,7 +180,7 @@ const caseStudy03: CaseStudyPageData = {
       icon: 'hub',
       title: 'Deterministic Rules, LLM Judgment',
       description:
-        'Rather than choosing between rigid rule automation or fully LLM-driven decisions, it combines both: the deterministic rule engine handles claims with a clearly selected rule, while LLM adjudication (across nano/mini/main tiers and an internal SG agent) resolves ambiguous matches and nuanced benefit language, with every decision routed through a human review queue.',
+        'Rather than choosing between rigid rule automation or fully LLM-driven decisions, it combines both: the deterministic rule engine handles claims with a clearly selected rule, while LLM adjudication (across nano/mini/main tiers) resolves ambiguous matches and nuanced benefit language, with every decision routed through a human review queue.',
     },
 
     {
@@ -192,7 +192,7 @@ const caseStudy03: CaseStudyPageData = {
       bullets: [
         { variant: 'check', text: 'Vector search over embedded SOT rules for fast, relevant rule retrieval.' },
         { variant: 'check', text: 'Deterministic rule engine for claims with an already-selected, well-defined rule.' },
-        { variant: 'check', text: 'Tiered LLM adjudication (nano/mini/main + SG agent) for ambiguous or complex claims.' },
+        { variant: 'check', text: 'Tiered LLM adjudication (nano/mini/main) for ambiguous or complex claims.' },
         { variant: 'check', text: 'Concurrency-capped batch validation for high-volume claim files.' },
       ],
       image: '/img/03/validator.png',
@@ -228,7 +228,7 @@ const caseStudy03: CaseStudyPageData = {
           variant: 'highlighted',
           items: [
             'Rule Engine: exact evaluation against a selected SOT rule.',
-            'LLM Adjudication: GPT nano/mini/main or SG agent, chosen by claim complexity.',
+            'LLM Adjudication: GPT nano/mini/main, chosen by claim complexity.',
           ],
           note: {
             icon: 'call_split',
@@ -274,7 +274,7 @@ const caseStudy03: CaseStudyPageData = {
           id: 'telemetry',
           title: 'LLM Telemetry & Cost Dashboard',
           description:
-            'Every LLM call across the nano, mini, main, and SG agent tiers is captured with token usage and computed cost, surfaced on a dashboard for monitoring spend and latency trends.',
+            'Every LLM call across the nano, mini, and main tiers is captured with token usage and computed cost, surfaced on a dashboard for monitoring spend and latency trends.',
           caption: 'Telemetry dashboard and logs',
           image: '/img/03/telemetry-dashboard.png',
         },
