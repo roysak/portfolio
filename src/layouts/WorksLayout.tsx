@@ -7,21 +7,23 @@ const tabs = [
   { to: "/works/digital-paintings", label: "Digital paintings" },
 ];
 
-/** Shared shell for the three Works galleries: heading plus pill sub-navigation. */
+/** Shared shell for the three Works galleries: heading plus segmented sub-navigation. */
 export default function WorksLayout() {
   return (
     <main className="px-gutter pt-36 pb-[clamp(64px,9vw,128px)]">
-      <SectionHead title="Works" aside="Applications · Creative coding · Digital paintings" />
-      <nav className="flex gap-2 flex-wrap mb-10" aria-label="Works categories">
+      <SectionHead index="01" title="Works" aside="Applications · Creative coding · Digital paintings" />
+
+      <nav
+        className="inline-flex flex-wrap gap-1 p-1 mb-12 rounded-art-pill border border-line bg-ink-2"
+        aria-label="Works categories"
+      >
         {tabs.map((t) => (
           <NavLink
             key={t.to}
             to={t.to}
             className={({ isActive }) =>
-              `font-mono text-xs uppercase tracking-[0.1em] px-4 py-2.5 rounded-full border transition-colors duration-300 ${
-                isActive
-                  ? "bg-bone text-ink border-bone"
-                  : "border-line-strong text-bone-2 hover:text-bone"
+              `font-mono text-[11px] uppercase tracking-[0.14em] px-4 py-2.5 rounded-art-pill transition-colors duration-400 ${
+                isActive ? "bg-bone text-ink" : "text-bone-2 hover:text-bone"
               }`
             }
           >
@@ -29,6 +31,7 @@ export default function WorksLayout() {
           </NavLink>
         ))}
       </nav>
+
       <Outlet />
     </main>
   );

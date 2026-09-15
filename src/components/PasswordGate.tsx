@@ -22,9 +22,9 @@ async function sha256(message: string): Promise<string> {
 }
 
 const inputBase =
-    "w-11 h-14 text-center text-xl font-display font-semibold rounded border outline-none bg-ink-2 transition-colors focus:border-pigment";
+    "w-11 h-14 text-center text-xl font-display rounded-art border outline-none bg-ink-2 transition-colors focus:border-pigment";
 const contactLink =
-    "inline-flex items-center gap-1.5 px-3 py-2 rounded-full border border-line-strong font-mono text-[11px] uppercase tracking-[0.08em] text-bone-2 hover:text-bone hover:border-bone transition-colors";
+    "inline-flex items-center gap-1.5 px-3.5 py-2 rounded-art-pill border border-line-strong font-mono text-[11px] uppercase tracking-[0.08em] text-bone-2 hover:text-bone hover:border-bone transition-colors";
 
 export default function PasswordGate({
     children,
@@ -126,8 +126,8 @@ export default function PasswordGate({
         <main className="flex flex-col items-center justify-center min-h-[70vh] px-gutter pt-32 pb-16">
             <div className="w-full max-w-sm">
                 <div className="mb-8 text-center">
-                    <span className="label block mb-3">Password protected</span>
-                    <h1 className="m-0 font-display font-semibold text-[clamp(30px,4vw,44px)] tracking-[-0.03em] leading-none">
+                    <span className="label tag-num text-pigment block mb-3">Protected</span>
+                    <h1 className="m-0 font-display text-[clamp(34px,5vw,56px)] leading-none">
                         Case Studies
                     </h1>
                     <p className="text-sm text-bone-2 mt-3 mb-0">
@@ -149,7 +149,7 @@ export default function PasswordGate({
                                         : "/img/protected.gif",
                                 )}
                                 alt="Protected"
-                                className="w-full rounded hidden"
+                                className="w-full rounded-art hidden"
                             />
                             <div className="flex gap-3">
                                 {pin.map((digit, i) => (
@@ -227,7 +227,7 @@ export default function PasswordGate({
                                 placeholder="Enter password"
                                 autoComplete="current-password"
                                 className={[
-                                    "w-full px-4 py-3 rounded border bg-ink-2 text-sm outline-none transition-colors focus:border-pigment",
+                                    "w-full px-4 py-3.5 rounded-art border bg-ink-2 text-sm outline-none transition-colors focus:border-pigment",
                                     error
                                         ? "border-red-400 placeholder:text-red-400"
                                         : "border-line-strong",
@@ -240,7 +240,7 @@ export default function PasswordGate({
                             )}
                             <button
                                 type="submit"
-                                className="w-full bg-pigment text-pigment-ink hover:bg-bone hover:text-ink font-mono text-xs uppercase tracking-[0.1em] py-3.5 rounded-full transition-colors">
+                                className="w-full bg-pigment text-pigment-ink hover:bg-bone hover:text-ink font-mono text-xs uppercase tracking-[0.1em] py-3.5 rounded-art-pill transition-colors">
                                 Unlock
                             </button>
                         </div>

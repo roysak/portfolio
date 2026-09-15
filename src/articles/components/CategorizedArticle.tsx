@@ -57,8 +57,8 @@ export default function CategorizedArticle({
         return (
           <section key={cat} className="mb-10">
             <div className="flex items-center gap-3 mb-4">
-              <h2 className="text-lg font-semibold text-neutral-800">{cat}</h2>
-              <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${badgeColors[cat] ?? "bg-neutral-100 text-neutral-600"}`}>
+              <h2 className="text-lg font-semibold text-bone">{cat}</h2>
+              <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-art-pill ${badgeColors[cat] ?? "bg-ink-3 text-bone-2"}`}>
                 {catItems.length} {countLabel}
               </span>
             </div>
@@ -68,7 +68,7 @@ export default function CategorizedArticle({
                 <TopicCard
                   key={topic.name}
                   topic={topic}
-                  badgeClass={badgeColors[topic.category] ?? "bg-neutral-100 text-neutral-600"}
+                  badgeClass={badgeColors[topic.category] ?? "bg-ink-3 text-bone-2"}
                   badgePrefix={badgePrefix}
                   onClick={() => setSelected(topic)}
                 />
@@ -83,7 +83,7 @@ export default function CategorizedArticle({
       {selected && (
         <TopicModal
           topic={selected}
-          badgeClass={badgeColors[selected.category] ?? "bg-neutral-100 text-neutral-600"}
+          badgeClass={badgeColors[selected.category] ?? "bg-ink-3 text-bone-2"}
           badgePrefix={badgePrefix}
           labels={labels}
           onClose={() => setSelected(null)}

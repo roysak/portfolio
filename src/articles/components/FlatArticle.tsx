@@ -52,7 +52,7 @@ export default function FlatArticle({
           <TopicCard
             key={topic.name}
             topic={topic}
-            badgeClass={badgeColors[topic.category] ?? "bg-neutral-100 text-neutral-600"}
+            badgeClass={badgeColors[topic.category] ?? "bg-ink-3 text-bone-2"}
             badgePrefix={badgePrefix}
             onClick={() => setSelected(topic)}
           />
@@ -64,7 +64,7 @@ export default function FlatArticle({
       {selected && (
         <TopicModal
           topic={selected}
-          badgeClass={badgeColors[selected.category] ?? "bg-neutral-100 text-neutral-600"}
+          badgeClass={badgeColors[selected.category] ?? "bg-ink-3 text-bone-2"}
           badgePrefix={badgePrefix}
           labels={labels}
           onClose={() => setSelected(null)}

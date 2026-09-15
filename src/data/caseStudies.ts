@@ -20,7 +20,7 @@ const caseStudies: CaseStudy[] = [
             "Transforming a space-heavy, stacked form into a compact, interactive property grid to speed up automation setup.",
         tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],
         swatch: "#bd97d7",
-        image: "/img/automationstory.png",
+        image: "/img/automationstory-01.png",
     },
     {
         id: 2,
@@ -31,18 +31,18 @@ const caseStudies: CaseStudy[] = [
             "Transforming a complex, code-based dashboard configuration process into an intuitive visual builder",
         tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],
         swatch: "#ebdba3",
-        image: "/img/dashboard-builder.png",
+        image: "/img/dashboard-builder-01.png",
     },
     {
         id: 3,
         link: "03",
-        title: "Insurance Claims Validation Platform",
+        title: "Insurance Claims Validation",
         client: "Intelligent Automation Platform",
         description:
             "Built a hybrid rule-engine and LLM platform to automate insurance claim validation and reduce manual review time.",
         tags: ["User Research", "UI Design", "Prototyping", "HTML/CSS"],
         swatch: "#b7ce85",
-        image: "/img/dashboard-builder.png",
+        image: "/img/insurance-validator-01.png",
     },
 ];
 

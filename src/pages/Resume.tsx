@@ -1,5 +1,6 @@
 import { assetUrl } from "../utils/assetUrl";
 import Button from "../components/Button";
+import { useReveal } from "../hooks/useReveal";
 
 const skills: { group: string; items: string[] }[] = [
   { group: "UX Design", items: ["User Research", "Wireframing", "Prototyping", "Interaction Design", "Design Systems"] },
@@ -103,30 +104,48 @@ const vtrio: Job[] = [
   },
 ];
 
+const contacts = [
+  { href: "mailto:roysak@gmail.com", label: "roysak@gmail.com" },
+  { href: "tel:+919846666988", label: "+91 98466 66988" },
+  { href: "https://in.linkedin.com/in/roysak", label: "linkedin.com/in/roysak", ext: true },
+];
+
 function Heading({ children }: { children: React.ReactNode }) {
-  return <h2 className="m-0 mb-4 font-mono text-xs uppercase tracking-[0.12em] text-pigment">{children}</h2>;
+  return (
+    <h2 className="m-0 mb-5 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.14em] text-pigment">
+      {children}
+      <span className="h-px flex-1 bg-line" aria-hidden="true" />
+    </h2>
+  );
 }
 
 function Timeline({ jobs }: { jobs: Job[] }) {
   return (
-    <div className="border-l border-line pl-7 grid gap-10 mt-4">
+    <div className="relative border-l border-line pl-8 grid gap-11 mt-5">
       {jobs.map((j) => (
         <div key={j.title} className="relative">
           <span
             aria-hidden="true"
-            className={`absolute -left-[33px] top-2 w-[9px] h-[9px] rounded-full border-2 ${
-              j.now ? "bg-pigment border-pigment shadow-[0_0_0_5px_rgba(228,176,74,0.18)]" : "bg-ink border-bone-3"
+            className={`absolute -left-[37px] top-2 w-[11px] h-[11px] rounded-full border-2 ${
+              j.now
+                ? "bg-pigment border-pigment shadow-[0_0_0_5px_var(--pigment-soft)]"
+                : "bg-ink border-bone-3"
             }`}
           />
-          <div className="flex justify-between gap-3 flex-wrap items-baseline">
-            <h3 className="m-0 font-display font-semibold text-2xl tracking-[-0.02em]">{j.title}</h3>
-            <span className="font-mono text-xs tracking-[0.06em] text-bone-3 whitespace-nowrap">{j.when}</span>
+          <div className="flex justify-between gap-4 flex-wrap items-baseline">
+            <h3 className="m-0 font-display text-[clamp(21px,2.2vw,30px)] leading-tight">{j.title}</h3>
+            <span className="font-mono text-[11px] tracking-[0.08em] text-bone-3 whitespace-nowrap">{j.when}</span>
           </div>
-          {j.role && <p className="m-0 mt-2 text-plum font-medium">{j.role}</p>}
+          {j.role && <p className="m-0 mt-2 text-plum font-medium text-[15px]">{j.role}</p>}
           {j.sub && <p className="m-0 mt-1 text-[15px] text-bone-2">{j.sub}</p>}
-          <ul className="list-disc mt-3 mb-0 pl-[18px] text-[15px] text-bone-2 grid gap-1 marker:text-bone-3">
+          <ul className="list-none mt-4 mb-0 p-0 text-[15px] text-bone-2 grid gap-2">
             {j.bullets.map((b) => (
-              <li key={b}>{b}</li>
+              <li
+                key={b}
+                className="relative pl-5 before:content-[''] before:absolute before:left-0 before:top-[0.72em] before:w-2 before:h-px before:bg-bone-3"
+              >
+                {b}
+              </li>
             ))}
           </ul>
         </div>
@@ -136,49 +155,56 @@ function Timeline({ jobs }: { jobs: Job[] }) {
 }
 
 export default function Resume() {
+  const pageRef = useReveal<HTMLElement>();
+
   return (
-    <main className="px-gutter pt-36 pb-[clamp(64px,9vw,128px)]">
-      {/* ── Header ── */}
-      <header className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-end pb-10 border-b border-line mb-14">
-        <div>
-          <h1 className="m-0 font-display font-bold text-[clamp(44px,7vw,104px)] leading-[0.92] tracking-[-0.04em]">
-            Roys A Kareem
-          </h1>
-          <p className="mt-4 mb-0 text-lg text-bone-2">
-            Product Designer · Frontend Developer · AI-Integrated Product Design
-          </p>
-          <div className="flex gap-5 flex-wrap mt-4">
-            {[
-              { href: "tel:+919846666988", label: "+91 98466 66988" },
-              { href: "mailto:roysak@gmail.com", label: "roysak@gmail.com" },
-              { href: "https://in.linkedin.com/in/roysak", label: "linkedin.com/in/roysak", ext: true },
-            ].map((c) => (
-              <a
-                key={c.href}
-                href={c.href}
-                target={c.ext ? "_blank" : undefined}
-                rel={c.ext ? "noopener noreferrer" : undefined}
-                className="font-mono text-xs tracking-[0.06em] border-b border-line-strong pb-0.5 hover:text-pigment hover:border-pigment transition-colors"
-              >
-                {c.label}
-              </a>
-            ))}
-          </div>
+    <main ref={pageRef} className="px-gutter pt-36 pb-[clamp(64px,9vw,128px)]">
+      {/* ── Masthead ── */}
+      <header className="grid gap-8 pb-12 border-b border-line mb-14">
+        <div className="flex items-center gap-4">
+          <span className="label tag-num text-pigment">CV</span>
+          <span className="h-px flex-1 bg-line" aria-hidden="true" />
+          <span className="label">Updated 2026</span>
         </div>
-        <Button href={assetUrl("/resumes/Roys_Resume.pdf")} download primary>
-          Download resume
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5" aria-hidden="true">
-            <path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16" />
-          </svg>
-        </Button>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-end">
+          <div>
+            <h1 className="m-0 font-display text-[clamp(46px,9vw,132px)] leading-[0.9] text-balance">
+              <em className="font-serif italic text-pigment"></em>Roys A Kareem
+            </h1>
+            <p className="mt-5 mb-0 text-[clamp(16px,1.6vw,20px)] text-bone-2">
+              Product Designer · Frontend Developer · AI-Integrated Product Design
+            </p>
+            <div className="flex gap-x-6 gap-y-2.5 flex-wrap mt-5">
+              {contacts.map((c) => (
+                <a
+                  key={c.href}
+                  href={c.href}
+                  target={c.ext ? "_blank" : undefined}
+                  rel={c.ext ? "noopener noreferrer" : undefined}
+                  className="link-sweep font-mono text-[11px] tracking-[0.08em] text-bone-2 hover:text-pigment transition-colors"
+                >
+                  {c.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <Button href={assetUrl("/resumes/Roys_Resume.pdf")} download primary>
+            Download PDF
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-3.5 h-3.5" aria-hidden="true">
+              <path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16" />
+            </svg>
+          </Button>
+        </div>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-[clamp(32px,6vw,96px)]">
+      <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-[clamp(40px,6vw,96px)]">
         {/* ── Left column ── */}
-        <aside className="grid gap-11 content-start">
-          <section>
+        <aside className="grid gap-12 content-start lg:sticky lg:top-[calc(var(--nav-height,72px)+32px)]">
+          <section className="reveal">
             <Heading>Summary</Heading>
-            <p className="m-0 text-bone-2">
+            <p className="m-0 text-[15px] text-bone-2">
               Product Designer with 15+ years of experience delivering scalable UX solutions and enterprise-grade
               frontend applications. Specialized in design systems, workflow automation platforms, and AI-assisted
               development. Proven ability to improve usability, accelerate development cycles, and bridge design with
@@ -186,15 +212,20 @@ export default function Resume() {
             </p>
           </section>
 
-          <section>
+          <section className="reveal">
             <Heading>Skills</Heading>
-            <dl className="m-0 grid gap-3.5">
+            <dl className="m-0 grid gap-4">
               {skills.map((s) => (
                 <div key={s.group}>
-                  <dt className="font-mono text-[13px] uppercase tracking-[0.06em] text-bone-3">{s.group}</dt>
-                  <dd className="m-0 mt-1 flex flex-wrap gap-x-3 gap-y-1.5 text-[15px]">
+                  <dt className="label mb-2">{s.group}</dt>
+                  <dd className="m-0 flex flex-wrap gap-1.5">
                     {s.items.map((i) => (
-                      <span key={i}>{i}</span>
+                      <span
+                        key={i}
+                        className="text-[13px] px-2.5 py-1 rounded-art-pill border border-line text-bone-2"
+                      >
+                        {i}
+                      </span>
                     ))}
                   </dd>
                 </div>
@@ -202,45 +233,47 @@ export default function Resume() {
             </dl>
           </section>
 
-          <section>
+          <section className="reveal">
             <Heading>Certifications</Heading>
             <ul className="list-none m-0 p-0 grid gap-3">
               {certs.map((c) => (
-                <li key={c.name} className="grid grid-cols-[1fr_auto] gap-3 text-[15px]">
+                <li key={c.name} className="grid grid-cols-[1fr_auto] gap-3 text-[15px] border-b border-line pb-3">
                   <span>
-                    {c.name} <span className="text-bone-3">· {c.issuer}</span>
+                    {c.name}
+                    <span className="block text-[13px] text-bone-3">{c.issuer}</span>
                   </span>
-                  <span className="font-mono text-xs text-bone-3">{c.year}</span>
+                  <span className="font-mono text-[11px] text-bone-3">{c.year}</span>
                 </li>
               ))}
             </ul>
           </section>
 
-          <section>
+          <section className="reveal">
             <Heading>Education</Heading>
-            <p className="m-0">Bachelor of Commerce (BCom)</p>
-            <p className="m-0 text-bone-2">MA College, Kothamangalam · 2003 – 2005</p>
+            <p className="m-0 text-[15px]">Bachelor of Commerce (BCom)</p>
+            <p className="m-0 text-[15px] text-bone-2">MA College, Kothamangalam · 2003 – 2005</p>
           </section>
         </aside>
 
         {/* ── Right column ── */}
-        <div className="grid gap-11 content-start">
-          <section>
+        <div className="grid gap-12 content-start min-w-0">
+          <section className="reveal">
             <Heading>Key achievements</Heading>
-            <ul className="list-none m-0 p-0 grid gap-2.5">
-              {achievements.map((a) => (
-                <li key={a} className="relative pl-5 before:content-[''] before:absolute before:left-0 before:top-[0.7em] before:w-2 before:h-0.5 before:bg-pigment">
-                  {a}
+            <ul className="list-none m-0 p-0 grid gap-px bg-line border border-line">
+              {achievements.map((a, i) => (
+                <li key={a} className="bg-ink p-5 flex gap-4 items-baseline">
+                  <span className="label tag-num shrink-0">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-[15px]">{a}</span>
                 </li>
               ))}
             </ul>
           </section>
 
-          <section>
+          <section className="reveal">
             <Heading>Experience</Heading>
-            <p className="label m-0">UST · Dec 2016 – Present</p>
+            <p className="label label-strong m-0">UST · Dec 2016 – Present</p>
             <Timeline jobs={ust} />
-            <p className="label m-0 mt-12">Vtrio Solutions Pvt Ltd · 2005 – 2016</p>
+            <p className="label label-strong m-0 mt-14">Vtrio Solutions Pvt Ltd · 2005 – 2016</p>
             <Timeline jobs={vtrio} />
           </section>
         </div>

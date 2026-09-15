@@ -5,21 +5,22 @@ const caseStudy03: CaseStudyPageData = {
 
   hero: {
     type: 'hero',
-    badge: 'Insurance Claims Validation Platform',
+    badge: 'Insurance Claims Validation',
     badgeIcon: 'fact_check',
-    title: 'BenVal: Validating Claims Against a Living Source of Truth',
+    title: 'Validating Claims Against a Living Source of Truth',
     description:
       'Designed and built an end-to-end platform that validates insurance claim line items against a benefit "Source of Truth" rule set, pairing a deterministic rule engine with LLM-based matching and adjudication to cut manual review time while keeping a human in the loop.',
     meta: {
       role: 'Full-Stack Engineer (Backend architecture, LLM pipeline, frontend delivery)',
       platform: 'FastAPI + React/Vite Web Application',
-      tools: 'Elasticsearch, Azure OpenAI, Internal SG Agent Gateway',
+      tools: 'Elasticsearch, Azure OpenAI',
       focus: 'Deterministic + LLM Hybrid Validation, Human-in-the-Loop Review',
     },
   },
   navItems: [
     { anchor: 'ecosystem', label: 'Ecosystem' },
     { anchor: 'architecture', label: 'Architecture' },
+    { anchor: 'ux-architecture', label: 'UX-Driven Decisions' },
     { anchor: 'challenge', label: 'Challenge' },
     { anchor: 'solution', label: 'Solution' },
     { anchor: 'flow', label: 'Validation Flow' },
@@ -35,7 +36,7 @@ const caseStudy03: CaseStudyPageData = {
       accent: 'plum',
       title: 'The Application Ecosystem',
       subtitle:
-        'BenVal is organized around three connected pillars that take a benefit rule set from raw source documents through to an auditable, reviewable claim decision.',
+        'Application is organized around three connected pillars that take a benefit rule set from raw source documents through to an auditable, reviewable claim decision.',
       cards: [
         {
           icon: 'rule',
@@ -69,7 +70,7 @@ const caseStudy03: CaseStudyPageData = {
         'A FastAPI backend organized into self-contained feature packages, backed by Elasticsearch for both structured and vector data, with a React SPA frontend.',
       root: {
         icon: 'account_tree',
-        title: 'BenVal Backend',
+        title: 'Backend',
         subtitle: 'FastAPI app (app.py)',
       },
       branches: [
@@ -104,7 +105,7 @@ const caseStudy03: CaseStudyPageData = {
               title: 'Adjudicate',
               subitems: [
                 { text: 'Deterministic rule engine', badge: { text: 'Rule-based', variant: 'required' } },
-                { text: 'LLM adjudication (GPT nano/mini/main, SG agent)', badge: { text: 'Model tiers', variant: 'optional' } },
+                { text: 'LLM adjudication (GPT nano/mini/main)', badge: { text: 'Model tiers', variant: 'optional' } },
               ],
             },
           ],
@@ -128,6 +129,36 @@ const caseStudy03: CaseStudyPageData = {
 
     {
       type: 'split',
+      anchor: 'ux-architecture',
+      title: 'Architecture Decisions Driven by Reviewer Experience',
+      description:
+        'The hybrid engine and data model weren\u2019t just built for correctness \u2014 several structural choices exist specifically because of how a claims reviewer works, reasons, and builds trust in an automated decision.',
+      bullets: [
+        {
+          variant: 'check',
+          text: 'Every adjudication result carries its decision path (rule engine vs. LLM tier), so the UI can show reviewers *why* a verdict was reached, not just what it was \u2014 this was an architectural requirement, not a display afterthought.',
+        },
+        {
+          variant: 'check',
+          text: 'SOT rules are stored and rendered as recursive nested conditions, mirroring how benefit clauses actually nest in source documents, so a `NestedRuleConditionView` component can walk arbitrarily deep logic without a schema rewrite.',
+        },
+        {
+          variant: 'check',
+          text: 'The HITL review queue was deliberately decoupled from the admin-gated SOT management endpoints, so any authenticated reviewer can audit and override claims without waiting on admin access \u2014 a permissions split that exists to keep review throughput unblocked.',
+        },
+        {
+          variant: 'check',
+          text: 'Telemetry and cost data live on a separate dashboard surface rather than inline in the validation screen, keeping the reviewer\u2019s per-claim workspace focused while still giving admins the visibility to tune model-tier usage.',
+        },
+      ],
+      image: '/img/03/claim-hitl.png',
+      imageAlt: 'HITL claim review drawer with clause checklist',
+      imageCaption: 'Case file drawer: clause checklist and evidence ledger reviewers use to reason through a claim',
+      imagePosition: 'right',
+    },
+
+    {
+      type: 'split',
       anchor: 'challenge',
       title: 'Manual Review Doesn\u2019t Scale',
       description:
@@ -140,7 +171,7 @@ const caseStudy03: CaseStudyPageData = {
       ],
       image: '/img/03/manual-review.png',
       imageAlt: 'Manual claim review workflow',
-      imageCaption: 'Legacy workflow: manual cross-referencing against static rule sheets',
+      imageCaption: 'Legacy workflow: manual cross-referencing',
       imagePosition: 'right',
     },
 
@@ -149,7 +180,7 @@ const caseStudy03: CaseStudyPageData = {
       icon: 'hub',
       title: 'Deterministic Rules, LLM Judgment',
       description:
-        'Rather than choosing between rigid rule automation or fully LLM-driven decisions, BenVal combines both: the deterministic rule engine handles claims with a clearly selected rule, while LLM adjudication (across nano/mini/main tiers and an internal SG agent) resolves ambiguous matches and nuanced benefit language, with every decision routed through a human review queue.',
+        'Rather than choosing between rigid rule automation or fully LLM-driven decisions, it combines both: the deterministic rule engine handles claims with a clearly selected rule, while LLM adjudication (across nano/mini/main tiers) resolves ambiguous matches and nuanced benefit language, with every decision routed through a human review queue.',
     },
 
     {
@@ -157,11 +188,11 @@ const caseStudy03: CaseStudyPageData = {
       anchor: 'solution',
       title: 'A Hybrid Validation Engine',
       description:
-        'BenVal retrieves the most relevant SOT rules for a claim via vector search over Elasticsearch, then routes adjudication through whichever mechanism fits the claim: an exact rule engine pass, or an LLM call sized to the complexity of the case.',
+        'Application retrieves the most relevant SOT rules for a claim via vector search over Elasticsearch, then routes adjudication through whichever mechanism fits the claim: an exact rule engine pass, or an LLM call sized to the complexity of the case.',
       bullets: [
         { variant: 'check', text: 'Vector search over embedded SOT rules for fast, relevant rule retrieval.' },
         { variant: 'check', text: 'Deterministic rule engine for claims with an already-selected, well-defined rule.' },
-        { variant: 'check', text: 'Tiered LLM adjudication (nano/mini/main + SG agent) for ambiguous or complex claims.' },
+        { variant: 'check', text: 'Tiered LLM adjudication (nano/mini/main) for ambiguous or complex claims.' },
         { variant: 'check', text: 'Concurrency-capped batch validation for high-volume claim files.' },
       ],
       image: '/img/03/validator.png',
@@ -197,7 +228,7 @@ const caseStudy03: CaseStudyPageData = {
           variant: 'highlighted',
           items: [
             'Rule Engine: exact evaluation against a selected SOT rule.',
-            'LLM Adjudication: GPT nano/mini/main or SG agent, chosen by claim complexity.',
+            'LLM Adjudication: GPT nano/mini/main, chosen by claim complexity.',
           ],
           note: {
             icon: 'call_split',
@@ -235,7 +266,7 @@ const caseStudy03: CaseStudyPageData = {
           id: 'claim-hitl',
           title: 'Claim HITL Review',
           description:
-            'A dedicated review queue lets any authenticated user audit claim decisions, add overrides, and track status changes over time, independent of the admin-only write restrictions applied elsewhere in the app.',
+            'A dedicated review queue lets any authenticated user audit claim decisions, add overrides, and track status changes over time, independent of the admin-only write restrictions applied elsewhere in the app. A slide-in case file drawer, clause checklist, evidence ledger, and financial reconciliation panel mirror the way a reviewer actually works a claim, without leaving the claim list.',
           caption: 'Claim HITL review workflow',
           image: '/img/03/claim-hitl.png',
         },
@@ -243,7 +274,7 @@ const caseStudy03: CaseStudyPageData = {
           id: 'telemetry',
           title: 'LLM Telemetry & Cost Dashboard',
           description:
-            'Every LLM call across the nano, mini, main, and SG agent tiers is captured with token usage and computed cost, surfaced on a dashboard for monitoring spend and latency trends.',
+            'Every LLM call across the nano, mini, and main tiers is captured with token usage and computed cost, surfaced on a dashboard for monitoring spend and latency trends.',
           caption: 'Telemetry dashboard and logs',
           image: '/img/03/telemetry-dashboard.png',
         },
@@ -251,7 +282,7 @@ const caseStudy03: CaseStudyPageData = {
           id: 'rule-management',
           title: 'SOT Rule Management',
           description:
-            'Admins can generate, edit, and re-embed SOT rules from uploaded benefit-header data, keeping the rule set current as source documents change.',
+            'Admins can generate, edit, and re-embed SOT rules from uploaded benefit-header data, keeping the rule set current as source documents change. Nested benefit conditions are rendered with a recursive component so arbitrarily deep clause logic stays readable instead of collapsing into raw JSON.',
           caption: 'Managing the Source of Truth rule set',
           image: '/img/03/manage-sot.png',
         },
