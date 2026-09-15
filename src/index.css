@@ -21,9 +21,9 @@
 /* ─── DESIGN mode · paper and pigment ─────────────────────────────────────── */
 :root,
 :root[data-mode="design"] {
-  --ink: #f0eae0;
-  --ink-2: #fbf8f2;
-  --ink-3: #e2d9c9;
+  --ink: #eef0ef;
+  --ink-2: #f8faf9;
+  --ink-3: #dde1df;
   --ink-invert: #191512;
 
   --bone: #191512;
@@ -34,9 +34,9 @@
   --line: rgba(25, 21, 18, 0.14);
   --line-strong: rgba(25, 21, 18, 0.34);
 
-  --pigment: #c9401d;
+  --pigment: #3f6b3a;
   --pigment-ink: #fbf8f2;
-  --pigment-soft: rgba(201, 64, 29, 0.1);
+  --pigment-soft: rgba(63, 107, 58, 0.1);
   --plum: #6d4778;
   --plum-soft: rgba(109, 71, 120, 0.12);
   --ochre: #b7811a;
