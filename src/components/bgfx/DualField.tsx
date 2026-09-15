@@ -97,7 +97,7 @@ export default function DualField({
       ground = readToken("--ink", isCode ? "#080a0d" : "#f0eae0");
       palette = isCode
         ? [readToken("--pigment", "#c8f55c"), readToken("--plum", "#9a8cff"), readToken("--ochre", "#ffc46b")]
-        : [readToken("--pigment", "#3f6b3a"), readToken("--plum", "#6d4778"), readToken("--ochre", "#b7811a")];
+        : [readToken("--pigment", "#a3243d"), readToken("--plum", "#6d4778"), readToken("--ochre", "#b7811a")];
     };
 
     const spawnWash = (): Wash => ({
