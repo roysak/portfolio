@@ -37,12 +37,12 @@ interface Job {
 
 const ust: Job[] = [
   {
-    title: "Healthcare Claims Validation Platform",
+    title: "Healthcare Claims Validation",
     when: "May 2026 – Present",
     role: "Specialist I · UX Design / Full-Stack Development",
     now: true,
     bullets: [
-      "Built an AI claims validation platform to automate healthcare benefit adjudication.",
+      "Built an AI claims validation to automate healthcare benefit adjudication.",
       "Architected a hybrid validation combining a two-stage LLM pipeline with a Python rule engine.",
       "Created rule lifecycle management and human-in-the-loop workflows for expert review.",
       "Built semantic retrieval mapping benefits to claim codes via Elasticsearch hybrid search.",
