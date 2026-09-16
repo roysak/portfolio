@@ -86,7 +86,7 @@ export default function DualField({
     // into a ball of scribble.
     let fade = 0.035;
 
-    let ground = "#f0eae0";
+    let ground = "#eef0ef";
     let palette: string[] = [];
     let wash: Wash[] = [];
     let traces: Trace[] = [];
@@ -94,7 +94,7 @@ export default function DualField({
     const pointer = { x: -9999, y: -9999 };
 
     const readPalette = () => {
-      ground = readToken("--ink", isCode ? "#080a0d" : "#f0eae0");
+      ground = readToken("--ink", isCode ? "#080a0d" : "#eef0ef");
       palette = isCode
         ? [readToken("--pigment", "#c8f55c"), readToken("--plum", "#9a8cff"), readToken("--ochre", "#ffc46b")]
         : [readToken("--pigment", "#a3243d"), readToken("--plum", "#6d4778"), readToken("--ochre", "#b7811a")];
