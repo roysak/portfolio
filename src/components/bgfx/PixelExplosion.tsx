@@ -33,6 +33,10 @@ export default function PixelExplosion({ src, alt = "", className = "" }: PixelE
 
         let particles: Particle[] = [];
         let animId: number;
+        // The image can finish decoding after the effect has been torn down;
+        // starting the loop then would leave it running against a detached
+        // canvas with nothing left to cancel it.
+        let alive = true;
         let mouseX = -9999;
         let mouseY = -9999;
         let isActive = false;
@@ -108,6 +112,7 @@ export default function PixelExplosion({ src, alt = "", className = "" }: PixelE
         const img = new Image();
         img.src = src;
         img.onload = () => {
+            if (!alive) return;
             setup(img);
             tick();
         };
@@ -134,6 +139,8 @@ export default function PixelExplosion({ src, alt = "", className = "" }: PixelE
         ro.observe(canvas);
 
         return () => {
+            alive = false;
+            img.onload = null;
             cancelAnimationFrame(animId);
             canvas.removeEventListener("mousemove", onMove);
             canvas.removeEventListener("mouseleave", onLeave);
