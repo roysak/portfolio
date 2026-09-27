@@ -26,14 +26,14 @@ const Modal: React.FC<ModalProps> = ({ imageSrc, imageAlt, onClose }) => {
       role="dialog"
       aria-modal="true"
       aria-label={imageAlt}
-      className="fixed inset-0 z-1000 grid place-items-center p-6 bg-ink/94 backdrop-blur-md cursor-zoom-out"
+      className="fixed inset-0 z-1000 grid place-items-center bg-ink/94 backdrop-blur-md cursor-zoom-out"
       onClick={onClose}
     >
-      <figure className="m-0 grid gap-4 justify-items-center max-h-[92svh]">
+      <figure className="m-0 grid gap-4 justify-items-center max-h-[100svh] w-full p-6 overflow-auto">
         <img
           src={imageSrc}
           alt={imageAlt}
-          className="max-w-full max-h-[84svh] rounded-art shadow-lift border border-line"
+          className="max-w-full rounded-art shadow-lift border border-line"
         />
         <figcaption className="label label-strong">{imageAlt}</figcaption>
       </figure>
