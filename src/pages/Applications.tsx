@@ -3,6 +3,8 @@ import { assetUrl } from "../utils/assetUrl";
 import Modal from "../components/Modal";
 
 const images = [
+  { file: "curioleap.png", alt: "CurioLeap - Growing Through Curiosity" },
+  { file: "apcaviation.png", alt: "Asia Pacific College of Aviation & Logistics" },
   { file: "app-01.png", alt: "Application 01" },
   { file: "app-02.png", alt: "Application 02" },
   { file: "app-03.png", alt: "Application 03" },
@@ -26,7 +28,7 @@ export default function Applications() {
             className="group m-0 border border-line rounded-art overflow-hidden bg-ink-2 cursor-zoom-in transition-colors duration-500 hover:border-line-strong"
             onClick={() => setSelected(img)}
           >
-            <div className="overflow-hidden">
+            <div className="overflow-hidden max-h-120">
               <img
                 src={assetUrl(`/img/works/${img.file}`)}
                 alt={img.alt}
