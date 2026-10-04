@@ -1,46 +1,10 @@
-import { Link } from "react-router-dom";
-
+﻿import { Link } from 'react-router-dom';
+import { assetUrl } from '../utils/assetUrl';
+const categories = [
+  { path: 'applications', title: 'Applications', label: '01 / FUNCTION MEETS FORM', description: 'Side projects and applications, built from idea to interface. Thoughtful experiences brought to life with code.', image: 'works/app-01.png', alt: 'An application designed and developed by Roys' },
+  { path: 'creative-coding', title: 'Creative coding', label: '02 / CODE AS A CANVAS', description: 'A playground of generative forms, unexpected patterns, and interactive experiments. Making room for the unexpected.', image: 'works/concentric-circle.png', alt: 'Generative concentric-circle artwork' },
+  { path: 'digital-paintings', title: 'Digital paintings', label: '03 / BEYOND THE INTERFACE', description: 'Studies in color, light, and imagination. A collection of digital artwork and illustrations.', image: 'dp/SeaShore01.png', alt: 'A digitally painted seashore' },
+];
 export default function Works() {
-  return (
-    <main className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full py-24 pt-12">
-      <h1 className="text-3xl font-semibold tracking-tight mb-10">Works</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <Link
-          to="/works/applications"
-          className="group block rounded-2xl border border-neutral-200 p-8 hover:border-neutral-400 transition-colors"
-        >
-          <h2 className="text-xl font-semibold mb-2 group-hover:text-neutral-600 transition-colors">
-            Applications
-          </h2>
-          <p className="text-neutral-500 leading-relaxed">
-            Side projects and applications I've built.
-          </p>
-        </Link>
-
-        <Link
-          to="/works/creative-coding"
-          className="group block rounded-2xl border border-neutral-200 p-8 hover:border-neutral-400 transition-colors"
-        >
-          <h2 className="text-xl font-semibold mb-2 group-hover:text-neutral-600 transition-colors">
-            Creative Coding
-          </h2>
-          <p className="text-neutral-500 leading-relaxed">
-            Creative coding projects and experiments.
-          </p>
-        </Link>
-
-        <Link
-          to="/works/digital-paintings"
-          className="group block rounded-2xl border border-neutral-200 p-8 hover:border-neutral-400 transition-colors"
-        >
-          <h2 className="text-xl font-semibold mb-2 group-hover:text-neutral-600 transition-colors">
-            Digital Paintings
-          </h2>
-          <p className="text-neutral-500 leading-relaxed">
-            A collection of digital artwork and illustrations.
-          </p>
-        </Link>
-      </div>
-    </main>
-  );
+  return <main className="work-index studio-container"><p className="eyebrow">THE EXPLORATIONS</p><h1>Curiosity,<br /><em>made tangible.</em></h1><p className="work-intro">A collection of things I’ve built, painted, and discovered along the way. Because the best ideas often start with play.</p>{categories.map(item => <Link key={item.path} to={`/works/${item.path}`} className="work-category"><div><span className="eyebrow">{item.label}</span><h2>{item.title}</h2><p>{item.description}</p><span className="text-link">Explore collection ↗</span></div><img src={assetUrl(`/img/${item.image}`)} alt={item.alt} loading="lazy" /></Link>)}</main>;
 }

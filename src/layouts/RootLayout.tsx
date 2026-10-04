@@ -1,17 +1,7 @@
-import { Outlet } from "react-router-dom";
-import Nav from "../components/Nav";
-import Footer from "../components/Footer";
-import ScrollToTop from '../components/ScrollToTop';
-
+﻿import { Outlet, useLocation } from 'react-router-dom';
+import Nav from '../components/Nav';
+import Footer from '../components/Footer';
 export default function RootLayout() {
-  return (
-    <div className="min-h-screen flex flex-col bg-white text-neutral-900 font-sans antialiased">
-      <Nav />
-      <div className="flex flex-col flex-1 py-20">
-        <Outlet />
-      </div>
-      <Footer />
-      <ScrollToTop />
-    </div>
-  );
+  const isHome = useLocation().pathname === '/';
+  return <div className="studio-shell min-h-screen flex flex-col text-neutral-900 antialiased"><Nav /><div id={isHome ? undefined : 'main-content'} className={`flex flex-col flex-1 ${isHome ? '' : 'studio-inner-page'}`}><Outlet /></div><Footer /></div>;
 }

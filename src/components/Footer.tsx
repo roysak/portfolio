@@ -1,9 +1,4 @@
+﻿import { Link } from 'react-router-dom';
 export default function Footer() {
-  const year = new Date().getFullYear();
-
-  return (
-    <footer className="bg-white py-4 text-center text-sm text-neutral-400">
-      <p>© {year} • Designed with intention.</p>
-    </footer>
-  );
+  return <footer className="studio-footer"><div className="studio-container"><p className="eyebrow">HAVE SOMETHING IN MIND?</p><a href="mailto:roysak@gmail.com" className="footer-invitation">Let’s make it<br /><em>mean something.</em><span aria-hidden="true">↗</span></a><div className="footer-bottom"><p>© {new Date().getFullYear()} Roys A Kareem<br /><span>Designed with intention. Built with curiosity.</span></p><div><a href="mailto:roysak@gmail.com">Email ↗</a><a href="https://in.linkedin.com/in/roysak" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><Link to="/resume">Resume ↗</Link></div><a href="#" onClick={(event) => { event.preventDefault(); window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' }); }}>BACK TO TOP ↑</a></div></div></footer>;
 }

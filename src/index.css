@@ -1,10 +1,11 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 @import "./styles/portfolio.css";
+@import "./styles/studio.css";
 
-/* ─── Design Tokens ─────────────────────────────────────────────────────────
+/* â”€â”€â”€ Design Tokens â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Primary brand color: #6D4778 (deep plum/violet)
    Used for: buttons, links, badges, accents, interactive highlights.
-   ──────────────────────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 @theme {
   --color-primary-50:  #f8f0fa;
@@ -30,8 +31,8 @@
   --color-primary-subtle: #e9cff0;
 }
 
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
 }
 
 body {
@@ -41,3 +42,4 @@ body {
 #root {
   min-height: 100svh;
 }
+
