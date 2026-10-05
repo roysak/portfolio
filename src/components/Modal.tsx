@@ -21,10 +21,10 @@ const Modal: React.FC<ModalProps> = ({ imageSrc, imageAlt, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="relative max-w-[90%] max-h-[90%]"
+        className="relative m-0 grid gap-4 justify-items-center max-h-[100svh] w-full p-6 overflow-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        <img src={imageSrc} alt={imageAlt} className="max-w-[90vw] max-h-[90vh] rounded-lg" />
+        <img src={imageSrc} alt={imageAlt} className="max-w-full rounded-lg" />
         <button
           className="absolute top-2.5 right-2.5 bg-transparent border-0 text-white text-2xl cursor-pointer leading-none"
           onClick={onClose}

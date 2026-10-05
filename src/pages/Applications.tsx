@@ -4,10 +4,12 @@ import { assetUrl } from "../utils/assetUrl";
 import Modal from "../components/Modal";
 
 const images = [
-  { file: "app-01.png", alt: "App 1" },
-  { file: "app-02.png", alt: "App 2" },
-  { file: "app-03.png", alt: "App 3" },
-  { file: "app-04.png", alt: "App 4" },
+  { file: "curioleap.png", alt: "CurioLeap - Growing Through Curiosity" },
+  { file: "apcaviation.png", alt: "Asia Pacific College of Aviation & Logistics" },
+  { file: "app-01.png", alt: "Application 01" },
+  { file: "app-02.png", alt: "Application 02" },
+  { file: "app-03.png", alt: "Application 03" },
+  { file: "app-04.png", alt: "Application 04" },
 ];
 
 export default function Applications() {
@@ -31,7 +33,7 @@ export default function Applications() {
         {images.map((img) => (
           <div
             key={img.file}
-            className="work-detail-tile"
+            className="work-detail-tile max-h-120"
             onClick={() => setSelected(img)}
           >
             <img
