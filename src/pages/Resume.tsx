@@ -2,12 +2,13 @@ import { assetUrl } from "../utils/assetUrl";
 
 export default function Resume() {
   return (
-    <main className="max-w-5xl w-full mx-auto px-6 py-16 pt-12">
+    <main className="resume-page studio-container">
 
       {/* ── Header ── */}
-      <header className="mb-12 pb-10 border-b border-neutral-200">
+      <header className="resume-header mb-12 pb-10 border-b border-neutral-200">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
+            <p className="eyebrow resume-kicker">02 / THE JOURNEY SO FAR</p>
             <h1 className="text-5xl md:text-6xl font-semibold tracking-tight text-neutral-900 mb-2">
               Roys A Kareem
             </h1>
@@ -32,7 +33,7 @@ export default function Resume() {
           <div>
             <a href={assetUrl('/resumes/Roys_Resume.pdf')} download className="px-4 py-2 inline-flex items-center gap-2 rounded-full bg-primary-600  text-white hover:bg-primary-800 transition-colors">
               <span className="material-symbols-rounded text-base!">download</span>
-              Download Resume
+              Download résumé
             </a>
           </div>
         </div>

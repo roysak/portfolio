@@ -86,18 +86,19 @@ export default function CreativeCoding() {
   }
 
   return (
-    <main className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full py-24 pt-12">
-      <div className="pb-12">
-        <Link to="/works" className="text-neutral-500 hover:text-neutral-900 flex gap-2">
+    <main className="work-detail-page studio-container">
+      <div className="work-detail-back">
+        <Link to="/works" className="inner-back-link">
           <i className="material-symbols-rounded">keyboard_backspace</i>Back to Works
         </Link>
       </div>
-      <h1 className="text-3xl font-semibold tracking-tight mb-10">
+      <p className="eyebrow">02 / CODE AS A CANVAS</p>
+      <h1>
         Creative Coding
       </h1>
 
       <section className="mb-16">
-        <p className="text-neutral-500 leading-relaxed max-w-2xl mb-6">
+        <p className="work-detail-intro">
           Interactive effects <span className="font-bold">created Using AI Tools</span>. Move your cursor across the canvas to see the effects.
         </p>
 

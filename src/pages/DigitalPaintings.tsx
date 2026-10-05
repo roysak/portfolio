@@ -19,18 +19,19 @@ export default function DigitalPaintings() {
   ];
 
   return (
-    <main className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full py-24 pt-12">
-      <div className="pb-12">
+    <main className="work-detail-page studio-container">
+      <div className="work-detail-back">
           <Link
               to="/works"
-              className="text-neutral-500 hover:text-neutral-900 flex gap-2">
+              className="inner-back-link">
               <i className="material-symbols-rounded">keyboard_backspace</i>Back to Works
           </Link>
       </div>
-      <h1 className="text-3xl font-semibold tracking-tight mb-10">
+      <p className="eyebrow">03 / BEYOND THE INTERFACE</p>
+      <h1>
         Digital Paintings
       </h1>
-      <p className="text-neutral-500 leading-relaxed max-w-2xl mb-12">
+      <p className="work-detail-intro">
         A curated gallery of digital paintings and illustrations.
       </p>
       

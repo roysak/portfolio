@@ -20,7 +20,7 @@ export default function CaseStudy() {
 
   if (!data) {
     return (
-      <main className="max-w-6xl w-full mx-auto px-6 py-24 text-center">
+      <main className="case-study-page studio-container py-24 text-center">
         <h1 className="text-3xl font-semibold mb-4">Case Study Not Found</h1>
         <Link
           to="/case-studies"
@@ -34,24 +34,25 @@ export default function CaseStudy() {
 
   return (
 	<ModalProvider>
-		<div className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full pt-12">
+	  <main className="case-study-page">
+		<div className="case-study-back studio-container">
 			<Link
 				to="/case-studies"
-				className="text-neutral-500 hover:text-neutral-900 flex gap-2">
+				className="inner-back-link">
 				<i className="material-symbols-rounded">keyboard_backspace</i>Back to Case Studies
 			</Link>
 		</div>
-		<div className="min-h-screen bg-white text-gray-900">
+		<div className="case-study-content">
 			<CaseStudyHero hero={data.hero} />
 			<CaseStudyInPageNav navItems={data.navItems} />
 			{data.sections.map((section, i) => (
 			  <SectionRenderer key={i} section={section} />
 			))}
-			<footer className="py-12 text-center text-gray-400 text-sm border-t border-gray-100">
+			<footer className="case-study-end">
 				<p>Thanks for scrolling.</p>
 			</footer>
 		</div>
+	  </main>
     </ModalProvider>
   );
 }
-

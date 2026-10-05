@@ -47,7 +47,7 @@ export default function FlatArticle({
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-10">
+      <div className="article-topic-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-10">
         {items.map((topic) => (
           <TopicCard
             key={topic.name}

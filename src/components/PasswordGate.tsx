@@ -31,7 +31,6 @@ export default function PasswordGate({
     const [value, setValue] = useState("");
     const [error, setError] = useState(false);
     const [shaking, setShaking] = useState(false);
-    const [typing, setTyping] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const pinRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -50,7 +49,6 @@ export default function PasswordGate({
     function triggerError() {
         setError(true);
         setShaking(true);
-        setTyping(false);
         if (MODE === "pin") {
             setPin(Array(PIN_LENGTH).fill(""));
             setTimeout(() => pinRefs.current[0]?.focus(), 50);
@@ -75,7 +73,6 @@ export default function PasswordGate({
     function handlePinChange(index: number, digit: string) {
         if (!/^\d?$/.test(digit)) return;
         setError(false);
-        if (digit) setTyping(true);
         const next = [...pin];
         next[index] = digit;
         setPin(next);
@@ -119,7 +116,7 @@ export default function PasswordGate({
     if (authenticated) return <>{children}</>;
 
     return (
-        <main className="flex flex-col items-center justify-center min-h-[70vh] px-6">
+        <main className="case-study-gate flex flex-col items-center justify-center min-h-[70vh] px-6">
             <div className="w-full max-w-sm">
                 <div className="mb-8 text-center">
                     <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary-50 mb-4">
@@ -142,7 +139,7 @@ export default function PasswordGate({
                     <div>
                         <div
                             className={`flex flex-col items-center gap-4 ${shaking ? "animate-shake" : ""}`}>
-                            <img
+                            {/* <img
                                 src={assetUrl(
                                     typing
                                         ? "/img/surprised.gif"
@@ -150,7 +147,7 @@ export default function PasswordGate({
                                 )}
                                 alt="Protected"
                                 className="w-full"
-                            />
+                            /> */}
                             <div className="flex gap-3">
                                 {pin.map((digit, i) => (
                                     <input
@@ -237,7 +234,6 @@ export default function PasswordGate({
                                 onChange={(e) => {
                                     setValue(e.target.value);
                                     setError(false);
-                                    setTyping(e.target.value.length > 0);
                                 }}
                                 placeholder="Enter password"
                                 autoComplete="current-password"

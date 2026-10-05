@@ -58,17 +58,16 @@ export default function Blog() {
   }
 
   return (
-    <main className="px-6 md:px-12 lg:px-24 max-w-6xl mx-auto w-full py-24 pt-12">
-      <header className="mb-10">
-        <h1 className="text-3xl font-semibold tracking-tight mb-3">Blog</h1>
-        <p className="text-neutral-500 text-md leading-relaxed">
-          Practical guides, cheatsheets, and thoughts on design and frontend development.
-        </p>
+    <main className="blog-index studio-container">
+      <header className="inner-page-intro">
+        <p className="eyebrow">03 / NOTES FROM THE DESK</p>
+        <h1>Learning <em>out loud.</em></h1>
+        <p>Practical guides, cheatsheets, and thoughts on design and frontend development.</p>
       </header>
 
       {/* Search */}
-      <div className="relative mb-6">
-        <span className="material-symbols-rounded absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400 text-xl! pointer-events-none">
+      <div className="blog-search">
+        <span className="material-symbols-rounded" aria-hidden="true">
           search
         </span>
         <input
@@ -76,12 +75,13 @@ export default function Blog() {
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
           placeholder="Search articles…"
-          className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-neutral-200 bg-white text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-400 transition"
+          aria-label="Search articles"
+          className="blog-search-input"
         />
         {query && (
           <button
             onClick={() => handleSearch("")}
-            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 transition"
+            className="blog-search-clear"
             aria-label="Clear search"
           >
             <span className="material-symbols-rounded text-xl!">close</span>
@@ -90,7 +90,7 @@ export default function Blog() {
       </div>
 
       {/* Category filters */}
-      <div className="flex flex-wrap gap-2 mb-10">
+      <div className="blog-filters" role="group" aria-label="Filter articles by category">
         {usedCategories.map((cat) => {
           const isActive = active === cat;
           const count =
@@ -101,17 +101,12 @@ export default function Blog() {
             <button
               key={cat}
               onClick={() => handleCategory(cat)}
-              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all border ${
-                isActive
-                  ? "bg-primary-600 text-white border-primary-600 shadow-sm"
-                  : "bg-white text-neutral-500 border-neutral-200 hover:border-primary-300 hover:text-primary-700"
-              }`}
+              aria-pressed={isActive}
+              className={`blog-filter ${isActive ? "is-active" : ""}`}
             >
               {cat}
               <span
-                className={`text-xs font-semibold px-1.5 py-0.5 rounded-full ${
-                  isActive ? "bg-white/20 text-white" : "bg-neutral-100 text-neutral-500"
-                }`}
+                className="blog-filter-count"
               >
                 {count}
               </span>
@@ -122,7 +117,7 @@ export default function Blog() {
 
       {/* Results summary */}
       {query && (
-        <p className="text-sm text-neutral-400 mb-6">
+        <p className="blog-results">
           {filtered.length === 0
             ? "No results"
             : `${filtered.length} result${filtered.length !== 1 ? "s" : ""} for "${query}"`}
@@ -131,54 +126,26 @@ export default function Blog() {
 
       {/* Article list */}
       {paginated.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 text-neutral-400 gap-3">
+        <div className="blog-empty">
           <span className="material-symbols-rounded text-4xl!">search_off</span>
           <p className="text-sm">
             {query ? `No articles match "${query}".` : "No articles in this category yet."}
           </p>
         </div>
       ) : (
-        <ul className="flex flex-col gap-6">
-          {paginated.map((article) => (
+        <ul className="blog-list">
+          {paginated.map((article, index) => (
             <li key={article.slug}>
               <Link
                 to={`/blog/${article.slug}`}
-                className="group flex flex-col gap-3 rounded-2xl border border-neutral-200 p-8 hover:border-primary-300 hover:bg-primary-50 transition-all"
+                className="blog-entry"
               >
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary-100 text-primary-700">
-                    {article.category}
-                  </span>
-                  {article.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-neutral-100 text-neutral-500"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                <div className="blog-entry-top">
+                  <span className="eyebrow">{String((safePage - 1) * PAGE_SIZE + index + 1).padStart(2, '0')} / {article.category}</span>
+                  <span className="blog-entry-date">{new Date(article.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
                 </div>
-
-                <h2 className="text-xl font-semibold text-neutral-900 group-hover:text-primary-700 transition-colors">
-                  {article.title}
-                </h2>
-
-                <p className="text-neutral-500 leading-relaxed">{article.description}</p>
-
-                <div className="flex items-center gap-4 text-sm text-neutral-400 mt-1">
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="material-symbols-rounded text-base!">calendar_today</span>
-                    {new Date(article.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="material-symbols-rounded text-base!">schedule</span>
-                    {article.readingTime}
-                  </span>
-                </div>
+                <div className="blog-entry-main"><div><h2>{article.title}</h2><p>{article.description}</p></div><span className="round-arrow" aria-hidden="true">↗</span></div>
+                <div className="blog-entry-bottom"><span>{article.readingTime}</span><span>{article.tags.join(' · ')}</span></div>
               </Link>
             </li>
           ))}
@@ -187,11 +154,11 @@ export default function Blog() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 mt-12">
+        <nav className="blog-pagination" aria-label="Article pages">
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={safePage === 1}
-            className="inline-flex items-center gap-1 px-3 py-2 rounded-lg border border-neutral-200 text-sm text-neutral-500 hover:border-primary-300 hover:text-primary-700 disabled:opacity-40 disabled:cursor-not-allowed transition"
+            className="blog-page-button"
           >
             <span className="material-symbols-rounded text-base!">chevron_left</span>
             Prev
@@ -201,11 +168,9 @@ export default function Blog() {
             <button
               key={n}
               onClick={() => setPage(n)}
-              className={`w-9 h-9 rounded-lg border text-sm font-medium transition ${
-                n === safePage
-                  ? "bg-primary-600 text-white border-primary-600 shadow-sm"
-                  : "border-neutral-200 text-neutral-500 hover:border-primary-300 hover:text-primary-700"
-              }`}
+              aria-label={`Page ${n}`}
+              aria-current={n === safePage ? "page" : undefined}
+              className={`blog-page-button ${n === safePage ? "is-active" : ""}`}
             >
               {n}
             </button>
@@ -214,12 +179,12 @@ export default function Blog() {
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={safePage === totalPages}
-            className="inline-flex items-center gap-1 px-3 py-2 rounded-lg border border-neutral-200 text-sm text-neutral-500 hover:border-primary-300 hover:text-primary-700 disabled:opacity-40 disabled:cursor-not-allowed transition"
+            className="blog-page-button"
           >
             Next
             <span className="material-symbols-rounded text-base!">chevron_right</span>
           </button>
-        </div>
+        </nav>
       )}
     </main>
   );

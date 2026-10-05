@@ -70,7 +70,7 @@ export default function TopicModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-900/50 backdrop-blur-sm"
+      className="article-topic-overlay fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-900/50 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
@@ -78,14 +78,14 @@ export default function TopicModal({
         role="dialog"
         aria-modal="true"
         aria-label={topic.name}
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden"
+        className="article-topic-modal bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-neutral-100 bg-neutral-50">
           <div className="flex items-center gap-3">
             <h2 className="text-xl font-semibold text-neutral-900">{topic.name}</h2>
-            <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${badgeClass}`}>
+            <span className={`article-badge text-xs font-semibold px-2.5 py-0.5 rounded-full ${badgeClass}`}>
               {badgePrefix}{topic.category}
             </span>
           </div>

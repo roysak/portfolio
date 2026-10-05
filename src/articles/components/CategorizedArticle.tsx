@@ -58,12 +58,12 @@ export default function CategorizedArticle({
           <section key={cat} className="mb-10">
             <div className="flex items-center gap-3 mb-4">
               <h2 className="text-lg font-semibold text-neutral-800">{cat}</h2>
-              <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${badgeColors[cat] ?? "bg-neutral-100 text-neutral-600"}`}>
+              <span className={`article-badge text-xs font-semibold px-2.5 py-0.5 rounded-full ${badgeColors[cat] ?? "bg-neutral-100 text-neutral-600"}`}>
                 {catItems.length} {countLabel}
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            <div className="article-topic-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {catItems.map((topic) => (
                 <TopicCard
                   key={topic.name}
