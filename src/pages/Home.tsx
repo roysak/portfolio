@@ -9,9 +9,10 @@ export default function Home() {
       <div className="hero-kicker"><span className="status-dot" /> A little strategy. A lot of curiosity.<span className="hero-edition">PORTFOLIO / 2026</span></div>
       <div className="hero-composition">
         <div className="hero-copy"><p className="eyebrow">ROYS A KAREEM — DESIGNER & DEVELOPER</p><h1 id="hero-title">Thoughtfully<br />designed.<br /><em>Playfully</em> built<span className="orange-period">.</span></h1><p className="hero-description">I turn complex problems into intuitive digital experiences. From the first “what if” to the last line of code.</p><a className="pill-button" href="#explore">Explore my work <span aria-hidden="true">↗</span></a></div>
-        <div className="hero-art"><div className="art-orbit orbit-one" /><div className="art-orbit orbit-two" /><span className="art-coordinate">FIG. 01 — IDEAS IN MOTION</span><Suspense fallback={<div className="sculpture-fallback" />}><Sculpture /></Suspense><span className="art-note">A meeting of<br /><em>logic & imagination.</em></span><span className="art-cross" aria-hidden="true">+</span></div>
+        <div className="hero-art"><div className="art-orbit orbit-one" /><div className="art-orbit orbit-two" /><span className="art-coordinate">FIG. 01 — IDEAS IN MOTION</span><span className="art-note">A meeting of<br /><em>logic & imagination.</em></span><span className="art-cross" aria-hidden="true">+</span></div>
       </div>
       <div className="hero-baseline"><p>15+ years of connecting<br /><strong>people, pixels & possibilities.</strong></p><span className="hero-baseline-center">UX DESIGN · FRONTEND DEVELOPMENT · CREATIVE CODE</span><a href="#explore" className="scroll-link">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a></div>
+      <Suspense fallback={null}><Sculpture /></Suspense>
     </section>
     <div className="discipline-strip" aria-label="Design disciplines"><span>Human-centered thinking</span><i>✳</i><span>Digital craftsmanship</span><i>✳</i><span>Creative exploration</span><i>✳</i><span>Built with intention</span><i>✳</i></div>
     <section id="explore" className="explore-section studio-container">

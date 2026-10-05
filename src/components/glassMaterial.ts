@@ -24,12 +24,13 @@ export const asteriskMaterials = ['Amber', 'Glass', 'Frosted', 'Rose', 'Chrome',
 }));
 
 /** Analytic artistic additions to physical glass; scattering is a backlighting approximation. */
-export function createGlassMaterial() {
+export function createGlassMaterial(sceneTexture: THREE.Texture, sceneSize: THREE.Vector2) {
   const material = new THREE.MeshPhysicalMaterial({ metalness: 0, transmission: 1, opacity: 1 });
   const uniforms = {
     uFresnel: { value: 0 }, uFresnelPower: { value: 4 }, uFresnelColor: { value: new THREE.Color() },
     uScattering: { value: 0 }, uScatteringPower: { value: 3 }, uScatteringDistortion: { value: 0.3 },
     uScatteringColor: { value: new THREE.Color() }, uScatterLight: { value: new THREE.Vector3(-3, 2, -4).normalize() },
+    uSceneTexture: { value: sceneTexture }, uSceneSize: { value: sceneSize },
   };
   material.onBeforeCompile = shader => {
     Object.assign(shader.uniforms, uniforms);
@@ -42,7 +43,19 @@ export function createGlassMaterial() {
       uniform float uScatteringPower;
       uniform float uScatteringDistortion;
       uniform vec3 uScatteringColor;
-      uniform vec3 uScatterLight;`);
+      uniform vec3 uScatterLight;
+`);
+    // Use the composited scene (DOM plus objects behind this mesh) with Three's
+    // physical refraction, dispersion and roughness-dependent mip filtering.
+    shader.fragmentShader = shader.fragmentShader.replace('#include <transmission_pars_fragment>',
+      THREE.ShaderChunk.transmission_pars_fragment
+        .replaceAll('transmissionSamplerMap', 'uSceneTexture')
+        .replaceAll('transmissionSamplerSize', 'uSceneSize'));
+    shader.fragmentShader = shader.fragmentShader.replace('#include <transmission_fragment>', `
+      #include <transmission_fragment>
+      #ifdef USE_TRANSMISSION
+        material.transmissionAlpha = 1.0;
+      #endif`);
     shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
       float edge = pow(1.0 - clamp(dot(normal, normalize(vViewPosition)), 0.0, 1.0), uFresnelPower);
       outgoingLight += uFresnelColor * edge * uFresnel;
@@ -52,7 +65,7 @@ export function createGlassMaterial() {
       outgoingLight += uScatteringColor * uScattering * scatterLobe * backlit;
       #include <opaque_fragment>`);
   };
-  material.customProgramCacheKey = () => 'portfolio-glass-v2-native-transmission';
+  material.customProgramCacheKey = () => 'portfolio-glass-v4-scene-refraction';
   const apply = (s: GlassSettings) => {
 
     material.metalness = s.metalness;

@@ -1,8 +1,8 @@
-﻿import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import GlassPanel from './GlassPanel';
-import { createSculptureBackdrop } from './sculptureBackdrop';
+import { createHeroRefractionLayer } from './heroRefractionLayer';
 import { createEnvironment, createGlassMaterial, asteriskMaterials } from './glassMaterial';
 import { createAsteriskGeometry, createAsteriskPhysics } from './asteriskPhysics';
 import type { GlassSettings } from './glassMaterial';
@@ -26,6 +26,9 @@ export default function Sculpture() {
   useEffect(() => {
     const element = host.current;
     if (!element) return;
+    const hero = element.parentElement;
+    const art = hero?.querySelector<HTMLElement>('.hero-art');
+    if (!hero || !art) return;
     let renderer: THREE.WebGLRenderer;
     try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); }
     catch { queueMicrotask(() => setAvailable(false)); return; }
@@ -38,18 +41,23 @@ export default function Sculpture() {
     canvas.setAttribute('aria-hidden', 'true');
     element.appendChild(canvas);
     const scene = new THREE.Scene();
-    const backdrop = createSculptureBackdrop();
-    if (backdrop) scene.add(backdrop.mesh);
+    const heroRefraction = createHeroRefractionLayer(hero);
+    const heroSize = new THREE.Vector2(1, 1);
     const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
     camera.position.set(0, 0, 10.5);
-    const controls = new OrbitControls(camera, canvas);
+    const controls = new OrbitControls(camera, art);
     controls.enablePan = false; controls.enableZoom = false;
     controls.enableDamping = true; controls.dampingFactor = 0.07;
     controls.rotateSpeed = 0.65; controls.autoRotateSpeed = 0.4;
     controls.saveState();
     const geometry = createAsteriskGeometry();
     const physics = createAsteriskPhysics();
-    const glasses = asteriskMaterials.map(() => createGlassMaterial());
+    const refractionTargets = asteriskMaterials.map(() => new THREE.WebGLRenderTarget(1, 1, {
+      type: THREE.HalfFloatType,
+      minFilter: THREE.LinearMipmapLinearFilter,
+      generateMipmaps: true,
+    }));
+    const glasses = refractionTargets.map(target => createGlassMaterial(target.texture, heroSize));
     const sculptures = glasses.map((glass, index) => {
       const mesh = new THREE.Mesh(geometry, glass.material);
       mesh.userData.asterisk = index;
@@ -77,8 +85,7 @@ export default function Sculpture() {
         glass.material.envMapRotation.y = THREE.MathUtils.degToRad(s.environmentRotation);
       });
       const s = allSettings[active];
-      scene.background = s.backdrop ? environmentFor(s.environment) : new THREE.Color('#f5f3ed');
-      if (backdrop) backdrop.mesh.visible = !s.backdrop;
+      scene.background = s.backdrop ? environmentFor(s.environment) : null;
       scene.backgroundRotation.y = THREE.MathUtils.degToRad(s.environmentRotation);
       scene.backgroundBlurriness = 0.25;
       scene.backgroundIntensity = 0.6;
@@ -87,8 +94,14 @@ export default function Sculpture() {
     runtime.current = { apply, resetView: () => controls.reset(), scatter: physics.scatter };
     const resize = () => {
       const { width, height } = element.getBoundingClientRect();
-      backdrop?.resize(width, height, element.parentElement?.clientWidth ?? width);
+      camera.position.z = Math.max(10.5, 2.2 / (Math.max(width / Math.max(height, 1), 0.1) * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))));
       renderer.setSize(width, height); camera.aspect = width / Math.max(height, 1); camera.updateProjectionMatrix();
+      renderer.getDrawingBufferSize(heroSize);
+      refractionTargets.forEach(target => target.setSize(heroSize.x, heroSize.y));
+      const halfHeight = camera.position.length() * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+      physics.setViewport(halfHeight * camera.aspect, halfHeight);
+      heroRefraction.scheduleCapture();
+      controls.saveState();
     };
     const observer = new ResizeObserver(resize); observer.observe(element); resize();
     let visible = true;
@@ -107,12 +120,13 @@ export default function Sculpture() {
     const cameraUp = new THREE.Vector3();
     let down: { x: number; y: number; id: number; moved: boolean; index: number; mode: 'nudge' | 'rotate'; origin: THREE.Vector3; startPoint: THREE.Vector3; rotation: THREE.Quaternion } | null = null;
     const aim = (event: PointerEvent) => {
-      const bounds = canvas.getBoundingClientRect();
+      const bounds = element.getBoundingClientRect();
       pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1, -(event.clientY - bounds.top) / bounds.height * 2 + 1);
       raycaster.setFromCamera(pointer, camera);
     };
     const onDown = (event: PointerEvent) => {
       if (!event.isPrimary || event.button !== 0 || down) return;
+      if (event.target instanceof Element && event.target.closest('.sculpture-toolbar')) return;
       aim(event);
       const hit = raycaster.intersectObjects(sculptures)[0];
       if (!hit) return; // Empty space continues to orbit the camera.
@@ -125,7 +139,7 @@ export default function Sculpture() {
         mode: event.shiftKey ? 'rotate' : interaction.current.tool, origin,
         startPoint: planePoint.clone(), rotation: sculptures[index].quaternion.clone() };
       controls.enabled = false;
-      canvas.setPointerCapture(event.pointerId);
+      hero.setPointerCapture(event.pointerId);
       event.preventDefault(); event.stopImmediatePropagation();
     };
     const onMove = (event: PointerEvent) => {
@@ -135,7 +149,7 @@ export default function Sculpture() {
         down.moved = true;
         setSelected(down.index);
         physics.beginGrab(down.index, down.mode);
-        canvas.classList.add('is-manipulating');
+        hero.classList.add('is-manipulating');
       }
       if (!down.moved) return;
       targetPosition.copy(down.origin);
@@ -159,8 +173,8 @@ export default function Sculpture() {
       down = null;
       physics.endGrab();
       controls.enabled = true;
-      canvas.classList.remove('is-manipulating');
-      if (canvas.hasPointerCapture(id)) canvas.releasePointerCapture(id);
+      hero.classList.remove('is-manipulating');
+      if (hero.hasPointerCapture(id)) hero.releasePointerCapture(id);
     };
     const onUp = (event: PointerEvent) => {
       if (!down || down.id !== event.pointerId) return;
@@ -173,9 +187,9 @@ export default function Sculpture() {
     const onCancel = () => finish();
     const lost = (event: Event) => { event.preventDefault(); finish(); setAvailable(false); setOpen(false); };
     const restored = () => setAvailable(true);
-    canvas.addEventListener('pointerdown', onDown, true); canvas.addEventListener('pointermove', onMove, true);
-    canvas.addEventListener('pointerup', onUp, true); canvas.addEventListener('pointercancel', onCancel);
-    canvas.addEventListener('lostpointercapture', onCancel); window.addEventListener('blur', onCancel);
+    hero.addEventListener('pointerdown', onDown, true); hero.addEventListener('pointermove', onMove, true);
+    hero.addEventListener('pointerup', onUp, true); hero.addEventListener('pointercancel', onCancel);
+    hero.addEventListener('lostpointercapture', onCancel); window.addEventListener('blur', onCancel);
     canvas.addEventListener('webglcontextlost', lost); canvas.addEventListener('webglcontextrestored', restored);
     let frame = 0, previous = 0, accumulator = 0;
     const scatterDirection = backlight.position.clone().normalize();
@@ -195,8 +209,26 @@ export default function Sculpture() {
       });
       controls.update(delta);
       camera.updateMatrixWorld();
-      backdrop?.update(camera);
       glasses.forEach(glass => glass.uniforms.uScatterLight.value.copy(scatterDirection).transformDirection(camera.matrixWorldInverse));
+      // Capture back to front. Each glass sees the DOM and completed objects
+      // behind it, never itself or a foreground object. Separate targets avoid
+      // sampling a texture while it is attached to the active framebuffer.
+      const background = scene.background;
+      const depth = new THREE.Vector3();
+      const ordered = sculptures.map((mesh, index) => ({
+        mesh, index, z: depth.copy(mesh.position).applyMatrix4(camera.matrixWorldInverse).z,
+      })).sort((a, b) => a.z - b.z);
+      sculptures.forEach(mesh => { mesh.visible = false; });
+      scene.background = background ?? heroRefraction.uniform.value;
+      for (const { mesh, index } of ordered) {
+        if (glasses[index].material.transmission > 0) {
+          renderer.setRenderTarget(refractionTargets[index]);
+          renderer.render(scene, camera);
+        }
+        mesh.visible = true;
+      }
+      scene.background = background;
+      renderer.setRenderTarget(null);
       renderer.render(scene, camera);
     };
     frame = requestAnimationFrame(render);
@@ -204,11 +236,12 @@ export default function Sculpture() {
       runtime.current = null;
       cancelAnimationFrame(frame); observer.disconnect(); intersection.disconnect(); controls.dispose();
       finish();
-      canvas.removeEventListener('pointerdown', onDown, true); canvas.removeEventListener('pointermove', onMove, true);
-      canvas.removeEventListener('pointerup', onUp, true); canvas.removeEventListener('pointercancel', onCancel);
-      canvas.removeEventListener('lostpointercapture', onCancel); window.removeEventListener('blur', onCancel);
+      hero.removeEventListener('pointerdown', onDown, true); hero.removeEventListener('pointermove', onMove, true);
+      hero.removeEventListener('pointerup', onUp, true); hero.removeEventListener('pointercancel', onCancel);
+      hero.removeEventListener('lostpointercapture', onCancel); window.removeEventListener('blur', onCancel);
       canvas.removeEventListener('webglcontextlost', lost); canvas.removeEventListener('webglcontextrestored', restored);
-      backdrop?.dispose(); physics.dispose(); geometry.dispose(); glasses.forEach(glass => glass.material.dispose()); environments.forEach(target => target.dispose());
+      refractionTargets.forEach(target => target.dispose());
+      heroRefraction.dispose(); physics.dispose(); geometry.dispose(); glasses.forEach(glass => glass.material.dispose()); environments.forEach(target => target.dispose());
       renderer.dispose(); renderer.forceContextLoss(); canvas.remove();
     };
   }, []);
@@ -219,8 +252,3 @@ export default function Sculpture() {
     {open && available && <GlassPanel selected={selected} onSelect={setSelected} settings={settings[selected]} onChange={value => setSettings(current => current.map((item, index) => index === selected ? value : item))} onClose={closePanel} onResetView={() => runtime.current?.resetView()} />}
   </>;
 }
-
-
-
-
-

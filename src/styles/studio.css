@@ -17,11 +17,12 @@ body { background: var(--paper); }
 .skip-link { position: fixed; top: -100px; left: 20px; background: var(--ink); color: white; padding: 14px; z-index: 100; }
 .skip-link:focus { top: 10px; }
 a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
-.hero-kicker { display: flex; align-items: center; gap: 9px; font-size: 11px; padding-top: 31px; }
+.hero { position: relative; isolation: isolate; }
+.hero-kicker { position: relative; z-index: 1; display: flex; align-items: center; gap: 9px; font-size: 11px; padding-top: 31px; }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 .hero-edition { margin-left: auto; letter-spacing: 1.5px; font-size: 10px; }
 .hero-composition { display: grid; grid-template-columns: 1.12fr 1fr; align-items: center; min-height: 610px; position: relative; }
-.hero-copy { position: relative; z-index: 2; padding: 58px 0 42px; }
+.hero-copy { position: relative; z-index: 1; padding: 58px 0 42px; }
 .eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 1.7px; line-height: 1.6; }
 .hero h1 { font-size: clamp(66px, 6.9vw, 110px); line-height: .99; font-weight: 500; letter-spacing: -.075em; margin: 25px -80px 25px 0; }
 .studio-home em, .studio-footer em, .work-index em { font-family: 'DM Serif Display', Georgia, serif; font-weight: 400; letter-spacing: -.045em; }
@@ -31,8 +32,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
 .pill-button span { font-size: 19px; }
 .pill-button:hover { background: var(--accent); transform: translateY(-3px); }
 .hero-art { height: 550px; position: relative; min-width: 0; }
-.sculpture-canvas { position: absolute; inset: 0 -30px; z-index: 1; }
-.sculpture-canvas canvas { position: relative; width: 100%; height: 100%; }
+.sculpture-canvas { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.sculpture-canvas canvas { position: relative; width: 100%; height: 100%; pointer-events: none; }
 .sculpture-fallback { position: absolute; width: 62%; aspect-ratio: 1; top: 18%; left: 19%; border: 60px solid #ed622f; border-radius: 42% 58% 58% 42%; transform: rotate(-30deg); box-shadow: inset 8px 8px 25px #8a300b, 8px 18px 25px #c9b9a4; }
 .sculpture-canvas:has(canvas) .sculpture-fallback { display: none; }
 .art-orbit { position: absolute; border: 1px solid #dbd9cc; border-radius: 50%; width: 94%; height: 70%; top: 14%; left: 3%; transform: rotate(-30deg); }
@@ -42,7 +43,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outlin
 .art-note em { font-size: 20px; }
 .art-cross { position: absolute; left: 5%; bottom: 60px; font-size: 30px; font-weight: 200; }
 .motion-toggle { position: absolute; left: 37%; bottom: 5px; z-index: 3; font: 9px 'Manrope', sans-serif; text-transform: uppercase; letter-spacing: 1px; padding: 12px; color: #66665b; cursor: pointer; }
-.hero-baseline { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding: 24px 0 29px; font-size: 10px; line-height: 1.8; }
+.hero-baseline { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding: 24px 0 29px; font-size: 10px; line-height: 1.8; }
 .hero-baseline strong { font-weight: 500; }
 .hero-baseline-center { letter-spacing: 1px; color: #77776c; font-size: 9px; }
 .scroll-link { display: flex; align-items: center; gap: 25px; font-size: 9px; letter-spacing: 1px; }
@@ -125,7 +126,7 @@ h2 { text-wrap: balance; }
 .glass-sculpture canvas:active { cursor: grabbing; }
 .glass-sculpture.glass-unavailable canvas { display: none; }
 .glass-sculpture.glass-unavailable .sculpture-fallback { display: block; }
-.sculpture-toolbar { position: absolute; z-index: 4; bottom: 3px; left: 8%; display: flex; gap: 12px; align-items: center; font-family: 'Manrope', Arial, sans-serif; }
+.sculpture-toolbar { position: absolute; z-index: 4; bottom: 105px; right: 6%; display: flex; gap: 12px; align-items: center; font-family: 'Manrope', Arial, sans-serif; }
 .sculpture-toolbar > span { font-size: 8px; letter-spacing: 1px; color: #69695e; }
 .sculpture-toolbar .motion-toggle { position: static; padding: 9px 5px; font-size: 9px; }
 .glass-edit { border: 1px solid #bab9ac; border-radius: 30px; padding: 8px 13px; font-size: 10px; background: #f5f3edee; cursor: pointer; }
@@ -179,3 +180,5 @@ h2 { text-wrap: balance; }
 @media (max-width: 700px) { .asterisk-tools button { padding: 6px 8px; font-size: 8px; } }
 .glass-material-note { font-size: 10px; line-height: 1.6; padding: 9px 11px; border-radius: 6px; background: #eee4d5; color: #704c32; }
 .art-coordinate, .art-cross { z-index: 2; pointer-events: none; }
+.hero.is-manipulating { cursor: grabbing; }
+@media (max-width: 700px) { .sculpture-toolbar { left: auto; right: 0; bottom: 85px; gap: 6px; } }

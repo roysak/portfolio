@@ -32,6 +32,10 @@ export function createAsteriskPhysics() {
   (world.solver as CANNON.GSSolver).iterations = 15;
   world.defaultContactMaterial.friction = 0.25;
   world.defaultContactMaterial.restitution = 0.35;
+  const attraction = new CANNON.Vec3(0, 0, 0);
+  const bounds = { x: 5, y: 3 };
+  let positioned = false;
+  const parked: (CANNON.Vec3 | null)[] = Array(6).fill(null);
   const bodies = Array.from({ length: 6 }, (_, index) => {
     const body = new CANNON.Body({ mass: 1, linearDamping: 0.65, angularDamping: 0.75 });
     // Keep the sculpture in a shallow display plane so pieces cannot hide in a stack.
@@ -64,14 +68,17 @@ export function createAsteriskPhysics() {
   };
   const moveGrab = (position: { x: number; y: number; z: number }, rotation: { x: number; y: number; z: number; w: number }) => {
     if (!grab) return;
-    grab.position.set(position.x, position.y, 0);
-    const distance = grab.position.length();
-    if (distance > 2.5) grab.position.scale(2.5 / distance, grab.position);
+    grab.position.set(
+      Math.max(-bounds.x, Math.min(bounds.x, position.x)),
+      Math.max(-bounds.y, Math.min(bounds.y, position.y)),
+      0,
+    );
     grab.rotation.set(rotation.x, rotation.y, rotation.z, rotation.w);
   };
   const endGrab = () => {
     if (grab) {
       const body = bodies[grab.index];
+      if (grab.mode === 'nudge') parked[grab.index] = new CANNON.Vec3(body.position.x, body.position.y, 0);
       body.angularFactor.set(0, 0, 1);
       body.angularVelocity.x = 0; body.angularVelocity.y = 0;
     }
@@ -80,9 +87,20 @@ export function createAsteriskPhysics() {
   const rotationError = new CANNON.Quaternion();
   const inverseRotation = new CANNON.Quaternion();
   world.addEventListener('preStep', () => {
-    for (const body of bodies) {
-      // A damped spring to the origin, with stronger depth restraint to keep all six readable.
-      body.force.set(-body.position.x * 2.5, -body.position.y * 2.5, -body.position.z * 16 - body.velocity.z * 2);
+    for (const [index, body] of bodies.entries()) {
+      // Released pieces keep their position; the other pieces still gather around the cluster.
+      const destination = parked[index] ?? attraction;
+      body.force.set((destination.x - body.position.x) * 2.5,
+        (destination.y - body.position.y) * 2.5, -body.position.z * 16 - body.velocity.z * 2);
+      const edge = 0.82;
+      if (body.position.x > bounds.x) body.force.x -= (body.position.x - bounds.x) * 30;
+      if (body.position.x < -bounds.x) body.force.x += (-bounds.x - body.position.x) * 30;
+      if (body.position.y > bounds.y) body.force.y -= (body.position.y - bounds.y) * 30;
+      if (body.position.y < -bounds.y) body.force.y += (-bounds.y - body.position.y) * 30;
+      if (body.position.x > bounds.x + edge) body.velocity.x = Math.min(0, body.velocity.x);
+      if (body.position.x < -bounds.x - edge) body.velocity.x = Math.max(0, body.velocity.x);
+      if (body.position.y > bounds.y + edge) body.velocity.y = Math.min(0, body.velocity.y);
+      if (body.position.y < -bounds.y - edge) body.velocity.y = Math.max(0, body.velocity.y);
     }
     if (grab) {
       const body = bodies[grab.index];
@@ -102,6 +120,7 @@ export function createAsteriskPhysics() {
     }
   });
   const scatter = () => bodies.forEach((body, index) => {
+    parked[index] = null;
     const angle = index * Math.PI / 3 + world.time;
     const direction = body.position.clone();
     if (direction.length() < 0.1) direction.set(Math.cos(angle), Math.sin(angle), 0);
@@ -109,5 +128,20 @@ export function createAsteriskPhysics() {
     body.applyImpulse(direction);
     body.angularVelocity.set(0, 0, index % 2 ? -1.5 : 1.5);
   });
-  return { world, bodies, scatter, beginGrab, moveGrab, endGrab, dispose: () => { endGrab(); bodies.forEach(body => world.removeBody(body)); } };
+  const setViewport = (halfWidth: number, halfHeight: number) => {
+    const previousX = attraction.x;
+    const previousY = attraction.y;
+    bounds.x = Math.max(0.1, halfWidth - 0.75);
+    bounds.y = Math.max(0.1, halfHeight - 0.75);
+    const compact = halfWidth / halfHeight < 0.7;
+    attraction.x = compact ? 0 : bounds.x * 0.48;
+    attraction.y = compact ? -Math.min(bounds.y * 0.4, 2.25) : 0;
+    bodies.forEach((body, index) => {
+      if (positioned && parked[index]) return;
+      body.position.x += attraction.x - previousX;
+      body.position.y += attraction.y - previousY;
+    });
+    positioned = true;
+  };
+  return { world, bodies, scatter, beginGrab, moveGrab, endGrab, setViewport, dispose: () => { endGrab(); bodies.forEach(body => world.removeBody(body)); } };
 }
