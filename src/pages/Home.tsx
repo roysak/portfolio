@@ -286,7 +286,7 @@ export default function Home() {
             to="/works/applications"
             title="Applications"
             text="Side projects and applications I've built."
-            foot="4 builds"
+            foot="6 builds"
           >
             <img
               src={assetUrl("/img/works/app-01.png")}
