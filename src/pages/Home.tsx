@@ -62,7 +62,7 @@ function Hero() {
   const { mode } = useMode();
 
   return (
-    <section className="relative min-h-[92svh] flex flex-col justify-end overflow-hidden border-b border-line px-gutter pt-10 pb-10 sm:pt-20 md:pt-20">
+    <section className="relative min-h-[92svh] flex flex-col justify-center overflow-hidden border-b border-line px-gutter pt-10 pb-10 sm:pt-20 md:pt-20">
       <Suspense fallback={<div className="h-[360px]" aria-label="Loading material playground" />}>
         <MaterialPlayground />
       </Suspense>
