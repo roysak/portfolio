@@ -27,8 +27,7 @@
 .material-playground__tools button { padding: 5px 9px; min-height: 28px; font-size: 10px; border-color: transparent; }
 @media (max-width: 600px) {
   .material-playground__canvas { height: 320px; }
-  .material-playground__inspector,
-  .material-playground__tools button[aria-controls="material-inspector"] { display: none; }
+  .material-playground__inspector { display: none; }
 }
 @media (pointer: coarse) {
   .material-playground__tools button { min-height: 36px; }

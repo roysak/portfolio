@@ -49,7 +49,7 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
   const canvas = renderer.domElement;
-  canvas.setAttribute('aria-label', 'Interactive 3D shapes. Click a shape to edit its material, or use the Materials button. Drag a shape to move it.');
+  canvas.setAttribute('aria-label', 'Interactive 3D shapes. Ctrl + click a shape to edit its material on desktop. Drag a shape to move it.');
   host.appendChild(canvas);
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
@@ -145,7 +145,7 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
     active = null;
     if (canvas.hasPointerCapture(id)) canvas.releasePointerCapture(id);
     canvas.style.cursor = 'grab';
-    if (clicked) {
+    if (clicked && event?.ctrlKey && !matchMedia('(max-width: 600px)').matches) {
       selected = index;
       onSelect(index);
     }

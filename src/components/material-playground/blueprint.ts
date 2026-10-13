@@ -59,7 +59,7 @@ export function createBlueprint(scene: THREE.Scene) {
     const dark = document.documentElement.dataset.mode === 'code';
     uniforms.paper.value.set(tokens.getPropertyValue('--ink').trim() || '#eef0ef');
     uniforms.ink.value.set(tokens.getPropertyValue(dark ? '--plum' : '--bone-2').trim() || '#5b5248');
-    uniforms.contrast.value = dark ? 0.16 : 0.62;
+    uniforms.contrast.value = dark ? 0.2 : 0.5;
   };
   const observer = new MutationObserver(syncTheme);
   observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-mode'] });

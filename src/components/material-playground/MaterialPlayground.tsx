@@ -81,13 +81,12 @@ export default function MaterialPlayground() {
           {(['move', 'rotate', 'depth'] as const).map(value => <button key={value} type="button" aria-pressed={tool === value} onClick={() => setTool(value)}>{value === 'move' ? 'Move' : value === 'rotate' ? 'Rotate' : 'Depth'}</button>)}
           <button type="button" aria-pressed={spinning} onClick={() => setSpinning(!spinning)}>{spinning ? 'Pause' : 'Play'}</button>
           <button type="button" onClick={() => { api.current?.reset(); setMaterials(initialMaterials(presets)); }}>Reset</button>
-          <button type="button" aria-expanded={selected !== null} aria-controls="material-inspector" onClick={() => setSelected(selected === null ? 0 : null)}>Materials</button>
         </div>
-        <div ref={host} className="material-playground__canvas" />
+        <div ref={host} className="material-playground__canvas" tabIndex={-1} />
         {status !== 'ready' && <div className="material-playground__status" role="status">
           {status === 'loading' ? 'Preparing the material studio…' : <><p>The 3D studio needs WebGL to run.</p><button type="button" onClick={() => { setStatus('loading'); setAttempt(a => a + 1); }}>Try again</button></>}
         </div>}
-      {current && selected !== null && createPortal(<div id="material-inspector" className="material-playground material-playground__inspector" role="region" onKeyDown={event => { if (event.key === 'Escape') { setSelected(null); host.current?.parentElement?.querySelector<HTMLButtonElement>('[aria-controls="material-inspector"]')?.focus(); } }} aria-label={`${shapeNames[selected]} material settings`}>
+      {current && selected !== null && createPortal(<div id="material-inspector" className="material-playground material-playground__inspector" role="region" onKeyDown={event => { if (event.key === 'Escape') { setSelected(null); host.current?.focus(); } }} aria-label={`${shapeNames[selected]} material settings`}>
         <div className="material-playground__inspector-heading"><div><span className="label">Material editor</span><h2>{shapeNames[selected]}</h2></div><button type="button" onClick={() => setSelected(null)} aria-label="Close material editor">Close ×</button></div>
       <div className="material-playground__objects" aria-label="Select an object to edit">
         {shapeNames.map((name, i) => <button key={name} type="button" aria-pressed={selected === i} aria-controls="material-inspector" onClick={() => setSelected(i)} onKeyDown={event => {
