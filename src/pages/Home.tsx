@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { assetUrl } from "../utils/assetUrl";
 import caseStudies from "../data/caseStudies";
 import DualField from "../components/bgfx/DualField";
+import { lazy, Suspense } from "react";
 import Button, { ArrowIcon, ArrowBadge } from "../components/Button";
 import SectionHead from "../components/SectionHead";
 import Marquee from "../components/Marquee";
@@ -9,6 +10,8 @@ import { HoverPeekProvider } from "../components/HoverPeek";
 import { usePeek } from "../components/peekContext";
 import { useReveal } from "../hooks/useReveal";
 import { useMode } from "../theme/modeContext";
+
+const MaterialPlayground = lazy(() => import("../components/material-playground/MaterialPlayground"));
 
 const capabilities = [
   "User experience",
@@ -55,38 +58,14 @@ const disciplines = [
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 
-function RegMark({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 40 40"
-      className={`absolute w-6 h-6 text-line-strong pointer-events-none ${className}`}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1"
-      aria-hidden="true"
-    >
-      <circle cx="20" cy="20" r="9" />
-      <path d="M20 0v14M20 26v14M0 20h14M26 20h14" />
-    </svg>
-  );
-}
-
 function Hero() {
   const { mode } = useMode();
 
   return (
     <section className="relative min-h-[92svh] flex flex-col justify-end overflow-hidden border-b border-line px-gutter pt-32 pb-10">
-      <div className="absolute inset-0" aria-hidden="true">
-        <DualField density={500} />
-      </div>
-      {/* Scrim: the field breathes through the upper half, the type sits on solid ground */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,var(--ink)_0%,transparent_12%,transparent_22%,var(--ink)_68%)]"
-      />
-
-      <RegMark className="hidden sm:block left-4 top-24" />
-      <RegMark className="hidden sm:block right-4 top-24" />
+      <Suspense fallback={<div className="h-[360px]" aria-label="Loading material playground" />}>
+        <MaterialPlayground />
+      </Suspense>
 
       <div className="relative grid gap-8">
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
