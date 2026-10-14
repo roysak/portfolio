@@ -44,6 +44,9 @@
   --shadow: 0 24px 60px -24px rgba(25, 21, 18, 0.28);
   --shadow-sm: 0 2px 14px -6px rgba(25, 21, 18, 0.24);
 
+  --ceramic: #5c1725;
+  --wax: #c28324;
+
   /* Type — an editorial serif leads, the grotesk supports */
   --display-family: "Instrument Serif", "Iowan Old Style", Georgia, serif;
   --display-weight: 400;
@@ -87,7 +90,10 @@
 
   --shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
   --shadow-sm: 0 2px 18px -6px rgba(0, 0, 0, 0.6);
-
+  
+  --ceramic: #5d7a1a;
+  --wax: #cb882a;
+  
   /* Type — an engineered grotesk leads, the mono supports */
   --display-family: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
   --display-weight: 700;

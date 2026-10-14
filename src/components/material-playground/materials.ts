@@ -18,11 +18,11 @@ const base: MaterialSettings = {
   transmission: 0, frost: 0, subsurface: 0, thickness: 1.2, ior: 1.5, clearcoat: 0.35,
 };
 export const presets: Record<string, MaterialSettings> = {
-  Ceramic: { ...base },
+  Ceramic: { ...base, color: '#5c1725' },
   Chrome: { ...base, color: '#8f8578', roughness: 0.16, metalness: 1, clearcoat: 0.6 },
   Glass: { ...base, color: '#e7e1e9', roughness: 0.03, transmission: 1, clearcoat: 1 },
   Frosted: { ...base, color: '#6d4778', roughness: 0.08, transmission: 0.95, frost: 0.65 },
-  Wax: { ...base, color: '#b7811a', roughness: 0.45, subsurface: 0.85, clearcoat: 0.1 },
+  Wax: { ...base, color: '#cb882a', roughness: 0.45, subsurface: 0.85, clearcoat: 0.1 },
 };
 export function getThemePresets(): Record<string, MaterialSettings> {
   if (typeof document === 'undefined') return presets;
@@ -30,11 +30,11 @@ export function getThemePresets(): Record<string, MaterialSettings> {
   const read = (token: string, fallback: string) => tokens.getPropertyValue(token).trim() || fallback;
   const plum = read('--plum', presets.Frosted.color);
   const colors: Record<string, string> = {
-    Ceramic: read('--pigment', presets.Ceramic.color),
+    Ceramic: read('--ceramic', presets.Ceramic.color),
     Chrome: read('--bone-3', presets.Chrome.color),
     Glass: `#${new THREE.Color(plum).lerp(new THREE.Color('#ffffff'), 0.7).getHexString()}`,
     Frosted: plum,
-    Wax: read('--ochre', presets.Wax.color),
+    Wax: read('--wax', presets.Wax.color),
   };
   return Object.fromEntries(Object.entries(presets).map(([name, settings]) => [name, { ...settings, color: colors[name] }]));
 }
