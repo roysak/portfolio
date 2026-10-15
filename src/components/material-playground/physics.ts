@@ -5,7 +5,8 @@ export function createPhysics() {
   world.defaultContactMaterial.friction = 0.16;
   world.defaultContactMaterial.restitution = 0.45;
   const objects = Array.from({ length: 4 }, (_, i) => {
-    const home = new CANNON.Vec3((i - 1.5) * 2.85, 0, 0);
+    // Bring the glass sphere forward toward the camera on the positive Z axis.
+    const home = new CANNON.Vec3((i - 1.5) * 2.85, 0, i === 1 ? 0.6 : 0);
     const body = new CANNON.Body({ mass: 1, position: home.clone(), linearDamping: 0.65, angularDamping: 0.8 });
     if (i === 2) body.addShape(new CANNON.Cylinder(0.01, 0.78, 1.8, 24));
     if (i === 0) body.addShape(new CANNON.Box(new CANNON.Vec3(0.75, 0.75, 0.5)));
