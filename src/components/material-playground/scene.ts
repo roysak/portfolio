@@ -81,9 +81,10 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
 
 
   let selected = -1;
-  let spinning = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let playing = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let manualPhysics = false;
   const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
-  const motionChange = () => { spinning = !motionQuery.matches; };
+  const motionChange = () => setPlaying(!motionQuery.matches);
   motionQuery.addEventListener('change', motionChange);
   let active: { index: number; pointer: number; x: number; y: number; startX: number; startY: number; dragged: boolean; startZ: number; offset: THREE.Vector3 } | null = null;
   const target = new THREE.Vector3();
@@ -123,7 +124,10 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
     active.dragged ||= Math.hypot(event.clientX - active.startX, event.clientY - active.startY) > 5;
     if (!active.dragged) return;
     const body = objects[active.index].body;
-    body.angularVelocity.set((event.clientY - active.y) * 0.12, (event.clientX - active.x) * 0.12, 0);
+    const dx = event.clientX - active.x;
+    const dy = event.clientY - active.y;
+    manualPhysics = true;
+    body.angularVelocity.set(dy * 0.12, dx * 0.12, 0);
     active.x = event.clientX;
     active.y = event.clientY;
     target.copy(intersection).add(active.offset);
@@ -177,18 +181,19 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
     const elapsed = Math.min((now - previous) / 1000, 0.05);
     previous = now;
     if (!visible || document.hidden) return;
-    accumulator += elapsed;
-    while (accumulator >= step) {
+    // Manual input enables collisions and momentum without restarting idle motion.
+    if (playing || manualPhysics) accumulator += elapsed;
+    while ((playing || manualPhysics) && accumulator >= step) {
       for (const [index, object] of objects.entries()) {
         const { body, home } = object;
         const dragging = active?.index === index && active.dragged;
         const anchor = dragging ? target : home;
-        const stiffness = dragging ? 65 : 1.8;
+        const stiffness = dragging ? 65 : playing ? 1.8 : 0;
         body.applyForce(new CANNON.Vec3((anchor.x - body.position.x) * stiffness - body.velocity.x * 5,
           (anchor.y - body.position.y) * stiffness - body.velocity.y * 5,
           (anchor.z - body.position.z) * stiffness - body.velocity.z * 5));
         // Idle torque is suspended for the selected object so material inspection stays steady.
-        if (spinning && index !== selected && active?.index !== index) {
+        if (playing && index !== selected && active?.index !== index) {
           body.torque.y += 0.065;
           body.torque.x += 0.025;
         }
@@ -205,12 +210,26 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
     renderer.render(scene, camera);
   }
   raf = requestAnimationFrame(animate);
+  function setPlaying(value: boolean) {
+    playing = value;
+    manualPhysics = false;
+    if (!playing) {
+      objects.forEach(({ body }) => {
+        body.velocity.setZero(); body.angularVelocity.setZero();
+        body.force.setZero(); body.torque.setZero();
+      });
+    }
+    accumulator = 0;
+    previous = performance.now();
+    up();
+  }
   return {
     setMaterials(settings: MaterialSettings[]) { objects.forEach((o, i) => updateMaterial(o.material, settings[i])); },
     select(index: number) { selected = index; },
-    setSpinning(value: boolean) { spinning = value; },
+    setPlaying,
     nudge(index: number, x: number, y: number) {
       const body = objects[index].body;
+      manualPhysics = true;
       body.angularVelocity.set(-y * 2, x * 2, 0);
       body.applyImpulse(new CANNON.Vec3(x * 1.5, y * 1.5, y * 1.5));
     },

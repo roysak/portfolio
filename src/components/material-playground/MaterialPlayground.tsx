@@ -22,7 +22,7 @@ export default function MaterialPlayground() {
   const [presets, setPresets] = useState(getThemePresets);
   const [materials, setMaterials] = useState(() => initialMaterials(getThemePresets()));
   const [selected, setSelected] = useState<number | null>(null);
-  const [spinning, setSpinning] = useState(() => !matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const [playing, setPlaying] = useState(() => !matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
@@ -61,10 +61,10 @@ export default function MaterialPlayground() {
   }, [attempt]);
   useEffect(() => { if (status === 'ready') api.current?.setMaterials(materials); }, [materials, status]);
   useEffect(() => { if (status === 'ready') api.current?.select(selected ?? -1); }, [selected, status]);
-  useEffect(() => { if (status === 'ready') api.current?.setSpinning(spinning); }, [spinning, status]);
+  useEffect(() => { if (status === 'ready') api.current?.setPlaying(playing); }, [playing, status]);
   useEffect(() => {
     const query = matchMedia('(prefers-reduced-motion: reduce)');
-    const change = () => setSpinning(!query.matches);
+    const change = () => setPlaying(!query.matches);
     query.addEventListener('change', change);
     return () => query.removeEventListener('change', change);
   }, []);
@@ -76,7 +76,7 @@ export default function MaterialPlayground() {
     <section className="material-playground" aria-label="3D material playground">
       <div className="material-playground__stage">
         <div className="material-playground__tools" aria-label="Scene controls">
-          <button type="button" aria-pressed={spinning} onClick={() => setSpinning(!spinning)}>{spinning ? 'Pause' : 'Play'}</button>
+          <button type="button" aria-pressed={playing} onClick={() => setPlaying(!playing)}>{playing ? 'Pause' : 'Play'}</button>
           <button type="button" onClick={() => { api.current?.reset(); setMaterials(initialMaterials(presets)); }}>Reset</button>
         </div>
         <div ref={host} className="material-playground__canvas" tabIndex={-1} />
