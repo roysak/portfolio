@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
 import { createPhysics } from './physics';
 import { createBlueprint } from './blueprint';
+import { createTransmissionRenderer } from './transmission';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { createMaterial, updateMaterial, type MaterialSettings } from './materials';
@@ -80,6 +81,7 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
   });
 
 
+  const transmissionRenderer = createTransmissionRenderer(renderer, objects);
   let selected = -1;
   let playing = !matchMedia('(prefers-reduced-motion: reduce)').matches;
   let manualPhysics = false;
@@ -207,7 +209,7 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
       mesh.position.copy(body.position);
       mesh.quaternion.copy(body.quaternion);
     });
-    renderer.render(scene, camera);
+    transmissionRenderer.render(scene, camera);
   }
   raf = requestAnimationFrame(animate);
   function setPlaying(value: boolean) {
@@ -253,6 +255,7 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
       canvas.removeEventListener('lostpointercapture', up); canvas.removeEventListener('webglcontextlost', contextLost);
       objects.forEach(o => { o.mesh.geometry.dispose(); o.material.dispose(); });
       blueprint.dispose();
+      transmissionRenderer.dispose();
       environmentTarget.dispose(); renderer.dispose(); renderer.forceContextLoss(); canvas.remove();
     },
   };

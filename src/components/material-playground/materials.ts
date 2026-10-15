@@ -21,7 +21,7 @@ export const presets: Record<string, MaterialSettings> = {
   Ceramic: { ...base, color: '#5c1725' },
   Chrome: { ...base, color: '#8f8578', roughness: 0.16, metalness: 1, clearcoat: 0.6 },
   Glass: { ...base, color: '#e7e1e9', roughness: 0.03, transmission: 1, clearcoat: 1 },
-  Frosted: { ...base, color: '#6d4778', roughness: 0.08, transmission: 0.95, frost: 0.65 },
+  Frosted: { ...base, color: '#ff990a', roughness: 0.08, transmission: 0.95, frost: 0.65, subsurface: 0.75, specular: 0.14, ior: 1.50, clearcoat: 0.0 },
   Wax: { ...base, color: '#cb882a', roughness: 0.45, subsurface: 0.85, clearcoat: 0.1 },
 };
 export function getThemePresets(): Record<string, MaterialSettings> {
@@ -33,17 +33,22 @@ export function getThemePresets(): Record<string, MaterialSettings> {
     Ceramic: read('--ceramic', presets.Ceramic.color),
     Chrome: read('--bone-3', presets.Chrome.color),
     Glass: `#${new THREE.Color(plum).lerp(new THREE.Color('#ffffff'), 0.7).getHexString()}`,
-    Frosted: plum,
+    Frosted: read('--frosted', presets.Frosted.color),
     Wax: read('--wax', presets.Wax.color),
   };
   return Object.fromEntries(Object.entries(presets).map(([name, settings]) => [name, { ...settings, color: colors[name] }]));
 }
 export const shapeNames = ['Square', 'Sphere', 'Cone', 'Asterisk'];
-export const initialMaterials = (palette = presets) => [palette.Chrome, palette.Glass, palette.Ceramic, palette.Wax].map(p => ({ ...p }));
+export const initialMaterials = (palette = presets) => [palette.Chrome, palette.Glass, palette.Ceramic, palette.Frosted].map(p => ({ ...p }));
 
 export function createMaterial() {
   const material = new THREE.MeshPhysicalMaterial();
-  const uniforms = { uSubsurface: { value: 0 }, uFrost: { value: 0 } };
+  const uniforms = {
+    uSubsurface: { value: 0 }, uFrost: { value: 0 },
+    uLayeredTransmission: { value: false },
+    uTransmissionScene: { value: null as THREE.Texture | null },
+    uTransmissionSize: { value: new THREE.Vector2(1, 1) },
+  };
   material.userData.playgroundUniforms = uniforms;
   // A view/light-dependent thin scattering approximation, plus procedural microtexture.
   // This is an artistic real-time SSS approximation, not volumetric path tracing.
@@ -55,6 +60,14 @@ export function createMaterial() {
       uniform float uSubsurface;
       uniform float uFrost;
       varying vec3 vSurfacePosition;
+    `).replace('#include <transmission_pars_fragment>', `
+      uniform bool uLayeredTransmission;
+      uniform sampler2D uTransmissionScene;
+      uniform vec2 uTransmissionSize;
+      ${THREE.ShaderChunk.transmission_pars_fragment
+        .replace('log2( transmissionSamplerSize.x )', 'log2( uLayeredTransmission ? uTransmissionSize.x : transmissionSamplerSize.x )')
+        .replace('return textureBicubic( transmissionSamplerMap, fragCoord.xy, lod );',
+          'if ( uLayeredTransmission ) return textureBicubic( uTransmissionScene, fragCoord.xy, lod );\nreturn textureBicubic( transmissionSamplerMap, fragCoord.xy, lod );')}
     `).replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
       vec3 grain = sin(vSurfacePosition.yzx * 185.0) * cos(vSurfacePosition.zxy * 153.0);
       normal = normalize(normal + grain * uFrost * 0.075);
@@ -65,7 +78,7 @@ export function createMaterial() {
       #include <opaque_fragment>
     `);
   };
-  material.customProgramCacheKey = () => 'material-playground-v1';
+  material.customProgramCacheKey = () => 'material-playground-v2';
   return material;
 }
 

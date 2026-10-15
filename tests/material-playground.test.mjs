@@ -71,3 +71,54 @@ test('material edits do not leak into another object or reset defaults', () => {
   const axis = cone.quaternion.vmult({ x: 0, y: 1, z: 0 });
   assert.ok(axis.y < -0.9);
 });
+
+ test('glass captures include resolved rear glass even at tiny transmission', async () => {
+  const THREE = await import('three');
+  const { createTransmissionRenderer } = await import('../src/components/material-playground/transmission.ts');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera();
+  camera.position.z = 10;
+  const objects = [2, -2, 0].map(z => {
+    const material = createMaterial();
+    updateMaterial(material, { ...presets.Glass, transmission: z === -2 ? 0.001 : 1 });
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(), material);
+    mesh.position.z = z;
+    scene.add(mesh);
+    return { mesh, material };
+  });
+  const frames = [];
+  let target = null;
+  const renderer = {
+    toneMapping: THREE.ACESFilmicToneMapping,
+    extensions: { has: () => true },
+    getDrawingBufferSize: size => size.set(800, 600),
+    getRenderTarget: () => target,
+    setRenderTarget: value => { target = value; },
+    render: () => {
+      const visible = objects.filter(o => o.mesh.visible);
+      for (const { material } of visible) {
+        const uniforms = material.userData.playgroundUniforms;
+        if (uniforms.uLayeredTransmission.value) {
+          assert.notEqual(uniforms.uTransmissionScene.value, target?.texture, 'must not sample the active render target');
+        }
+      }
+      frames.push(visible.map(o => o.mesh.position.z));
+    },
+  };
+  const pipeline = createTransmissionRenderer(renderer, objects);
+  pipeline.render(scene, camera);
+  assert.deepEqual(frames, [[], [-2], [-2, 0], [2, -2, 0]]);
+  assert.equal(target, null);
+  assert.equal(renderer.toneMapping, THREE.ACESFilmicToneMapping);
+  objects[0].mesh.position.z = -4;
+  frames.length = 0;
+  pipeline.render(scene, camera);
+  assert.deepEqual(frames, [[], [-4], [-4, -2], [-4, -2, 0]]);
+  objects.slice(1).forEach(o => updateMaterial(o.material, presets.Ceramic));
+  frames.length = 0;
+  pipeline.render(scene, camera);
+  assert.equal(frames.length, 1, 'single glass uses the native pass');
+  assert.ok(objects.every(o => !o.material.userData.playgroundUniforms.uLayeredTransmission.value));
+  pipeline.dispose();
+  objects.forEach(o => { o.mesh.geometry.dispose(); o.material.dispose(); });
+});
