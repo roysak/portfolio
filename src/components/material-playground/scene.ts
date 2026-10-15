@@ -49,7 +49,7 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
   const canvas = renderer.domElement;
-  canvas.setAttribute('aria-label', 'Interactive 3D shapes. Ctrl + click a shape to edit its material on desktop. Drag a shape to move it.');
+  canvas.setAttribute('aria-label', 'Interactive 3D shapes. Ctrl + click a shape to edit its material on desktop. Drag to move and rotate together; drag up to bring closer, down to push away.');
   host.appendChild(canvas);
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
@@ -81,12 +81,11 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
 
 
   let selected = -1;
-  let tool: 'move' | 'rotate' | 'depth' = 'move';
   let spinning = !matchMedia('(prefers-reduced-motion: reduce)').matches;
   const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
   const motionChange = () => { spinning = !motionQuery.matches; };
   motionQuery.addEventListener('change', motionChange);
-  let active: { index: number; pointer: number; x: number; y: number; startX: number; startY: number; dragged: boolean; depth: boolean; startZ: number; rotate: boolean; offset: THREE.Vector3 } | null = null;
+  let active: { index: number; pointer: number; x: number; y: number; startX: number; startY: number; dragged: boolean; startZ: number; offset: THREE.Vector3 } | null = null;
   const target = new THREE.Vector3();
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
@@ -109,7 +108,7 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
     dragPlane.constant = -body.position.z;
     project(event);
     target.copy(body.position);
-    active = { index, pointer: event.pointerId, x: event.clientX, y: event.clientY, startX: event.clientX, startY: event.clientY, dragged: false, depth: tool === 'depth' || event.altKey, startZ: body.position.z, rotate: tool === 'rotate' || event.shiftKey, offset: target.clone().sub(intersection) };
+    active = { index, pointer: event.pointerId, x: event.clientX, y: event.clientY, startX: event.clientX, startY: event.clientY, dragged: false, startZ: body.position.z, offset: target.clone().sub(intersection) };
     canvas.setPointerCapture(event.pointerId);
     canvas.style.cursor = 'grabbing';
   };
@@ -123,18 +122,14 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
     // Remember the whole gesture, including a drag that returns to its starting point.
     active.dragged ||= Math.hypot(event.clientX - active.startX, event.clientY - active.startY) > 5;
     if (!active.dragged) return;
-    if (active.rotate) {
-      const body = objects[active.index].body;
-      body.angularVelocity.set((event.clientY - active.y) * 0.12, (event.clientX - active.x) * 0.12, 0);
-      active.x = event.clientX;
-      active.y = event.clientY;
-    } else if (active.depth) {
-      target.z = THREE.MathUtils.clamp(active.startZ + (active.startY - event.clientY) * 0.015, -1.1, 1.1);
-    } else {
-      target.copy(intersection).add(active.offset);
-      target.x = THREE.MathUtils.clamp(target.x, -5.65, 5.65);
-      target.y = THREE.MathUtils.clamp(target.y, -0.85, 0.85);
-    }
+    const body = objects[active.index].body;
+    body.angularVelocity.set((event.clientY - active.y) * 0.12, (event.clientX - active.x) * 0.12, 0);
+    active.x = event.clientX;
+    active.y = event.clientY;
+    target.copy(intersection).add(active.offset);
+    target.x = THREE.MathUtils.clamp(target.x, -5.65, 5.65);
+    target.y = THREE.MathUtils.clamp(target.y, -0.85, 0.85);
+    target.z = THREE.MathUtils.clamp(active.startZ + (active.startY - event.clientY) * 0.015, -1.1, 1.1);
   };
   const up = (event?: PointerEvent) => {
     if (!active || (event && event.pointerId !== active.pointer)) return;
@@ -186,7 +181,7 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
     while (accumulator >= step) {
       for (const [index, object] of objects.entries()) {
         const { body, home } = object;
-        const dragging = active?.index === index && active.dragged && !active.rotate;
+        const dragging = active?.index === index && active.dragged;
         const anchor = dragging ? target : home;
         const stiffness = dragging ? 65 : 1.8;
         body.applyForce(new CANNON.Vec3((anchor.x - body.position.x) * stiffness - body.velocity.x * 5,
@@ -213,12 +208,11 @@ export function createPlayground(host: HTMLDivElement, onSelect: (index: number)
   return {
     setMaterials(settings: MaterialSettings[]) { objects.forEach((o, i) => updateMaterial(o.material, settings[i])); },
     select(index: number) { selected = index; },
-    setTool(value: 'move' | 'rotate' | 'depth') { tool = value; },
     setSpinning(value: boolean) { spinning = value; },
-    nudge(index: number, x: number, y: number, rotate: boolean, z = 0) {
+    nudge(index: number, x: number, y: number) {
       const body = objects[index].body;
-      if (rotate) body.angularVelocity.set(y * 2, x * 2, 0);
-      else body.applyImpulse(new CANNON.Vec3(x * 1.5, y * 1.5, z * 1.5));
+      body.angularVelocity.set(-y * 2, x * 2, 0);
+      body.applyImpulse(new CANNON.Vec3(x * 1.5, y * 1.5, y * 1.5));
     },
     reset() {
       up();
