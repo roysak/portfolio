@@ -4,7 +4,9 @@ import { initialMaterials, getThemePresets, shapeNames, type MaterialSettings } 
 import { createPlayground } from './scene';
 import './material-playground.css';
 
-const controls: { key: Exclude<keyof MaterialSettings, 'color'>; label: string; min?: number; max?: number }[] = [
+const controls: { key: Exclude<keyof MaterialSettings, 'color' | 'emissionColor'>; label: string; min?: number; max?: number }[] = [
+  { key: 'emission', label: 'Emission', max: 5 },
+  { key: 'reflection', label: 'Reflection', max: 3 },
   { key: 'roughness', label: 'Roughness' },
   { key: 'metalness', label: 'Metalness' },
   { key: 'specular', label: 'Specular intensity' },
@@ -95,6 +97,7 @@ export default function MaterialPlayground() {
         <div className="material-playground__presets" aria-label="Material presets">{Object.entries(presets).map(([name, value]) => <button type="button" key={name} onClick={() => patchMaterial(value)}>{name}</button>)}</div>
         <div className="material-playground__parameters">
           <label className="material-playground__color"><span>Base color <output>{current.color.toUpperCase()}</output></span><input aria-label="Base color" type="color" value={current.color} onChange={e => patchMaterial({ color: e.target.value })} /></label>
+          <label className="material-playground__color"><span>Emission color <output>{current.emissionColor.toUpperCase()}</output></span><input aria-label="Emission color" type="color" value={current.emissionColor} onChange={e => patchMaterial({ emissionColor: e.target.value })} /></label>
           {controls.map(({ key, label, min = 0, max = 1 }) => <label key={key}><span>{label}<output>{current[key].toFixed(2)}</output></span><input type="range" min={min} max={max} step="0.01" value={current[key]} onChange={e => patchMaterial({ [key]: Number(e.target.value) })} /></label>)}
         </div>
         <p className="material-playground__hint">Drag to move and rotate together. Drag up to also bring a shape closer, down to push it away. Arrow keys on a shape do the same. Each shape keeps its own material. Scattering is a real-time shader approximation; frost adds roughness and surface grain. Metalness reduces the visible glass effect.</p>

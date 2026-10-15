@@ -2,6 +2,9 @@ import * as THREE from 'three';
 
 export interface MaterialSettings {
   color: string;
+  emissionColor: string;
+  emission: number;
+  reflection: number;
   roughness: number;
   metalness: number;
   specular: number;
@@ -14,14 +17,15 @@ export interface MaterialSettings {
 }
 
 const base: MaterialSettings = {
-  color: '#a3243d', roughness: 0.28, metalness: 0, specular: 0.8,
+  color: '#a3243d', emissionColor: '#ffffff', emission: 0, reflection: 1.3,
+  roughness: 0.28, metalness: 0, specular: 0.8,
   transmission: 0, frost: 0, subsurface: 0, thickness: 1.2, ior: 1.5, clearcoat: 0.35,
 };
 export const presets: Record<string, MaterialSettings> = {
   Ceramic: { ...base, color: '#5c1725' },
-  Chrome: { ...base, color: '#8f8578', roughness: 0.16, metalness: 1, clearcoat: 0.6 },
+  Chrome: { ...base, color: '#8f8578', roughness: 0.16, metalness: 1, clearcoat: 0.6, ior: 1.16 },
   Glass: { ...base, color: '#e7e1e9', roughness: 0.03, transmission: 1, clearcoat: 1 },
-  Frosted: { ...base, color: '#ff990a', roughness: 0.08, transmission: 0.95, frost: 0.65, subsurface: 0.75, specular: 0.14, ior: 1.50, clearcoat: 0.0 },
+  Frosted: { ...base, color: '#ff990a', emissionColor: '#f2392c', emission: 0.24, roughness: 0.08, transmission: 0.95, frost: 0.5, subsurface: 0.75, specular: 0.14, clearcoat: 0.0 },
   Wax: { ...base, color: '#cb882a', roughness: 0.45, subsurface: 0.85, clearcoat: 0.1 },
 };
 export function getThemePresets(): Record<string, MaterialSettings> {
@@ -32,7 +36,7 @@ export function getThemePresets(): Record<string, MaterialSettings> {
   const colors: Record<string, string> = {
     Ceramic: read('--ceramic', presets.Ceramic.color),
     Chrome: read('--bone-3', presets.Chrome.color),
-    Glass: `#${new THREE.Color(plum).lerp(new THREE.Color('#ffffff'), 0.7).getHexString()}`,
+    Glass: `#${new THREE.Color(plum).lerp(new THREE.Color('#ffffff'), 1).getHexString()}`,
     Frosted: read('--frosted', presets.Frosted.color),
     Wax: read('--wax', presets.Wax.color),
   };
@@ -86,6 +90,8 @@ export function updateMaterial(material: THREE.MeshPhysicalMaterial, settings: M
   const recompile = (material.transmission > 0) !== (settings.transmission > 0)
     || (material.clearcoat > 0) !== (settings.clearcoat > 0);
   material.color.set(settings.color);
+  material.emissive.set(settings.emissionColor);
+  material.emissiveIntensity = settings.emission;
   material.roughness = Math.min(1, settings.roughness + settings.frost * 0.65);
   material.metalness = settings.metalness;
   material.specularIntensity = settings.specular;
@@ -96,7 +102,7 @@ export function updateMaterial(material: THREE.MeshPhysicalMaterial, settings: M
   material.clearcoatRoughness = settings.frost * 0.5;
   material.attenuationColor.set(settings.color);
   material.attenuationDistance = 4;
-  material.envMapIntensity = 1.3;
+  material.envMapIntensity = settings.reflection;
   material.userData.playgroundUniforms.uSubsurface.value = settings.subsurface;
   material.userData.playgroundUniforms.uFrost.value = settings.frost;
   if (recompile) material.needsUpdate = true;

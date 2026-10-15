@@ -62,6 +62,23 @@ test('material edits do not leak into another object or reset defaults', () => {
   first.dispose(); second.dispose();
 });
 
+test('emission and reflection controls update only their material and reset with presets', () => {
+  const first = createMaterial();
+  const second = createMaterial();
+  const edited = { ...presets.Ceramic, emissionColor: '#ff6600', emission: 2.5, reflection: 0.4 };
+  updateMaterial(first, edited);
+  updateMaterial(second, presets.Ceramic);
+  assert.equal(first.emissive.getHexString(), 'ff6600');
+  assert.equal(first.emissiveIntensity, 2.5);
+  assert.equal(first.envMapIntensity, 0.4);
+  assert.equal(second.emissiveIntensity, 0);
+  assert.equal(second.envMapIntensity, 1.3);
+  updateMaterial(first, presets.Ceramic);
+  assert.equal(first.emissiveIntensity, 0);
+  assert.equal(first.envMapIntensity, 1.3);
+  first.dispose(); second.dispose();
+});
+
  test('bodies can travel in depth and the cone starts upside down', () => {
   const { world, objects } = createPhysics();
   objects[1].body.velocity.z = 2;
