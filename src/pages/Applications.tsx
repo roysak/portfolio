@@ -3,6 +3,7 @@ import { assetUrl } from "../utils/assetUrl";
 import Modal from "../components/Modal";
 
 const images = [
+  { file: "recipe-book.png", alt: "Recipe Book - A simple recipe management application" },
   { file: "curioleap.png", alt: "CurioLeap - Growing Through Curiosity" },
   { file: "apcaviation.png", alt: "Asia Pacific College of Aviation & Logistics" },
   { file: "app-01.png", alt: "Application 01" },

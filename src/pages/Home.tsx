@@ -268,7 +268,7 @@ export default function Home() {
             foot="6 builds"
           >
             <img
-              src={assetUrl("/img/works/app-01.png")}
+              src={assetUrl("/img/works/recipe-book.png")}
               alt="Screenshot of a web application built by Roys"
               loading="lazy"
               className="w-full h-full object-cover transition-transform duration-700 ease-art group-hover:scale-105"

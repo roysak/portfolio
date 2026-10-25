@@ -10,10 +10,10 @@ const items = [
     to: "/works/applications",
     title: "Applications",
     text: "Side projects and applications I've built, end to end.",
-    foot: "4 builds",
+    foot: "6 builds",
     art: (
       <img
-        src={assetUrl("/img/works/app-01.png")}
+        src={assetUrl("/img/works/recipe-book.png")}
         alt=""
         loading="lazy"
         className="w-full h-full object-cover transition-transform duration-700 ease-art group-hover:scale-105"
