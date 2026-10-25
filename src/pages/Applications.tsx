@@ -6,6 +6,7 @@ const images = [
   { file: "recipe-book.png", alt: "Recipe Book - A simple recipe management application" },
   { file: "curioleap.png", alt: "CurioLeap - Growing Through Curiosity" },
   { file: "apcaviation.png", alt: "Asia Pacific College of Aviation & Logistics" },
+  { file: "diet-planner.png", alt: "Diet Planner - A simple diet planning application" },
   { file: "app-01.png", alt: "Application 01" },
   { file: "app-02.png", alt: "Application 02" },
   { file: "app-03.png", alt: "Application 03" },
