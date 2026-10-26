@@ -11,7 +11,7 @@
     "test:materials": "node --experimental-strip-types --test tests/material-playground.test.mjs",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist --cname roysak.in"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
