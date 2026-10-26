@@ -30,7 +30,7 @@ export default function Applications() {
             className="group m-0 border border-line rounded-art overflow-hidden bg-ink-2 cursor-zoom-in transition-colors duration-500 hover:border-line-strong"
             onClick={() => setSelected(img)}
           >
-            <div className="overflow-hidden max-h-88">
+            <div className="overflow-hidden max-h-120">
               <img
                 src={assetUrl(`/img/works/${img.file}`)}
                 alt={img.alt}
