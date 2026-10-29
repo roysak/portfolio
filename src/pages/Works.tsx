@@ -10,7 +10,7 @@ const items = [
     to: "/works/applications",
     title: "Applications",
     text: "Side projects and applications I've built, end to end.",
-    foot: "7 builds",
+    foot: "8 builds",
     art: (
       <img
         src={assetUrl("/img/works/recipe-book.png")}
