@@ -150,7 +150,7 @@ const Modal: React.FC<ModalProps> = ({ imageSrc, imageAlt, onClose, onPrevious, 
           key={label}
           type="button"
           aria-label={label}
-          className={`absolute top-1/2 -translate-y-1/2 ${position} w-11 h-11 rounded-art-pill border border-line-strong bg-ink/90 text-bone grid place-items-center cursor-pointer transition-colors hover:bg-bone hover:text-ink focus-visible:outline-2 focus-visible:outline-bone`}
+          className={`absolute top-1/2 -translate-y-1/2 ${position} w-11 h-11 rounded-art-pill border border-line-strong bg-ink/90 text-bone grid place-items-center cursor-pointer transition-colors hover:bg-bone hover:text-ink focus-visible:outline-2 focus-visible:outline-bone [@media(pointer:coarse)]:hidden`}
           onClick={(e) => {
             e.stopPropagation();
             action();
