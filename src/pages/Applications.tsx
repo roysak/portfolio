@@ -7,6 +7,7 @@ const images = [
   { file: "curioleap.png", alt: "CurioLeap - Growing Through Curiosity" },
   { file: "apcaviation.png", alt: "Asia Pacific College of Aviation & Logistics" },
   { file: "covid-orbit.png", alt: "Covid Orbit - Exploring the spread of the virus" },
+  { file: "f1-project.png", alt: "F1 Project - A basic Formula 1 exploration tool" },
   { file: "world-atlas.png", alt: "World Atlas - Explore the Globe" },
   { file: "diet-planner.png", alt: "Diet Planner - A simple diet planning application" },
   { file: "mission-atlas.png", alt: "Mission Atlas - Explore India's Space Age" },
