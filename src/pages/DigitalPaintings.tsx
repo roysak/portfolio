@@ -21,7 +21,7 @@ const pretty = (file: string) =>
     .replace(/(\d+)$/, " $1");
 
 export default function DigitalPaintings() {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function DigitalPaintings() {
             key={p}
             data-cursor="big"
             className="group relative m-0 rounded-art overflow-hidden bg-ink-3 border border-line cursor-zoom-in"
-            onClick={() => setSelected(p)}
+            onClick={() => setSelected(i)}
           >
             <img
               src={assetUrl(`/img/dp/${p}`)}
@@ -52,8 +52,14 @@ export default function DigitalPaintings() {
         ))}
       </div>
 
-      {selected && (
-        <Modal imageSrc={assetUrl(`/img/dp/${selected}`)} imageAlt={pretty(selected)} onClose={() => setSelected(null)} />
+      {selected !== null && (
+        <Modal
+          imageSrc={assetUrl(`/img/dp/${paintings[selected]}`)}
+          imageAlt={pretty(paintings[selected])}
+          onPrevious={() => setSelected((index) => index === null ? null : (index - 1 + paintings.length) % paintings.length)}
+          onNext={() => setSelected((index) => index === null ? null : (index + 1) % paintings.length)}
+          onClose={() => setSelected(null)}
+        />
       )}
     </>
   );

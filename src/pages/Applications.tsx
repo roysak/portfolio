@@ -18,7 +18,7 @@ const images = [
 ];
 
 export default function Applications() {
-  const [selected, setSelected] = useState<(typeof images)[number] | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
 
   return (
     <>
@@ -32,7 +32,7 @@ export default function Applications() {
             key={img.file}
             data-cursor="big"
             className="group m-0 border border-line rounded-art overflow-hidden bg-ink-2 cursor-zoom-in transition-colors duration-500 hover:border-line-strong"
-            onClick={() => setSelected(img)}
+            onClick={() => setSelected(i)}
           >
             <div className="overflow-hidden max-h-88">
               <img
@@ -50,10 +50,12 @@ export default function Applications() {
         ))}
       </div>
 
-      {selected && (
+      {selected !== null && (
         <Modal
-          imageSrc={assetUrl(`/img/works/${selected.file}`)}
-          imageAlt={selected.alt}
+          imageSrc={assetUrl(`/img/works/${images[selected].file}`)}
+          imageAlt={images[selected].alt}
+          onPrevious={() => setSelected((index) => index === null ? null : (index - 1 + images.length) % images.length)}
+          onNext={() => setSelected((index) => index === null ? null : (index + 1) % images.length)}
           onClose={() => setSelected(null)}
         />
       )}
