@@ -436,6 +436,23 @@ export default function FluidSimulationHexFX({
       };
     }
 
+    /**
+     * A WebGL texture/framebuffer is only reclaimed when it is deleted or when
+     * the whole context goes away. Every FBO we stop pointing at has to be
+     * handed back explicitly, or a resize quietly strands megabytes on the GPU.
+     */
+    function destroyFBO(target: FBO | undefined) {
+      if (!target) return;
+      gl.deleteTexture(target.texture);
+      gl.deleteFramebuffer(target.fbo);
+    }
+
+    function destroyDoubleFBO(target: DoubleFBO | undefined) {
+      if (!target) return;
+      destroyFBO(target.read);
+      destroyFBO(target.write);
+    }
+
     function createDoubleFBO(w: number, h: number, internalFormat: number, format: number, type: number, param: number): DoubleFBO {
       let fbo1 = createFBO(w, h, internalFormat, format, type, param);
       let fbo2 = createFBO(w, h, internalFormat, format, type, param);
@@ -452,12 +469,14 @@ export default function FluidSimulationHexFX({
       copyProgram.bind();
       gl.uniform1i(copyProgram.uniforms.uTexture, target.attach(0));
       blit(newFBO);
+      destroyFBO(target);
       return newFBO;
     }
 
     function resizeDoubleFBO(target: DoubleFBO, w: number, h: number, internalFormat: number, format: number, type: number, param: number): DoubleFBO {
       if (target.width === w && target.height === h) return target;
       target.read = resizeFBO(target.read, w, h, internalFormat, format, type, param);
+      destroyFBO(target.write);
       target.write = createFBO(w, h, internalFormat, format, type, param);
       target.width = w; target.height = h;
       target.texelSizeX = 1 / w; target.texelSizeY = 1 / h;
@@ -494,11 +513,23 @@ export default function FluidSimulationHexFX({
       else dye = resizeDoubleFBO(dye, dyeRes.width, dyeRes.height, rgba.internalFormat, rgba.format, texType, filtering);
       if (!velocity) velocity = createDoubleFBO(simRes.width, simRes.height, rg.internalFormat, rg.format, texType, filtering);
       else velocity = resizeDoubleFBO(velocity, simRes.width, simRes.height, rg.internalFormat, rg.format, texType, filtering);
-      divergence = createFBO(simRes.width, simRes.height, r.internalFormat, r.format, texType, gl.NEAREST);
-      curl = createFBO(simRes.width, simRes.height, r.internalFormat, r.format, texType, gl.NEAREST);
-      pressure = createDoubleFBO(simRes.width, simRes.height, r.internalFormat, r.format, texType, gl.NEAREST);
+      // divergence/curl/pressure are scratch - they carry nothing worth keeping
+      // across a resize - but rebuilding them when the resolution has not moved
+      // just abandons the previous set.
+      if (!divergence || divergence.width !== simRes.width || divergence.height !== simRes.height) {
+        destroyFBO(divergence);
+        destroyFBO(curl);
+        destroyDoubleFBO(pressure);
+        divergence = createFBO(simRes.width, simRes.height, r.internalFormat, r.format, texType, gl.NEAREST);
+        curl = createFBO(simRes.width, simRes.height, r.internalFormat, r.format, texType, gl.NEAREST);
+        pressure = createDoubleFBO(simRes.width, simRes.height, r.internalFormat, r.format, texType, gl.NEAREST);
+      }
     }
 
+    // Size the drawing buffer before the first allocation, so the framebuffers
+    // start at the canvas resolution rather than being rebuilt once the resize
+    // debounce below settles.
+    resizeCanvas();
     initFramebuffers();
     multipleSplats(parseInt(String(Math.random() * 20)) + 5);
 
@@ -764,12 +795,23 @@ export default function FluidSimulationHexFX({
     let lastUpdateTime = Date.now();
     let animId: number;
 
+    // Dragging a window edge resizes the canvas on nearly every frame. Each
+    // rebuild allocates a fresh dye pair (~15MB apiece at DYE_RESOLUTION), so
+    // wait for the size to stop moving before touching the framebuffers. The
+    // drawing buffer itself still follows the element immediately.
+    const RESIZE_SETTLE_MS = 150;
+    let resizeSettlesAt = 0;
+
     function update() {
       const now = Date.now();
       let dt = Math.min((now - lastUpdateTime) / 1000, 0.016666);
       lastUpdateTime = now;
 
-      if (resizeCanvas()) initFramebuffers();
+      if (resizeCanvas()) resizeSettlesAt = now + RESIZE_SETTLE_MS;
+      if (resizeSettlesAt !== 0 && now >= resizeSettlesAt) {
+        resizeSettlesAt = 0;
+        initFramebuffers();
+      }
 
       // Apply splat stack
       if (splatStack.length > 0) multipleSplats(splatStack.pop()!);
@@ -799,6 +841,11 @@ export default function FluidSimulationHexFX({
       canvas.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('keydown', handleKeyDown);
+      destroyDoubleFBO(dye);
+      destroyDoubleFBO(velocity);
+      destroyDoubleFBO(pressure);
+      destroyFBO(divergence);
+      destroyFBO(curl);
       scheduleWebGLContextRelease(canvas, gl);
     };
   }, []);

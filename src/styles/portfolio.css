@@ -145,7 +145,7 @@ figcaption {
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--bone-3);
+  color: var(--bone-2);
   transition: color 0.4s var(--ease);
   white-space: nowrap;
 }

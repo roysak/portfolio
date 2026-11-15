@@ -42,6 +42,13 @@ const GRID = 26;
 /** Simulation steps run synchronously on init so the field starts composed. */
 const WARMUP = 90;
 
+// Require roughly 50 FPS, allowing occasional dropped frames. Measure actual
+// frame delivery rather than guessing performance from the device's hardware.
+const SAMPLE_MS = 1000;
+const MAX_FRAME_MS = 30;
+const SLOW_FRAME_MS = 40;
+const MAX_DRAW_MS = 12;
+
 function readToken(name: string, fallback: string) {
   const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   return v || fallback;
@@ -61,6 +68,7 @@ export default function DualField({
   className = "",
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const performanceDisabled = useRef(false);
   const { mode } = useMode();
 
   useEffect(() => {
@@ -69,7 +77,7 @@ export default function DualField({
     const ctx = canvas.getContext("2d", { alpha: false });
     if (!ctx) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const isCode = mode === "code";
 
     let w = 1;
@@ -78,8 +86,27 @@ export default function DualField({
     let grid = GRID;
     let t = 0;
     let raf = 0;
-    let running = true;
-    let frames = 0;
+    let visible = false;
+    let qualified = false;
+    let previousTime = 0;
+    let sampleTime = 0;
+    let sampleFrames = 0;
+    let slowFrames = 0;
+    let drawTime = 0;
+
+    const resetSample = () => {
+      previousTime = 0;
+      sampleTime = sampleFrames = slowFrames = drawTime = 0;
+    };
+
+    const syncPlayback = () => {
+      cancelAnimationFrame(raf);
+      raf = 0;
+      resetSample();
+      if (visible && !document.hidden && !motion.matches && !performanceDisabled.current) {
+        raf = requestAnimationFrame(frame);
+      }
+    };
     // How fast the ground reclaims the canvas. Set in resize() from the canvas
     // width so a trail is always roughly the same fraction of the frame —
     // a fixed value that reads as flowing strokes on a hero turns a thumbnail
@@ -143,14 +170,18 @@ export default function DualField({
       const n = count();
       wash = Array.from({ length: n }, spawnWash);
       traces = Array.from({ length: Math.round(n * 0.28) }, spawnTrace);
-      frames = 0;
-      running = true;
       // Pre-roll the simulation so the field arrives already composed rather
       // than assembling itself out of an empty ground over the first seconds.
       // Small, sparse panels need far fewer steps or the strokes pile into mush.
       const warm = Math.round(WARMUP * Math.min(1, density / 900));
-      for (let i = 0; i < warm; i++) step();
-      if (!raf) raf = requestAnimationFrame(frame);
+      const started = performance.now();
+      for (let i = 0; i < warm; i++) {
+        step();
+        // Keep the static fallback inexpensive even on a struggling device.
+        if (performance.now() - started >= MAX_DRAW_MS) break;
+      }
+      qualified = false;
+      syncPlayback();
     };
 
     const onMove = (e: PointerEvent) => {
@@ -267,34 +298,63 @@ export default function DualField({
       else drawWash();
     };
 
-    const frame = () => {
-      if (!running) {
-        raf = 0;
-        return;
+    const frame = (now: number) => {
+      raf = 0;
+      if (!visible || document.hidden || motion.matches || performanceDisabled.current) return;
+
+      if (previousTime) {
+        const elapsed = now - previousTime;
+        sampleTime += elapsed;
+        sampleFrames++;
+        if (elapsed > SLOW_FRAME_MS) slowFrames++;
+      }
+      previousTime = now;
+
+      if (qualified) {
+        const started = performance.now();
+        step();
+        drawTime += performance.now() - started;
+      }
+
+      if (sampleTime >= SAMPLE_MS) {
+        if (
+          sampleTime / sampleFrames > MAX_FRAME_MS ||
+          slowFrames / sampleFrames > 0.2 ||
+          drawTime / sampleFrames > MAX_DRAW_MS
+        ) {
+          // Leave the last composition in place and don't retry on resize or
+          // theme changes: repeated probes would add load to a slow device.
+          performanceDisabled.current = true;
+          return;
+        }
+        qualified = true;
+        resetSample();
       }
       raf = requestAnimationFrame(frame);
-      // Pause when scrolled out of the layout entirely.
-      if (canvas.offsetParent === null) return;
-
-      step();
-
-      // Reduced motion: compose a still image, then stop.
-      if (reduced && ++frames > 90) running = false;
     };
 
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      syncPlayback();
+    });
+    observer.observe(canvas);
+    document.addEventListener("visibilitychange", syncPlayback);
+    motion.addEventListener("change", syncPlayback);
     if (interactive) {
       canvas.addEventListener("pointermove", onMove);
       canvas.addEventListener("pointerleave", onLeave);
     }
 
     return () => {
-      running = false;
       cancelAnimationFrame(raf);
       raf = 0;
       ro.disconnect();
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", syncPlayback);
+      motion.removeEventListener("change", syncPlayback);
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerleave", onLeave);
     };
