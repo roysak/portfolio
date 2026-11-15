@@ -8,9 +8,9 @@ import { useReveal } from "../hooks/useReveal";
 const items = [
   {
     to: "/works/applications",
-    title: "Applications",
+    title: "Apps",
     text: "Side projects and applications I've built, end to end.",
-    foot: "11 builds",
+    foot: "12 builds",
     art: (
       <img
         src={assetUrl("/img/works/recipe-book.png")}
@@ -22,14 +22,14 @@ const items = [
   },
   {
     to: "/works/creative-coding",
-    title: "Creative coding",
+    title: "Coding",
     text: "Shader and canvas experiments, most of them built with AI in the loop.",
     foot: "6 effects · WebGL",
     art: <DualField density={360} intensity={1.15} interactive={false} />,
   },
   {
     to: "/works/digital-paintings",
-    title: "Digital paintings",
+    title: "Paintings",
     text: "A collection of digital artwork and illustrations.",
     foot: "9 pieces",
     art: (

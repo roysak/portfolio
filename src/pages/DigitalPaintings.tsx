@@ -26,7 +26,7 @@ export default function DigitalPaintings() {
   return (
     <>
       <p className="max-w-[60ch] text-bone-2 mt-0 mb-10">
-        Painting is where the colour sense comes from. A curated gallery of digital work, mostly landscapes and
+        Digital painting is where the colour sense comes from. A curated gallery of digital work, mostly landscapes and
         colour studies.
       </p>
 

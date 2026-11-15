@@ -2,16 +2,16 @@ import { NavLink, Outlet } from "react-router-dom";
 import SectionHead from "../components/SectionHead";
 
 const tabs = [
-  { to: "/works/applications", label: "Applications" },
-  { to: "/works/creative-coding", label: "Creative coding" },
-  { to: "/works/digital-paintings", label: "Digital paintings" },
+  { to: "/works/applications", label: "Apps" },
+  { to: "/works/creative-coding", label: "Coding" },
+  { to: "/works/digital-paintings", label: "Paintings" },
 ];
 
 /** Shared shell for the three Works galleries: heading plus segmented sub-navigation. */
 export default function WorksLayout() {
   return (
     <main className="px-gutter pt-36 pb-[clamp(64px,9vw,128px)]">
-      <SectionHead index="01" title="Works" aside="Applications · Creative coding · Digital paintings" />
+      <SectionHead index="01" title="Works" />
 
       <nav
         className="inline-flex flex-wrap gap-1 p-1 mb-12 rounded-art-pill border border-line bg-ink-2"

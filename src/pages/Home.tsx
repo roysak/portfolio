@@ -263,7 +263,7 @@ export default function Home() {
         <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
           <Panel
             to="/works/applications"
-            title="Applications"
+            title="Apps"
             text="Side projects and applications I've built."
             foot="6 builds"
           >
@@ -276,7 +276,7 @@ export default function Home() {
           </Panel>
           <Panel
             to="/works/creative-coding"
-            title="Creative coding"
+            title="Coding"
             text="Interactive shader and canvas experiments."
             foot="6 effects · WebGL"
           >
@@ -284,7 +284,7 @@ export default function Home() {
           </Panel>
           <Panel
             to="/works/digital-paintings"
-            title="Digital paintings"
+            title="Paintings"
             text="A collection of digital artwork and illustrations."
             foot="9 pieces"
           >
